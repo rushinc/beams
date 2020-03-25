@@ -2,7 +2,7 @@
 The Berkeley ElectromAgnetic Modal Solver or beams solves the Maxwell's equations using the Fourier Modal Method (FMM). Currently in the very early stages of development this Python module lacks many basic features, a documentation, and an easy to use interface. However there are plans on implementing the latest advances in electromagnetic modal methods as the software matures.
 
 ## Installation
-To install `beams` clone the repository to a location in your `PYTHONPATH` or add the parent directory to `sys.path`. A mature build process is yet to be implemented.
+To install `beams` clone the repository to a location in your `PYTHONPATH` or add the parent directory to `sys.path`. An automated build process is yet to be implemented.
 1. Clone the repository: 
 ```
 git clone https://github.com/rushinc/beams
@@ -36,4 +36,4 @@ The `test/si_sensor.py` should in the end produce results similar to the Matlab 
 - Add a non-linear solver.
 
 ## Disclaimer:
-*At present this is a playground for parallelizing FMM for UC Berkeley's CS267. Nothing here will work as expected.*
+*At present this is an exercise in parallelizing FMM for UC Berkeley's CS267. Nothing here will work as expected.*
