@@ -29,6 +29,7 @@ The `test/si_sensor.py` should in the end produce results similar to the Matlab 
 - More shapes.
 - Add support for dispersive materials.
 - Implement an inbuilt eigenmode solver.
+- Allow PML boundaries for finite, non-periodic structures.
 - Add support for magnetic materials.
 - Add support for anisotropic materials.
 - Include Legendre and Chebyshev polynomial bases.
