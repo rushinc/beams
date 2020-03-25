@@ -11,6 +11,7 @@ git clone https://github.com/rushinc/beams
 ```
 import sys
 sys.path.append('path/to/beams')
+```
 3. Import as any other module
 ```
 import beams as bm
