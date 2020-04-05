@@ -2,7 +2,11 @@ import numpy as np
 
 class Vector(object):
     def __init__(self, data):
-        self.data = list(data) if isinstance(data, tuple) else data
+        try:
+            self.data = list(data)
+        except TypeError:
+            self.data = []
+            self.data.append(data)
 
     def __add__(self, other):
         if isinstance(other, Vector):
@@ -28,13 +32,21 @@ class Vector(object):
     def __rmul__(self, other):
         return Vector([other * a for a in self.data])
 
-    def __div__(self, other):
+    def __truediv__(self, other):
         if isinstance(other, Vector):
             return Vector([a / b for (a, b) in zip(self.data, other.data)])
         return Vector([a / other for a in self.data])
 
-    def __rdiv__(self, other):
+    def __rtruediv__(self, other):
         return Vector([other / a for a in self.data])
+
+    def __floordiv__(self, other):
+        if isinstance(other, Vector):
+            return Vector([a // b for (a, b) in zip(self.data, other.data)])
+        return Vector([a // other for a in self.data])
+
+    def __rfloordiv__(self, other):
+        return Vector([other // a for a in self.data])
 
     def __neg__(self):
         return Vector([-a for a in self.data])
@@ -83,19 +95,19 @@ class Vector(object):
             return Vector(np.zeros(self.data.shape()))
         return Vector(self.data/length)
 
-class Vector2D(Vector):
+class Vector2d(Vector):
     def __init__(self, x=0., y=0.):
         self._x = x
         self._y = y
-        super().__init__(np.array([x, y], dtype=np.float32))
+        super().__init__([x, y])
 
     @property
     def x(self):
         return self._x
 
     @x.setter
-    def x(self, new_x):
-        self._x = float(new_x)
+    def x(self, x_p):
+        self._x = x_p
         self.data[0] = self._x
 
     @property
@@ -103,6 +115,6 @@ class Vector2D(Vector):
         return self._y
 
     @y.setter
-    def y(self, new_y):
-        self._y = float(new_y)
+    def y(self, y_p):
+        self._y = y_p
         self.data[1] = self._y

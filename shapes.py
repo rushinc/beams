@@ -3,7 +3,7 @@ import beams as bm
 
 class Shape:
     def __init__(self, material=bm.Material(),
-            center=bm.Vector2D(), interior=None):
+            center=bm.Vector2d(), interior=None):
         self.material = material
         self.center = center
         self.interior = interior
@@ -12,7 +12,7 @@ class Shape:
         return self.interior(point)
 
 class Rectangle(Shape):
-    def __init__(self, size=bm.Vector2D(), **kwargs):
+    def __init__(self, size=bm.Vector2d(), **kwargs):
         self.size = size
         super().__init__(interior=self.interior, **kwargs)
 

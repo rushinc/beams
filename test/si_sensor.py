@@ -8,8 +8,8 @@ y = np.arange(1.500, 1.700, .001)    # Range of wavelength in nm
 kx = 0
 ky = 0
 freqs = 1 / y
-k = bm.vec2(kx, ky)
-N_modes = bm.vec2(9, 9)
+k = bm.Vector2d(kx, ky)
+N_modes = bm.Vector2d(9, 9)
 
 ## Materials
 air = bm.Material()
@@ -25,12 +25,12 @@ L = .600
 w_1 = .230                       # Width of Si bar 1
 w_2 = .190                       # Width of Si bar 2
 gap = .125
-C_1 = bm.vec2(y=-(w_1 + gap)/2)       # Center of Si bar 1
-C_2 = bm.vec2(y=(w_2 + gap)/2)        # Center of Si bar 1
+C_1 = bm.Vector2d(y=-(w_1 + gap)/2)       # Center of Si bar 1
+C_2 = bm.Vector2d(y=(w_2 + gap)/2)        # Center of Si bar 1
 res = 4096
 
-bar1 = bm.Rectangle(size=bm.vec2(L, w_1), center=C_1, material=Si)
-bar2 = bm.Rectangle(size=bm.vec2(L, w_2), center=C_2, material=Si)
+bar1 = bm.Rectangle(size=bm.Vector2d(L, w_1), center=C_1, material=Si)
+bar2 = bm.Rectangle(size=bm.Vector2d(L, w_2), center=C_2, material=Si)
 shapes = [bar1, bar2]
 bars = bm.Layer(0, res, shapes, air)
 layers = [bars]

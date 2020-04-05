@@ -19,7 +19,7 @@ class Layer:
         res = resolution if resolution else self.resolution 
         grid = np.mgrid[-px / 2 : px / 2 : 1 / res,
                 -py / 2 : py / 2 : 1 / res]
-        vgrid = bm.vec2(grid[0], grid[1])
+        vgrid = bm.Vector2d(grid[0], grid[1])
         layout = np.zeros(grid[0].shape)
         for id, shape in list(enumerate(self.shapes))[::-1]:
             interior_indices = shape.interior(vgrid)
