@@ -1,14 +1,9 @@
 import numpy as np
 import beams as bm
 
-class vec2:
-    def __init__(self, x=0., y=0.):
-        self.x = float(x) if type(x) is int else x
-        self.y = float(y) if type(y) is int else y
-
 class Shape:
     def __init__(self, material=bm.Material(),
-            center=vec2(), interior=None):
+            center=bm.Vector2D(), interior=None):
         self.material = material
         self.center = center
         self.interior = interior
@@ -17,7 +12,7 @@ class Shape:
         return self.interior(point)
 
 class Rectangle(Shape):
-    def __init__(self, size=vec2(), **kwargs):
+    def __init__(self, size=bm.Vector2D(), **kwargs):
         self.size = size
         super().__init__(interior=self.interior, **kwargs)
 

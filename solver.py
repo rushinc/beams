@@ -5,7 +5,9 @@ import beams as bm
 from beams import *
 
 class Solver:
-    def __init__(self, freqs, k_vals, N_modes, layers):
+    def __init__(self, period, freqs, k_vals, N_modes, layers):
+        self.p1 = period[0]
+        self.p2 = period[1]
         self.fs = freqs
         self.ks = k_vals
         self.N = N_modes
@@ -14,5 +16,7 @@ class Solver:
                 np.arange(-(N_modes.y // 2), N_modes.y // 2, dtype=int))
         self.m0 = vec2(N_modes.x // 2, N_modes.y // 2)
 
-    def solve_at(self, freq, k)
+    def solve_at(self, freq, k):
+        k0 = 2 * pi * freq
+        ki = k0 * k.x + 2 * pi * m
 
