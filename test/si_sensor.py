@@ -4,7 +4,7 @@ import beams as bm
 import matplotlib.pyplot as plt
 
 ## Inputs
-y = np.arange(1.500, 1.700, .001)    # Range of wavelength in nm
+y = 1.55
 kx = 0
 ky = 0
 freqs = 1 / y
@@ -27,7 +27,7 @@ w_2 = .190                       # Width of Si bar 2
 gap = .125
 C_1 = bm.Vector2d(y=-(w_1 + gap)/2)       # Center of Si bar 1
 C_2 = bm.Vector2d(y=(w_2 + gap)/2)        # Center of Si bar 1
-res = 4096
+res = 4000
 
 bar1 = bm.Rectangle(size=bm.Vector2d(L, w_1), center=C_1, material=Si)
 bar2 = bm.Rectangle(size=bm.Vector2d(L, w_2), center=C_2, material=Si)
