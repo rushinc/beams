@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 y = 1.55
 kx = 0
 ky = 0
-freqs = 1 / y
+freq = 1 / y
 k = bm.Vector2d(kx, ky)
 N_modes = bm.Vector2d(9, 9)
 
@@ -20,6 +20,7 @@ Si = bm.Material(index=3.4)
 # Unit cell
 px = .810                       # Period in 'x'
 py = px                       # Period in 'y'
+p = bm.Vector2d(px, py)
 h_z = .320                       # Thickness of layers
 L = .600 
 w_1 = .230                       # Width of Si bar 1
@@ -34,7 +35,7 @@ bar2 = bm.Rectangle(size=bm.Vector2d(L, w_2), center=C_2, material=Si)
 shapes = [bar1, bar2]
 bars = bm.Layer(0, res, shapes, air)
 layers = [bars]
-
+'''
 ## Solver
 R = []; T = []
 for freq in freqs:
@@ -45,3 +46,4 @@ for freq in freqs:
 
 ## Plot
 plt.plot(freqs, R)
+'''
