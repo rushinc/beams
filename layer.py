@@ -154,8 +154,7 @@ class Layer:
         for (i, xx) in enumerate(grid[0]):
             for (j, yy) in enumerate(grid[1][0]):
                 r = Vector2d(xx, yy)
-                k_phase = Vector2d(np.exp(1j * self.ki.fgrid().x * r.x),
-                        np.exp(1j * self.ki.fgrid().y * r.y))
+                k_phase = np.exp(1j * self.ki.dot(r))
                 e_field = k_phase @ e_mode
                 h_field = k_phase @ h_mode
                 e_x[i, j] = e_field.x
