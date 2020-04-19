@@ -1,14 +1,14 @@
 import numpy as np
 
 class Vector(object):
-    def __init__(self, elements=[], *args):
-        if elements:
-            self.data = elements
-        else:
-            self.data = []
-            for arg in args:
-                self.data.append(np.array(arg))
+    def __init__(self, *args):
+        self.data = []
+        for arg in args:
+            self.data.append(np.array(arg))
         self.dim = len(self.data)
+
+    def __getitem__(self, indices):
+        return self.__class__(*[a.__getitem__(indices) for a in self.data])
 
     def __add__(self, other):
         if isinstance(other, Vector):
@@ -103,8 +103,11 @@ class Vector(object):
     def dot(self, other):
         return sum([a * b for (a, b) in zip(self.data, other.data)])
 
-    def length(self):
+    def norm(self):
         return float(np.linalg.norm(self.data))
+
+    def intensity(self):
+        return sum([a ** 2 for a in self.data])
 
     def unit(self):
         length = self.length()
@@ -122,19 +125,21 @@ class Vector(object):
             dvec.append(ediag)
         return self.__class__(*dvec)
 
-    def fgrid(self):
-        flatg = []
-        mgrid = np.meshgrid(*self.data)
-        for g in mgrid:
-            flatg.append(g.flatten())
-        return self.__class__(*flatg)
+    def flatten(self):
+        return self.__class__(*[a.flatten() for a in self.data])
 
-    def mgrid(self):
+    def grid(self):
         return self.__class__(*np.meshgrid(*self.data))
+
+    def hstack(self):
+        return np.hstack(self.data)
+
+    def vstack(self):
+        return np.vstack(self.data)
 
 class Vector2d(Vector):
     def __init__(cls, x=0., y=0.):
-        super().__init__([x, y])
+        super().__init__(x, y)
 
     @property
     def x(self):
@@ -152,9 +157,14 @@ class Vector2d(Vector):
     def y(self, y_p):
         self.data[1] = y_p
 
+    def rotate(self, angle):
+        new_x = np.cos(angle) * self.x - np.sin(angle) * self.y
+        new_y = np.sin(angle) * self.x + np.cos(angle) * self.y
+        return Vector2d(new_x, new_y)
+
 class Vector3d(Vector):
     def __init__(self, x=0., y=0., z=0.):
-        super().__init__([x, y, z])
+        super().__init__(x, y, z)
 
     @property
     def x(self):

@@ -36,6 +36,7 @@ class Layer:
         N_x = int(N_modes.x)
         N_y = int(N_modes.y)
         N_t = N_x * N_y
+
         (G_x, G_y) = grid.shape
 
         EPS = np.zeros((N_t, N_t), dtype=complex)
@@ -90,8 +91,9 @@ class Layer:
                     rr, ss], np.flip(epsyx_mnl[:N_x, rr, ss]))
         self.fft_eps_iy = np.reshape(E4, [N_t, N_t], order='F')
 
-    def mode_solve(self, K):
-        I = np.eye(K.x.shape[0])
+    def mode_solve(self, freq, K):
+        N_t = K.x.shape[0]
+        I = np.eye(N_t)
         EPS = self.fft_eps
         EPSxy = self.fft_eps_ix
         EPSyx = self.fft_eps_iy
@@ -108,59 +110,57 @@ class Layer:
         G22 = K.x @ K.y
         self.G = np.block([[G11, G12], [G21, G22]])
 
-        (Q, self.W) = linalg.eig(self.F @ self.G)
-        self.gamma = sp.sqrt(Q)
+        if not np.count_nonzero(EPS - np.diag(np.diag(EPS))):
+            self.W = np.eye(2 * N_t)
+            k_z = np.lib.scimath.sqrt(np.diag(EPS) + np.diag(K.intensity()))
+            self.gamma = -1j * np.hstack((k_z, k_z))
+        else:
+            (Q, self.W) = linalg.eig(self.F @ self.G)
+            self.gamma = sp.sqrt(Q)
+
         self.V = -self.G @ self.W / self.gamma
 
-    def eigs(self, freq, k, period, N_modes):
-        self.freq = freq
-        self.period = period
-        self.N_modes = N_modes
+    def eigs(self, freq, k, period, N):
         k0 = 2 * np.pi * freq
-        m = bm.Vector2d(np.arange(-(N_modes.x // 2), N_modes.x // 2 + 1,
-            dtype=int), np.arange(-(N_modes.y // 2), N_modes.y // 2 + 1,
+        m = bm.Vector2d(np.arange(-(N.x // 2), N.x // 2 + 1,
+            dtype=int), np.arange(-(N.y // 2), N.y // 2 + 1,
                 dtype=int))
         ki = k0 * k + 2 * np.pi * m / period
-        self.ki = ki
-        K = 1j * ki.fgrid().diag() / k0
-        self.fft(self.grid(period, value='eps'), N_modes)
-        self.mode_solve(K)
+        K = 1j * ki.grid().flatten().diag() / k0
+        self.fft(self.grid(period, value='eps'), N)
+        self.mode_solve(freq, K)
+        self.K = K
+        self.freq = freq
+        self.period = period
+        self.N = N
 
         return (self.gamma, self.W, self.V)
 
-    def mode(self, index, res): 
-        try:
-            N_t = self.N_modes.x * self.N_modes.y
-            gamma = self.gamma[index]
-            e_mode = Vector2d(self.W[:N_t, index], self.W[N_t:, index])
-            h_mode = Vector2d(self.V[:N_t, index], self.V[N_t:, index])
-            px = self.period.x
-            py = self.period.y
-        except AttributeError as ae:
-            print(type(ae))
-            print("Please solve the eigenmodes for the layer first.")
-        except IndexError as ie:
-            print(type(ie))
-            print("Mode index " + str(index) +
-                    " is greater than the number of modes solved for "
-                    + str(self.N_modes))
+    def field(self, pts, amplitudes, components=''):
+        if not self.K or not self.period or not self.N:
+            raise AttributeError('Solve the eigenmodes first by calling Layer.eig')
+            return
 
-        grid = np.ogrid[-px / 2 : px / 2 : 1 / res,
-                -py / 2 : py / 2 : 1 / res]
-        e_x = np.zeros((grid[0].size, grid[1].size), dtype=complex)
-        e_y = np.zeros((grid[0].size, grid[1].size), dtype=complex)
-        h_x = np.zeros((grid[0].size, grid[1].size), dtype=complex)
-        h_y = np.zeros((grid[0].size, grid[1].size), dtype=complex)
-        for (i, xx) in enumerate(grid[0]):
-            for (j, yy) in enumerate(grid[1][0]):
-                r = Vector2d(xx, yy)
-                k_phase = np.exp(1j * self.ki.dot(r))
-                e_field = k_phase @ e_mode
-                h_field = k_phase @ h_mode
-                e_x[i, j] = e_field.x
-                e_y[i, j] = e_field.y
-                h_x[i, j] = h_field.x
-                h_y[i, j] = h_field.y
+        N_t = self.N.x * self.N.y
+        k0 = 2 * np.pi * self.freq
+        e_mode = self.W @ amplitudes.vstack()
+        h_mode = self.V @ amplitudes.vstack()
+        e_x = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+        e_y = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+        e_z = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+        h_x = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+        h_y = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+        h_z = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+        for (j, yy) in enumerate(pts.y):
+            r = Vector2d(pts.x, yy)
+            k_phase = np.exp(k0 * self.K.diag().dot(r))
+            e_x[:, [j]] = k_phase @ e_mode[:N_t]
+            e_y[:, [j]] = k_phase @ e_mode[N_t:]
+            h_x[:, [j]] = k_phase @ h_mode[:N_t]
+            h_y[:, [j]] = k_phase @ h_mode[N_t:]
+            e_z[:, [j]] = k_phase @ linalg.solve(self.fft_eps,
+                    self.K.rotate(np.pi / 2).hstack() @ h_mode)
+            h_z = k_phase @ self.K.rotate(np.pi / 2).hstack() @ e_mode
 
-        return (Vector2d(e_x, e_y), Vector2d(h_x, h_y))
+        return (Vector3d(e_x, e_y, e_z), Vector3d(h_x, h_y, h_z))
 
