@@ -7,16 +7,25 @@ from beams import *
 class Solver:
     def __init__(self, period, freqs, k_vals, N_modes, layers):
         self.p = period
-        self.f_list = freqs
-        self.k_list = k_vals
+        self.f_list = list(freqs)
+        self.k_list = list(k_vals)
         self.N = N_modes
-        self.layers = layers
-        self.m = Vector2d(np.arange(-(N_modes.x // 2), N_modes.x // 2 + 1, dtype=int),
-                np.arange(-(N_modes.y // 2), N_modes.y // 2 + 1, dtype=int))
-        self.m0 = Vector2d(N_modes.x // 2, N_modes.y // 2)
+        self.layers = list(layers)
 
-    def solve_at(self, freq, k):
-        k0 = 2 * np.pi * freq
-        ki = k0 * k + 2 * np.pi * self.m / self.p
-        K = ki.fgrid().diag()
+    def build(self, freq, k):
+        L = len(self.layers)
+        N_t = self.N.x * self.N.y
+        B = np.zeros((4 * N_t * (L + 1), 4 * N_t * (L + 1)), dtype=complex)
+        Z = np.zeros((2 * N_t, 2 * N_t), dtype=complex)
+        for i, l in enumerate(self.layers):
+            l.compute_eigs(freq, k, self.p, self.N)
+            b_l = np.block([[l.W, l.W @ l.X], [l.V, -l.V @ l.X],
+                [-l.W @ l.X, -l.W], [-l.V @ l.X, l.V]])
+            B[4 * i * N_t:4 * (i + 2) * N_t,
+                    4 * i * N_t:4 * (i + 1) * N_t] = b_l
+            if i == 0:
+                B[:4 * N_t, 4 * N_t * L:] = np.block([[-l.W, Z], [l.V, Z]])
+            if i == L - 1:
+                B[-4 * N_t:, 4 * N_t * L:] = np.block([[Z, l.W], [Z, l.V]])
+        self.B = B
 

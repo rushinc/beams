@@ -33,8 +33,11 @@ res = 4000
 bar1 = bm.Rectangle(size=bm.Vector2d(L, w_1), center=C_1, material=Si)
 bar2 = bm.Rectangle(size=bm.Vector2d(L, w_2), center=C_2, material=Si)
 shapes = [bar1, bar2]
-bars = bm.Layer(0, res, shapes, air)
-layers = [bars]
+bars = bm.Layer(h_z, res, shapes, air)
+inc = bm.Layer(0, res)
+trn = bm.Layer(0, res, material=SiO2)
+layers = [inc, bars, trn]
+
 '''
 ## Solver
 R = []; T = []

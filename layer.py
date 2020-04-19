@@ -6,11 +6,13 @@ from scipy import linalg
 from beams import *
 
 class Layer:
-    def __init__(self, z=0., resolution=None,
-            shapes=[], material=Material()):
-        self.z = float(z) if type(z) is int else z
+    def __init__(self, h, resolution, shapes=None, material=Material()):
+        self.h = float(h)
         self.resolution = resolution
-        self.shapes = shapes
+        if not shapes:
+            self.shapes = []
+        else:
+            self.shapes = shapes
         self.material = material
 
     def grid(self, period, freq=None, value='id'):
@@ -32,7 +34,7 @@ class Layer:
             return eps_grid
         return layout
 
-    def fft(self, grid, N_modes):
+    def ffts(self, grid, N_modes):
         N_x = int(N_modes.x)
         N_y = int(N_modes.y)
         N_t = N_x * N_y
@@ -91,7 +93,7 @@ class Layer:
                     rr, ss], np.flip(epsyx_mnl[:N_x, rr, ss]))
         self.fft_eps_iy = np.reshape(E4, [N_t, N_t], order='F')
 
-    def mode_solve(self, freq, K):
+    def eig_solve(self, freq, K):
         N_t = K.x.shape[0]
         I = np.eye(N_t)
         EPS = self.fft_eps
@@ -112,29 +114,28 @@ class Layer:
 
         if not np.count_nonzero(EPS - np.diag(np.diag(EPS))):
             self.W = np.eye(2 * N_t)
-            k_z = np.lib.scimath.sqrt(np.diag(EPS) + np.diag(K.intensity()))
-            self.gamma = -1j * np.hstack((k_z, k_z))
+            k_z = np.lib.scimath.sqrt(np.diag(EPS) - np.diag(K.intensity()))
+            self.gamma = 1j * np.hstack((k_z, k_z))
         else:
             (Q, self.W) = linalg.eig(self.F @ self.G)
             self.gamma = sp.sqrt(Q)
 
         self.V = -self.G @ self.W / self.gamma
 
-    def eigs(self, freq, k, period, N):
+    def compute_eigs(self, freq, k, period, N):
         k0 = 2 * np.pi * freq
         m = bm.Vector2d(np.arange(-(N.x // 2), N.x // 2 + 1,
             dtype=int), np.arange(-(N.y // 2), N.y // 2 + 1,
                 dtype=int))
         ki = k0 * k + 2 * np.pi * m / period
         K = 1j * ki.grid().flatten().diag() / k0
-        self.fft(self.grid(period, value='eps'), N)
-        self.mode_solve(freq, K)
+        self.ffts(self.grid(period, value='eps'), N)
+        self.eig_solve(freq, K)
+        self.X = np.diag(np.exp(-k0 * self.gamma * self.h))
         self.K = K
         self.freq = freq
         self.period = period
         self.N = N
-
-        return (self.gamma, self.W, self.V)
 
     def field(self, pts, amplitudes, components=''):
         if not self.K or not self.period or not self.N:
@@ -153,7 +154,7 @@ class Layer:
         h_z = np.zeros((pts.x.size, pts.y.size), dtype=complex)
         for (j, yy) in enumerate(pts.y):
             r = Vector2d(pts.x, yy)
-            k_phase = np.exp(k0 * self.K.diag().dot(r))
+            k_phase = np.exp(-k0 * self.K.diag().dot(r))
             e_x[:, [j]] = k_phase @ e_mode[:N_t]
             e_y[:, [j]] = k_phase @ e_mode[N_t:]
             h_x[:, [j]] = k_phase @ h_mode[:N_t]

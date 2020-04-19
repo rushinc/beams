@@ -74,16 +74,24 @@ class Vector(object):
         return not self.__eq__(other)
 
     def __lt__(self, other):
-        return self.length() < other.length()
+        if isinstance(other, Vector):
+            return self.intensity() < other.intensity()
+        return self.length() < other
 
     def __le__(self, other):
-        return self.length() <= other.length()
+        if isinstance(other, Vector):
+            return self.intensity() <= other.intensity()
+        return self.intensity() <= other
 
     def __gt__(self, other):
-        return self.length() > other.length()
+        if isinstance(other, Vector):
+            return self.intensity() > other.intensity()
+        return self.intensity() > other
 
     def __ge__(self, other):
-        return self.length() >= other.length()
+        if isinstance(other, Vector):
+            return self.intensity() >= other.intensity()
+        return self.intensity() >= other
 
     def __repr__(self):
         return "Vector(" + self.__str__() + ")"
@@ -107,7 +115,10 @@ class Vector(object):
         return float(np.linalg.norm(self.data))
 
     def intensity(self):
-        return sum([a ** 2 for a in self.data])
+        return sum([np.abs(a) ** 2 for a in self.data])
+
+    def length(self):
+        return np.sqrt(sum([np.abs(a) ** 2 for a in self.data]))
 
     def unit(self):
         length = self.length()
