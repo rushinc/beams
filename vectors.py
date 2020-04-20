@@ -10,6 +10,9 @@ class Vector(object):
     def __getitem__(self, indices):
         return self.__class__(*[a.__getitem__(indices) for a in self.data])
 
+    def __setitem__(self, indices, other):
+        return self.__class__(*[a.__setitem__(indices, b) for (a, b) in zip(self.data, other.data)])
+
     def __add__(self, other):
         if isinstance(other, Vector):
             return self.__class__(*[a + b for (a, b)
@@ -142,14 +145,22 @@ class Vector(object):
     def grid(self):
         return self.__class__(*np.meshgrid(*self.data))
 
-    def hstack(self):
-        return np.hstack(self.data)
+    def hstack(self, other=None):
+        if not other:
+            return np.hstack(self.data)
+        else:
+            return self.__class__(*[np.hstack((a, b)) for (a, b)\
+                    in zip(self.data, other.data)])
 
-    def vstack(self):
-        return np.vstack(self.data)
+    def vstack(self, other=None):
+        if not other:
+            return np.vstack(self.data)
+        else:
+            return self.__class__(*[np.vstack((a, b)) for (a, b)\
+                    in zip(self.data, other.data)])
 
 class Vector2d(Vector):
-    def __init__(cls, x=0., y=0.):
+    def __init__(self, x=0., y=0.):
         super().__init__(x, y)
 
     @property
@@ -197,7 +208,7 @@ class Vector3d(Vector):
     def z(self):
         return self.data[2]
 
-    @y.setter
+    @z.setter
     def z(self, z_p):
         self.data[2] = z_p
 

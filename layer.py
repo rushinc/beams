@@ -113,14 +113,14 @@ class Layer:
         self.G = np.block([[G11, G12], [G21, G22]])
 
         if not np.count_nonzero(EPS - np.diag(np.diag(EPS))):
-            self.W = np.eye(2 * N_t)
+            self.U = np.eye(2 * N_t)
             k_z = np.lib.scimath.sqrt(np.diag(EPS) - np.diag(K.intensity()))
             self.gamma = 1j * np.hstack((k_z, k_z))
         else:
-            (Q, self.W) = linalg.eig(self.F @ self.G)
+            (Q, self.U) = linalg.eig(self.F @ self.G)
             self.gamma = sp.sqrt(Q)
 
-        self.V = -self.G @ self.W / self.gamma
+        self.V = -self.G @ self.U / self.gamma
 
     def compute_eigs(self, freq, k, period, N):
         k0 = 2 * np.pi * freq
@@ -137,31 +137,68 @@ class Layer:
         self.period = period
         self.N = N
 
-    def field(self, pts, amplitudes, components=''):
+    def get_fields(self, pts, amplitudes, components=''):
         if not self.K or not self.period or not self.N:
-            raise AttributeError('Solve the eigenmodes first by calling Layer.eig')
+            raise AttributeError('Solve the eigenmodes first by calling Layer.eigs')
             return
 
         N_t = self.N.x * self.N.y
         k0 = 2 * np.pi * self.freq
-        e_mode = self.W @ amplitudes.vstack()
-        h_mode = self.V @ amplitudes.vstack()
-        e_x = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-        e_y = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-        e_z = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-        h_x = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-        h_y = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-        h_z = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-        for (j, yy) in enumerate(pts.y):
-            r = Vector2d(pts.x, yy)
-            k_phase = np.exp(-k0 * self.K.diag().dot(r))
-            e_x[:, [j]] = k_phase @ e_mode[:N_t]
-            e_y[:, [j]] = k_phase @ e_mode[N_t:]
-            h_x[:, [j]] = k_phase @ h_mode[:N_t]
-            h_y[:, [j]] = k_phase @ h_mode[N_t:]
-            e_z[:, [j]] = k_phase @ linalg.solve(self.fft_eps,
-                    self.K.rotate(np.pi / 2).hstack() @ h_mode)
-            h_z = k_phase @ self.K.rotate(np.pi / 2).hstack() @ e_mode
 
-        return (Vector3d(e_x, e_y, e_z), Vector3d(h_x, h_y, h_z))
+        if isinstance(pts, Vector3d):
+            e_x = np.zeros((pts.x.size, pts.y.size, pts.z.size), dtype=complex)
+            e_y = np.zeros((pts.x.size, pts.y.size, pts.z.size), dtype=complex)
+            e_z = np.zeros((pts.x.size, pts.y.size, pts.z.size), dtype=complex)
+            h_x = np.zeros((pts.x.size, pts.y.size, pts.z.size), dtype=complex)
+            h_y = np.zeros((pts.x.size, pts.y.size, pts.z.size), dtype=complex)
+            h_z = np.zeros((pts.x.size, pts.y.size, pts.z.size), dtype=complex)
+            E = Vector3d(e_x, e_y, e_z)
+            H = Vector3d(h_x, h_y, h_z)
+            for (k, z) in enumerate(pts.z.flatten()):
+                p_z = np.exp(-k0 * self.gamma * z)
+                a_xy = np.zeros(amplitudes.vstack().shape, dtype=complex)
+                a_xy[:, 0] = p_z * amplitudes.vstack()[:, 0]
+                if amplitudes.x.shape[1] == 2:
+                    a_xy[:, 1] *= self.X @ (1 / p_z) *\
+                            (amplitudes.vstack()[:, 1])
+                pts_xy = Vector2d(*pts.data[:2])
+                (E[:, :, k], H[:, :, k]) = self.get_fields(pts_xy,
+                        Vector2d(a_xy[:N_t], a_xy[N_t:]), components)
+        else:
+            U_xy = self.U
+            V_xy = self.V
+            U_z = linalg.solve(self.fft_eps, self.K.rotate(np.pi / 2).hstack())
+            V_z = self.K.rotate(np.pi / 2).hstack()
+
+            if amplitudes.x.shape[1] == 2:
+                U_xy = np.hstack((U_xy, U_xy))
+                V_xy = np.hstack((V_xy, -V_xy))
+                U_z = np.hstack((U_z, -U_z))
+                V_z = np.hstack((V_z, V_z))
+
+            u_xy = U_xy @ amplitudes.vstack()
+            v_xy = V_xy @ amplitudes.vstack()
+            u_z = U_z @ v_xy
+            v_z = V_z @ u_xy
+
+            e_x = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+            e_y = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+            e_z = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+            h_x = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+            h_y = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+            h_z = np.zeros((pts.x.size, pts.y.size), dtype=complex)
+            E = Vector3d(e_x, e_y, e_z)
+            H = Vector3d(h_x, h_y, h_z)
+
+            for (j, yy) in enumerate(pts.y):
+                r = Vector2d(pts.x, yy)
+                k_phase = np.exp(-k0 * self.K.diag().dot(r))
+                E.x[:, [j]] = k_phase @ u_xy[:N_t]
+                E.y[:, [j]] = k_phase @ u_xy[N_t:]
+                H.x[:, [j]] = k_phase @ v_xy[:N_t]
+                H.y[:, [j]] = k_phase @ v_xy[N_t:]
+                E.z[:, [j]] = k_phase @ u_z
+                H.z[:, [j]] = k_phase @ v_z
+
+        return (E, H)
 
