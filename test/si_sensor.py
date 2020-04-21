@@ -13,8 +13,8 @@ N_modes = bm.Vector2d(9, 9)
 
 ## Materials
 air = bm.Material()
-SiO2 = bm.Material(index=1.5)
-Si = bm.Material(index=3.4)
+SiO2 = bm.Material(epsilon=1.5 ** 2)
+Si = bm.Material(epsilon=3.4 ** 2)
 
 ## Geometry
 # Unit cell
@@ -28,7 +28,7 @@ w_2 = .190                       # Width of Si bar 2
 gap = .125
 C_1 = bm.Vector2d(y=-(w_1 + gap)/2)       # Center of Si bar 1
 C_2 = bm.Vector2d(y=(w_2 + gap)/2)        # Center of Si bar 1
-res = 4000
+res = 1000
 
 bar1 = bm.Rectangle(size=bm.Vector2d(L, w_1), center=C_1, material=Si)
 bar2 = bm.Rectangle(size=bm.Vector2d(L, w_2), center=C_2, material=Si)
@@ -38,15 +38,8 @@ inc = bm.Layer(0, res)
 trn = bm.Layer(0, res, material=SiO2)
 layers = [inc, bars, trn]
 
-'''
-## Solver
-R = []; T = []
-for freq in freqs:
-    sol = bm.Solver(freq, k, N_modes, layers)
-    sol.compute_all()
-    R.append(sol.reflectance())
-    T.append(sol.transmittance())
+## Cell
+cell = bm.Cell(p, N_modes, layers)
+(R, T) = cell.R_T(freq, bm.Vector3d())
+# (E, H) = cell.fields(freq, bm.Vector3d())
 
-## Plot
-plt.plot(freqs, R)
-'''

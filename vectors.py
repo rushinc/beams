@@ -71,7 +71,7 @@ class Vector(object):
     def __eq__(self, other):
         if isinstance(other, Vector):
             return np.allclose(self.data, other.data)
-        return np.allclose(self.data, other)
+        return False
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -169,7 +169,7 @@ class Vector2d(Vector):
 
     @x.setter
     def x(self, x_p):
-        self.data[0] = x_p
+        self.data[0] = np.array(x_)
 
     @property
     def y(self):
@@ -177,7 +177,7 @@ class Vector2d(Vector):
 
     @y.setter
     def y(self, y_p):
-        self.data[1] = y_p
+        self.data[1] = np.array(y_p)
 
     def rotate(self, angle):
         new_x = np.cos(angle) * self.x - np.sin(angle) * self.y
@@ -194,7 +194,7 @@ class Vector3d(Vector):
 
     @x.setter
     def x(self, x_p):
-        self.data[0] = x_p
+        self.data[0] = np.array(x_p)
 
     @property
     def y(self):
@@ -202,7 +202,7 @@ class Vector3d(Vector):
 
     @y.setter
     def y(self, y_p):
-        self.data[1] = y_p
+        self.data[1] = np.array(y_p)
 
     @property
     def z(self):
@@ -210,5 +210,5 @@ class Vector3d(Vector):
 
     @z.setter
     def z(self, z_p):
-        self.data[2] = z_p
+        self.data[2] = np.array(z_p)
 

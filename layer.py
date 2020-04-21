@@ -2,7 +2,8 @@ import numpy as np
 import scipy as sp
 import beams as bm
 from numpy import fft
-from scipy import linalg
+from numpy.lib.scimath import sqrt
+from scipy import linalg as la
 from beams import *
 
 class Layer:
@@ -15,30 +16,39 @@ class Layer:
             self.shapes = shapes
         self.material = material
 
-    def grid(self, period, freq=None, value='id'):
+        self.period = None
+        self.N = None
+        self.K = None
+        self.k = None
+        self.freq = None
+
+    def grid(self, period, freq=None, feature='shape'):
         px = period.x
         py = period.y
         res = self.resolution
         grid = np.mgrid[-px / 2 : px / 2 : 1 / res,
                 -py / 2 : py / 2 : 1 / res]
         vgrid = bm.Vector2d(grid[0], grid[1])
-        layout = np.zeros(grid[0].shape)
-        for id, shape in list(enumerate(self.shapes))[::-1]:
-            interior_indices = shape.interior(vgrid)
+        layout = np.zeros(grid[0].shape, dtype=int)
+        for i, s in list(enumerate(self.shapes))[::-1]:
+            interior_indices = s.interior(vgrid)
             layout[np.logical_and(layout == 0, interior_indices)]\
-                    = id + 1
-        if 'eps' in value: 
-            eps_grid = np.full(layout.shape, self.material.get_eps(freq))
-            for id, shape in enumerate(self.shapes):
-                eps_grid[layout == id + 1] = shape.material.get_eps(freq)
-            return eps_grid
+                    = i + 1
+
+        if feature != 'shape': 
+            feat_grid = np.full(layout.shape, self.material.get(feature, freq))
+            for i, s in enumerate(self.shapes):
+                feat_grid[layout == i + 1] = s.material.get(feature, freq)
+            return feat_grid
+
         return layout
 
-    def ffts(self, grid, N_modes):
-        N_x = int(N_modes.x)
-        N_y = int(N_modes.y)
+    def __ffts(self, period, N, freq=None):
+        N_x = int(N.x)
+        N_y = int(N.y)
         N_t = N_x * N_y
 
+        grid = self.grid(period, freq, 'eps')
         (G_x, G_y) = grid.shape
 
         EPS = np.zeros((N_t, N_t), dtype=complex)
@@ -48,7 +58,8 @@ class Layer:
     
         for pp in range(N_x):
             for qq in range(N_y):
-                EPS[pp + N_x * qq, ::-1] = np.reshape(eps_mn[pp:pp + N_x, qq:qq + N_y], (1, -1), order='F')
+                EPS[pp + N_x * qq, ::-1] = np.reshape(eps_mn[pp:pp + N_x,
+                    qq:qq + N_y], (1, -1), order='F')
         self.fft_eps = EPS
 
         i_iepsx_mj = np.zeros((N_x, G_y, N_x), dtype=complex)
@@ -57,9 +68,9 @@ class Layer:
 
         for qq in range(G_y):
             iepsx_m = iepsx_fft[G_x // 2 - N_x + 1:G_x // 2 + N_x, qq]
-            iepsx_mj = linalg.toeplitz(iepsx_m[N_x - 1:2 * N_x],
+            iepsx_mj = la.toeplitz(iepsx_m[N_x - 1:2 * N_x],
                     np.flip(iepsx_m[:N_x]))
-            i_iepsx_mj[:, qq, :] = linalg.inv(iepsx_mj)
+            i_iepsx_mj[:, qq, :] = la.inv(iepsx_mj)
 
         epsxy_fft = fft.fftshift(fft.fft(i_iepsx_mj, axis=1),
                 axes=1) / (G_y)
@@ -68,7 +79,7 @@ class Layer:
         E4 = np.zeros((N_x, N_y, N_x, N_y), dtype=complex);
         for pp in range(N_x):
             for qq in range(N_x):
-                E4[pp, :, qq, :] = linalg.toeplitz(epsxy_mnj[pp,
+                E4[pp, :, qq, :] = la.toeplitz(epsxy_mnj[pp,
                     N_y - 1:2 * N_y, qq], np.flip(epsxy_mnj[pp, :N_y, qq]))
         self.fft_eps_ix = np.reshape(E4, (N_t, N_t), order='F')
 
@@ -78,9 +89,9 @@ class Layer:
 
         for pp in range(G_x):
             iepsy_n = iepsy_fft[pp, G_y // 2 - N_y + 1:G_y // 2 + N_y]
-            iepsy_nl = linalg.toeplitz(iepsy_n[N_y - 1:2 * N_y],
+            iepsy_nl = la.toeplitz(iepsy_n[N_y - 1:2 * N_y],
                     np.flip(iepsy_n[:N_y]))
-            i_iepsy_nl[pp, :, :] = linalg.inv(iepsy_nl)
+            i_iepsy_nl[pp, :, :] = la.inv(iepsy_nl)
 
         epsyx_fft = fft.fftshift(fft.fft(i_iepsy_nl, axis=0),
                 axes=0) / (G_x)
@@ -89,57 +100,64 @@ class Layer:
         E4 = np.zeros((N_x,N_y,N_x,N_y), dtype=complex)
         for rr in range(N_y):
             for ss in range(N_y):
-                E4[:, rr, :, ss] = linalg.toeplitz(epsyx_mnl[N_x - 1:2 * N_x - 1,
+                E4[:, rr, :, ss] = la.toeplitz(epsyx_mnl[N_x - 1:2 * N_x - 1,
                     rr, ss], np.flip(epsyx_mnl[:N_x, rr, ss]))
         self.fft_eps_iy = np.reshape(E4, [N_t, N_t], order='F')
 
-    def eig_solve(self, freq, K):
+        self.period = period
+        self.N = N
+
+    def __eigs(self, freq, K):
         N_t = K.x.shape[0]
         I = np.eye(N_t)
         EPS = self.fft_eps
         EPSxy = self.fft_eps_ix
         EPSyx = self.fft_eps_iy
 
-        F11 = -K.x @ linalg.solve(EPS, K.y)
-        F12 = I + K.x @ linalg.solve(EPS, K.x)
-        F21 = -I - K.y @ linalg.solve(EPS, K.y)
-        F22 = K.y @ linalg.solve(EPS, K.x)
-        self.F = np.block([[F11, F12], [F21, F22]])
+        F11 = -K.x @ la.solve(EPS, K.y)
+        F12 = I + K.x @ la.solve(EPS, K.x)
+        F21 = -I - K.y @ la.solve(EPS, K.y)
+        F22 = K.y @ la.solve(EPS, K.x)
+        self.L_eh = np.block([[F11, F12], [F21, F22]])
 
         G11 = -K.x @ K.y
         G12 = EPSyx + K.x ** 2
         G21 = -EPSxy - K.y ** 2
         G22 = K.x @ K.y
-        self.G = np.block([[G11, G12], [G21, G22]])
+        self.L_he = np.block([[G11, G12], [G21, G22]])
 
-        if not np.count_nonzero(EPS - np.diag(np.diag(EPS))):
+        if EPS.size > 1 and not np.count_nonzero(EPS - np.diag(np.diag(EPS))):
             self.U = np.eye(2 * N_t)
-            k_z = np.lib.scimath.sqrt(np.diag(EPS) - np.diag(K.intensity()))
+            k_z = sqrt(np.diag(EPS) - np.diag(K.intensity()))
+            k_z = np.conj(k_z)
             self.gamma = 1j * np.hstack((k_z, k_z))
         else:
-            (Q, self.U) = linalg.eig(self.F @ self.G)
-            self.gamma = sp.sqrt(Q)
+            (Q, self.U) = la.eig(self.L_eh @ self.L_he)
+            self.gamma = sqrt(Q)
 
-        self.V = -self.G @ self.U / self.gamma
-
-    def compute_eigs(self, freq, k, period, N):
-        k0 = 2 * np.pi * freq
-        m = bm.Vector2d(np.arange(-(N.x // 2), N.x // 2 + 1,
-            dtype=int), np.arange(-(N.y // 2), N.y // 2 + 1,
-                dtype=int))
-        ki = k0 * k + 2 * np.pi * m / period
-        K = 1j * ki.grid().flatten().diag() / k0
-        self.ffts(self.grid(period, value='eps'), N)
-        self.eig_solve(freq, K)
-        self.X = np.diag(np.exp(-k0 * self.gamma * self.h))
+        self.V = -self.L_he @ self.U / self.gamma
         self.K = K
         self.freq = freq
-        self.period = period
-        self.N = N
+
+    def compute_eigs(self, freq, k, period, N):
+        if self.period != period or self.N != N:
+            self.__ffts(period, N, freq)
+
+        if self.freq != freq or self.k != k:
+            k0 = 2 * np.pi * freq
+            m = bm.Vector2d(np.arange(-(N.x // 2), N.x // 2 + 1,
+                dtype=int), np.arange(-(N.y // 2), N.y // 2 + 1,
+                    dtype=int))
+            ki = k0 * k + 2 * np.pi * m / period
+            K = 1j * ki.grid().flatten().diag() / k0
+            self.__eigs(freq, K)
+            self.k = k
+            self.X = np.diag(np.exp(-k0 * self.gamma * self.h))
 
     def get_fields(self, pts, amplitudes, components=''):
         if not self.K or not self.period or not self.N:
-            raise AttributeError('Solve the eigenmodes first by calling Layer.eigs')
+            raise AttributeError('Solve the eigenmodes first ' +\
+                    'by calling Layer.eigs')
             return
 
         N_t = self.N.x * self.N.y
@@ -155,20 +173,27 @@ class Layer:
             E = Vector3d(e_x, e_y, e_z)
             H = Vector3d(h_x, h_y, h_z)
             for (k, z) in enumerate(pts.z.flatten()):
+                if self.h != 0 and (z > self.h or z < 0):
+                    raise RuntimeWarning('Points outside layer. ' +\
+                            'Solutions may be divergent.')
                 p_z = np.exp(-k0 * self.gamma * z)
                 a_xy = np.zeros(amplitudes.vstack().shape, dtype=complex)
                 a_xy[:, 0] = p_z * amplitudes.vstack()[:, 0]
+                pts_xy = Vector2d(*pts.data[:2])
                 if amplitudes.x.shape[1] == 2:
                     a_xy[:, 1] *= self.X @ (1 / p_z) *\
                             (amplitudes.vstack()[:, 1])
-                pts_xy = Vector2d(*pts.data[:2])
-                (E[:, :, k], H[:, :, k]) = self.get_fields(pts_xy,
-                        Vector2d(a_xy[:N_t], a_xy[N_t:]), components)
+                    (E[:, :, k], H[:, :, k]) = self.get_fields(pts_xy,
+                            Vector2d(a_xy[:N_t, :], a_xy[N_t:, :]), components)
+                else:
+                    (E[:, :, k], H[:, :, k]) = self.get_fields(pts_xy,
+                            Vector2d(a_xy[:N_t], a_xy[N_t:]), components)
         else:
             U_xy = self.U
             V_xy = self.V
-            U_z = linalg.solve(self.fft_eps, self.K.rotate(np.pi / 2).hstack())
-            V_z = self.K.rotate(np.pi / 2).hstack()
+            U_z = la.solve(self.fft_eps,
+                    self.K.rotate(np.pi / 2).hstack()) @ self.V
+            V_z = self.K.rotate(np.pi / 2).hstack() @ self.U
 
             if amplitudes.x.shape[1] == 2:
                 U_xy = np.hstack((U_xy, U_xy))
@@ -176,10 +201,14 @@ class Layer:
                 U_z = np.hstack((U_z, -U_z))
                 V_z = np.hstack((V_z, V_z))
 
-            u_xy = U_xy @ amplitudes.vstack()
-            v_xy = V_xy @ amplitudes.vstack()
-            u_z = U_z @ v_xy
-            v_z = V_z @ u_xy
+            u_xy = U_xy @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
+                    * 2 * N_t, 1))
+            v_xy = V_xy @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
+                    * 2 * N_t, 1))
+            u_z = U_z @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
+                    * 2 * N_t, 1))
+            v_z = V_z @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
+                    * 2 * N_t, 1))
 
             e_x = np.zeros((pts.x.size, pts.y.size), dtype=complex)
             e_y = np.zeros((pts.x.size, pts.y.size), dtype=complex)
