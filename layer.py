@@ -22,10 +22,13 @@ class Layer:
         self.k = None
         self.freq = None
 
-    def grid(self, period, freq=None, feature='shape'):
+    def grid(self, period, freq=None, feature='shape', resolution=None):
         px = period.x
         py = period.y
-        res = self.resolution
+        if resolution:
+            res = resolution
+        else:
+            res = self.resolution
         grid = np.mgrid[-px / 2 : px / 2 : 1 / res,
                 -py / 2 : py / 2 : 1 / res]
         vgrid = bm.Vector2d(grid[0], grid[1])
