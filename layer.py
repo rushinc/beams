@@ -164,6 +164,7 @@ class Layer:
         k0 = 2 * np.pi * self.freq
 
         if isinstance(pts, Vector3d):
+            pts_xy = Vector2d(*pts.data[:2])
             e_x = np.zeros((pts.x.size, pts.y.size, pts.z.size), dtype=complex)
             e_y = np.zeros((pts.x.size, pts.y.size, pts.z.size), dtype=complex)
             e_z = np.zeros((pts.x.size, pts.y.size, pts.z.size), dtype=complex)
@@ -177,17 +178,15 @@ class Layer:
                     raise RuntimeWarning('Points outside layer. ' +\
                             'Solutions may be divergent.')
                 p_z = np.exp(-k0 * self.gamma * z)
-                a_xy = np.zeros(amplitudes.vstack().shape, dtype=complex)
-                a_xy[:, 0] = p_z * amplitudes.vstack()[:, 0]
-                pts_xy = Vector2d(*pts.data[:2])
+                c = np.array(amplitudes.vstack(), dtype=complex)
+                c[:, 0] *= p_z
                 if amplitudes.x.shape[1] == 2:
-                    a_xy[:, 1] *= self.X @ (1 / p_z) *\
-                            (amplitudes.vstack()[:, 1])
+                    c[:, 1] *= self.X @ (1 / p_z)
                     (E[:, :, k], H[:, :, k]) = self.get_fields(pts_xy,
-                            Vector2d(a_xy[:N_t, :], a_xy[N_t:, :]), components)
+                            Vector2d(c[:N_t, :], c[N_t:, :]), components)
                 else:
                     (E[:, :, k], H[:, :, k]) = self.get_fields(pts_xy,
-                            Vector2d(a_xy[:N_t], a_xy[N_t:]), components)
+                            Vector2d(c[:N_t], c[N_t:]), components)
         else:
             U_xy = self.U
             V_xy = self.V
@@ -202,13 +201,13 @@ class Layer:
                 V_z = np.hstack((V_z, V_z))
 
             u_xy = U_xy @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
-                    * 2 * N_t, 1))
+                    * 2 * N_t, 1), order='F')
             v_xy = V_xy @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
-                    * 2 * N_t, 1))
+                    * 2 * N_t, 1), order='F')
             u_z = U_z @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
-                    * 2 * N_t, 1))
+                    * 2 * N_t, 1), order='F')
             v_z = V_z @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
-                    * 2 * N_t, 1))
+                    * 2 * N_t, 1), order='F')
 
             e_x = np.zeros((pts.x.size, pts.y.size), dtype=complex)
             e_y = np.zeros((pts.x.size, pts.y.size), dtype=complex)

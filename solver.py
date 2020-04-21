@@ -154,10 +154,10 @@ class Cell:
 
         zi = np.cumsum([l.h for l in self.layers])
         for (k, z) in enumerate(pts.z.flatten()):
-            li = bisect(zi, z)
-            if li >= L:  l -= 1
+            li = bisect(zi[:-1], z)
             l = self.layers[li]
-            zz = z - zi[li - 1]
+            if li > 0: zz = z - zi[li - 1]
+            else: zz = z
             c = self.C[:, [li]]
             amp = Vector2d(np.hstack((c[:N_t], c[2 * N_t:3 * N_t])),
                     np.hstack((c[N_t:2 * N_t], c[3 * N_t:])))

@@ -9,7 +9,7 @@ kx = 0
 ky = 0
 freq = 1 / y
 k = bm.Vector2d(kx, ky)
-N_modes = bm.Vector2d(9, 9)
+N_modes = bm.Vector2d(3, 3)
 
 ## Materials
 air = bm.Material()
@@ -38,8 +38,14 @@ inc = bm.Layer(0, res)
 trn = bm.Layer(0, res, material=SiO2)
 layers = [inc, bars, trn]
 
-## Cell
+## Diffraction
 cell = bm.Cell(p, N_modes, layers)
 (R, T) = cell.R_T(freq, bm.Vector3d())
-# (E, H) = cell.fields(freq, bm.Vector3d())
+
+## Fields
+r = 400
+grid = np.ogrid[-p.x / 2:p.x / 2:1 / r, -p.y / 2:p.y / 2:1 / r]
+vgrid = bm.Vector3d(grid[0], grid[1].T)
+vgrid.z = -bars.h / 2
+(E, H) = cell.fields(freq, bm.Vector3d(), vgrid)
 
