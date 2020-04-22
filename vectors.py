@@ -1,7 +1,7 @@
 import numpy as np
 
 class Vector(object):
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         self.data = []
         for arg in args:
             self.data.append(np.array(arg))
@@ -160,7 +160,9 @@ class Vector(object):
                     in zip(self.data, other.data)])
 
 class Vector2d(Vector):
-    def __init__(self, x=0., y=0.):
+    def __init__(self, x=0., y=0., **kwargs):
+        for k, v in kwargs.items():
+            if k == 'xy': x = v; y = v
         super().__init__(x, y)
 
     @property
@@ -186,6 +188,11 @@ class Vector2d(Vector):
 
 class Vector3d(Vector):
     def __init__(self, x=0., y=0., z=0.):
+        for k, v in kwargs.items():
+            if k == 'xy': x = v; y = v
+            if k == 'yz': x = v; y = v
+            if k == 'zx': x = v; y = v
+            if k == 'xyz': x = v; y = v; z = v
         super().__init__(x, y, z)
 
     @property
