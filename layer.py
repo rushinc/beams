@@ -4,17 +4,28 @@ import beams as bm
 from numpy import fft
 from numpy.lib.scimath import sqrt
 from scipy import linalg as la
+from collections import Callable
 from beams import *
 
 class Layer:
     def __init__(self, h, resolution, shapes=None, material=Material()):
         self.h = float(h)
         self.resolution = resolution
+        self.dispersive = False
+
         if not shapes:
             self.shapes = []
         else:
             self.shapes = shapes
+            for s in shapes:
+                if (isinstance(s.material.eps, Callable)
+                        or isinstance(s.material.mu, Callable)):
+                    self.dispersive = True
+
         self.material = material
+        if (isinstance(material.eps, Callable)
+                or isinstance(material.mu, Callable)):
+            self.dispersive = True
 
         self.period = None
         self.N = None
@@ -143,10 +154,10 @@ class Layer:
         self.freq = freq
 
     def compute_eigs(self, freq, k, period, N):
-        if self.period != period or self.N != N:
-            self.__ffts(period, N, freq)
-
-        if self.freq != freq or self.k != k:
+        if (self.period != period or self.N != N
+                or self.freq != freq or self.k != k):
+            if self.period != period or self.N != N or self.dispersive:
+                self.__ffts(period, N, freq)
             k0 = 2 * np.pi * freq
             m = bm.Vector2d(np.arange(-(N.x // 2), N.x // 2 + 1,
                 dtype=int), np.arange(-(N.y // 2), N.y // 2 + 1,
