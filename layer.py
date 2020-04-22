@@ -4,13 +4,12 @@ import beams as bm
 from numpy import fft
 from numpy.lib.scimath import sqrt
 from scipy import linalg as la
-from collections import Callable
 from beams import *
 
 class Layer:
-    def __init__(self, h, resolution, shapes=None, material=Material()):
+    def __init__(self, h=0, shapes=None, material=Material(), resolution=None):
         self.h = float(h)
-        self.resolution = resolution
+        self.res = to_vec2(resolution)
         self.dispersive = False
 
         if not shapes:
@@ -18,13 +17,11 @@ class Layer:
         else:
             self.shapes = shapes
             for s in shapes:
-                if (isinstance(s.material.eps, Callable)
-                        or isinstance(s.material.mu, Callable)):
+                if s.material.dispersive:
                     self.dispersive = True
 
         self.material = material
-        if (isinstance(material.eps, Callable)
-                or isinstance(material.mu, Callable)):
+        if material.dispersive:
             self.dispersive = True
 
         self.period = None
@@ -33,17 +30,28 @@ class Layer:
         self.k = None
         self.freq = None
 
-    def grid(self, period, freq=None, feature='shape', resolution=None):
-        px = period.x
-        py = period.y
-        if resolution:
-            res = resolution
+    def grid(self, resolution=None, period=None, freq=None, feature='shape'):
+        if not period:
+            if not self.period:
+                raise AttributeError('period of Layer object has not been initialized yet')
+            else:
+                p = self.period
         else:
-            res = self.resolution
-        grid = np.mgrid[-px / 2 : px / 2 : 1 / res,
-                -py / 2 : py / 2 : 1 / res]
-        vgrid = bm.Vector2d(grid[0], grid[1])
-        layout = np.zeros(grid[0].shape, dtype=int)
+            p = to_vec2(period)
+
+        if resolution:
+            res = to_vec2(resolution)
+        elif self.res:
+            res = self.res
+        else:
+            raise AttributeError('resolution of Layer object has not been initialized')
+
+        if not freq: freq = self.freq
+
+        grid = np.ogrid[-p.x / 2 : p.x / 2 : 1 / res.x,
+                -p.y / 2 : p.y / 2 : 1 / res.y]
+        vgrid = to_vec2(grid)
+        layout = np.zeros((grid[0].size, grid[1].size), dtype=int)
         for i, s in list(enumerate(self.shapes))[::-1]:
             interior_indices = s.interior(vgrid)
             layout[np.logical_and(layout == 0, interior_indices)]\
@@ -53,23 +61,36 @@ class Layer:
             feat_grid = np.full(layout.shape, self.material.get(feature, freq))
             for i, s in enumerate(self.shapes):
                 feat_grid[layout == i + 1] = s.material.get(feature, freq)
-            return feat_grid
+            return (vgrid.flatten(), feat_grid.T)
 
-        return layout
+        return (vgrid.flatten(), layout.T)
 
-    def __ffts(self, period, N, freq=None):
+    def __ffts(self, period, N, resolution=None, freq=None):
         N_x = int(N.x)
         N_y = int(N.y)
         N_t = N_x * N_y
 
-        grid = self.grid(period, freq, 'eps')
-        (G_x, G_y) = grid.shape
+        if not freq: freq = self.freq
+
+        if not self.shapes:
+            self.fft_eps = self.material.get('eps', freq) * np.eye(N_t)
+            self.fft_eps_ix = self.material.get('eps', freq) * np.eye(N_t)
+            self.fft_eps_iy = self.material.get('eps', freq) * np.eye(N_t)
+            return
+
+        if not resolution:
+            res = (2 * N - 1) / period
+        else:
+            res = to_vec2(resolution)
+
+        _, grid = self.grid(res, period, freq, 'eps')
+        (G_y, G_x) = grid.shape
 
         EPS = np.zeros((N_t, N_t), dtype=complex)
-        eps_fft = fft.fftshift(fft.fft2(grid)) / (G_x * G_y)
+        eps_fft = fft.fftshift(fft.fft2(grid.T)) / (G_x * G_y)
         eps_mn = eps_fft[G_x // 2 - N_x + 1:G_x // 2 + N_x,
                 G_y // 2 - N_y + 1:G_y // 2 + N_y]
-    
+
         for pp in range(N_x):
             for qq in range(N_y):
                 EPS[pp + N_x * qq, ::-1] = np.reshape(eps_mn[pp:pp + N_x,
@@ -77,7 +98,7 @@ class Layer:
         self.fft_eps = EPS
 
         i_iepsx_mj = np.zeros((N_x, G_y, N_x), dtype=complex)
-        iepsx_fft = fft.fftshift(fft.fft(1 / grid, axis=0),
+        iepsx_fft = fft.fftshift(fft.fft(1 / grid.T, axis=0),
                 axes=0) / (G_x)
 
         for qq in range(G_y):
@@ -98,7 +119,7 @@ class Layer:
         self.fft_eps_ix = np.reshape(E4, (N_t, N_t), order='F')
 
         i_iepsy_nl = np.zeros((G_x, N_y, N_y), dtype=complex)
-        iepsy_fft = fft.fftshift(fft.fft(1 / grid, axis=1),
+        iepsy_fft = fft.fftshift(fft.fft(1 / grid.T, axis=1),
                 axes=1) / (G_y)
 
         for pp in range(G_x):
@@ -118,6 +139,7 @@ class Layer:
                     rr, ss], np.flip(epsyx_mnl[:N_x, rr, ss]))
         self.fft_eps_iy = np.reshape(E4, [N_t, N_t], order='F')
 
+        self.res = res
         self.period = period
         self.N = N
 
@@ -157,7 +179,7 @@ class Layer:
         if (self.period != period or self.N != N
                 or self.freq != freq or self.k != k):
             if self.period != period or self.N != N or self.dispersive:
-                self.__ffts(period, N, freq)
+                self.__ffts(period, N, freq=freq)
             k0 = 2 * np.pi * freq
             m = bm.Vector2d(np.arange(-(N.x // 2), N.x // 2 + 1,
                 dtype=int), np.arange(-(N.y // 2), N.y // 2 + 1,
