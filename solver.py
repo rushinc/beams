@@ -9,16 +9,74 @@ class Cell:
     def __init__(self, period, N, layers):
         self.p = to_vec2(period)
         self.N = to_vec2(N, dtype=int)
+        # Ensure N is odd.
+        # TODO: Allow even N.
         if not self.N.x % 2:
             self.N.x += 1 
         if not self.N.y % 2:
             self.N.y += 1 
-        self.layers = list(layers)
-        self.freq = None
-        self.k = None
-        self.u = None
+        self._layers = list(layers)
+        self.reset()
+
+    def reset(self):
+        """Forces reset. Stored solutions are discarded."""
+        self._freq = None
+        self._k = None
+        self._u = None
+        self._B = None
+        self._C = None
+
+    @property
+    def freq(self):
+        """Frequency of the last computation."""
+        return self._freq
+
+    @property
+    def k(self):
+        """Wavevector of the last computation."""
+        return self._k
+
+    @property
+    def B(self):
+        """Matrix form of the linear system."""
+        return self._B
+
+    @property
+    def C(self):
+        """The eigenmode amplitude coefficients for each layer."""
+        return self._C
+
+    @property
+    def u(self):
+        """Electric field polarization vector of the last computation."""
+        return self._u
+
+    @property
+    def layers(self):
+        """List of layers in the cell arranged in order of increasing z-coordinate."""
+        return self._layers
+
+    @layers.setter
+    def layers(self, new_layers):
+        self._layers = list(new_layers)
+        self.reset()
 
     def build(self, freq, k):
+        """
+        Builds the linear system for a given frequency and wavevector.
+
+        This function computes the eigenvalues of all the layers in the cell
+        and builds a 4 * N * (L + 1) square matrix. No return value but the
+        constructed matrix can be accessed via `cell.B`.
+
+        Parameters
+        ==========
+        freq : double
+            The frequency at which to compute the layer eigenvalues.
+        k : Vector2d
+            The wavevector along the plane of the layers.
+        """
+
         L = len(self.layers)
         N_t = self.N.x * self.N.y
         B = np.zeros((4 * N_t * (L + 1), 4 * N_t * (L + 1)), dtype=complex)
@@ -33,11 +91,29 @@ class Cell:
                 B[:4 * N_t, 4 * N_t * L:] = np.block([[-l.U, Z], [l.V, Z]])
             if i == L - 1:
                 B[-4 * N_t:, 4 * N_t * L:] = np.block([[Z, l.U], [Z, l.V]])
-        self.B = B
-        self.freq = freq
-        self.k = k
+        self._B = B
+        self._freq = freq
+        self._k = k
 
     def linsolve(self, freq, k, b):
+        """
+        Solves the linear system arising from the boundary conditions.
+
+        Often invoked after `cell.build()`, this is where the linear system is
+        actually solved. Since `cell.B` can be constructed independently of the
+        source fields the to methods can be accessed separately. No values are
+        returned but solutions can be accessed via `cell.C`.
+
+        Parameters
+        ==========
+        freq : double
+            The frequency at which to compute the layer eigenvalues.
+        k : Vector2d
+            The wavevector along the plane of the layers.
+        b : np.ndarray
+            A flattened 4*N*(L+1) array of the field eigenmode amplitudes.
+        """
+
         L = len(self.layers)
         N_t = self.N.x * self.N.y
 
@@ -45,10 +121,22 @@ class Cell:
             self.build(freq, k)
 
         C = la.solve(self.B, b)
-        self.C = np.reshape(C, (4 * N_t, L + 1), order='F')
-        self.C[2 * N_t:4 * N_t, L - 1] = np.zeros(2 * N_t, dtype=complex)
+        self._C = np.reshape(C, (4 * N_t, L + 1), order='F')
+        self._C[2 * N_t:4 * N_t, L - 1] = np.zeros(2 * N_t, dtype=complex)
 
     def angles_to_k(self, freq, angles):
+        """
+        Converts the electric field orientation to an in-plane wavevector.
+
+        Parameter
+        =========
+        freq : double
+            The frequency of the source
+        angles : Vector3d
+            The orientation of the electric field along the three angular
+            degrees of freedom.
+        """
+
         theta = angles.x
         phi = angles.y
         psi = angles.z
@@ -60,6 +148,16 @@ class Cell:
         return ks
 
     def angles_to_u(self, angles):
+        """
+        Converts the electric field orientation to in-plane amplitude components.
+        
+        Parameters
+        ==========
+        angles : Vector3d
+            The orientation of the electric field along the three angular
+            degrees of freedom.
+        """
+        
         theta = angles.x
         phi = angles.y
         psi = angles.z
@@ -74,15 +172,33 @@ class Cell:
             uy[:, i] = py.flatten()
         return Vector2d(ux, uy)
 
-    def __excitation(self, u, layer=0):
+    def __excitation(self, u, mode_id=0, layer_id=0):
+        """
+        Computes the eigenmode field components of the source field.
+
+        Converts the the source electric field in-plane amplitude components to
+        the corresponding eigenmode amplitudes and returns an array to be used
+        in `cell.linsolve`.
+
+        Parameters
+        ==========
+        u : Vector2d
+            The in-plane components of the source electric field vector.
+        mode_id : int, optional
+            The eigenmode index of the source as per the eigenmodes of
+            `cell.layers[layer].
+        layer_id : int, optional
+            The index of the layer in which to apply the source. Defaults to 0.
+        """
+
         L = len(self.layers)
         N_t = self.N.x * self.N.y
         l = layer
         exc = np.zeros((2 * N_t, 1))
-        exc[N_t // 2] = u.x
-        exc[N_t + N_t // 2] = u.y
+        exc[N_t // 2 + mode_id] = u.x
+        exc[N_t + N_t // 2 + mode_id] = u.y
         ui = np.vstack((exc, self.layers[l].V @ exc))
-        self.u = u
+        self._u = u
         return np.vstack((np.zeros((4 * N_t * l, 1)), ui,
             np.zeros((4 * N_t * (L - l), 1))))
 
