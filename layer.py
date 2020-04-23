@@ -61,11 +61,11 @@ class Layer:
             feat_grid = np.full(layout.shape, self.material.get(feature, freq))
             for i, s in enumerate(self.shapes):
                 feat_grid[layout == i + 1] = s.material.get(feature, freq)
-            return (vgrid.flatten(), feat_grid.T)
+            return (vgrid.flatten(), feat_grid)
 
-        return (vgrid.flatten(), layout.T)
+        return (vgrid.flatten(), layout)
 
-    def __ffts(self, period, N, resolution=None, freq=None):
+    def __ffts(self, period, N, freq=None):
         N_x = int(N.x)
         N_y = int(N.y)
         N_t = N_x * N_y
@@ -78,16 +78,16 @@ class Layer:
             self.fft_eps_iy = self.material.get('eps', freq) * np.eye(N_t)
             return
 
-        if not resolution:
-            res = (2 * N - 1) / period
+        if self.res:
+            res = self.res
         else:
-            res = to_vec2(resolution)
+            res = (2 * N - 1) / period
 
         _, grid = self.grid(res, period, freq, 'eps')
         (G_y, G_x) = grid.shape
 
         EPS = np.zeros((N_t, N_t), dtype=complex)
-        eps_fft = fft.fftshift(fft.fft2(grid.T)) / (G_x * G_y)
+        eps_fft = fft.fftshift(fft.fft2(grid)) / (G_x * G_y)
         eps_mn = eps_fft[G_x // 2 - N_x + 1:G_x // 2 + N_x,
                 G_y // 2 - N_y + 1:G_y // 2 + N_y]
 
@@ -98,7 +98,7 @@ class Layer:
         self.fft_eps = EPS
 
         i_iepsx_mj = np.zeros((N_x, G_y, N_x), dtype=complex)
-        iepsx_fft = fft.fftshift(fft.fft(1 / grid.T, axis=0),
+        iepsx_fft = fft.fftshift(fft.fft(1 / grid, axis=0),
                 axes=0) / (G_x)
 
         for qq in range(G_y):
@@ -119,7 +119,7 @@ class Layer:
         self.fft_eps_ix = np.reshape(E4, (N_t, N_t), order='F')
 
         i_iepsy_nl = np.zeros((G_x, N_y, N_y), dtype=complex)
-        iepsy_fft = fft.fftshift(fft.fft(1 / grid.T, axis=1),
+        iepsy_fft = fft.fftshift(fft.fft(1 / grid, axis=1),
                 axes=1) / (G_y)
 
         for pp in range(G_x):
@@ -179,7 +179,7 @@ class Layer:
         if (self.period != period or self.N != N
                 or self.freq != freq or self.k != k):
             if self.period != period or self.N != N or self.dispersive:
-                self.__ffts(period, N, freq=freq)
+                self.__ffts(period, N, freq)
             k0 = 2 * np.pi * freq
             m = bm.Vector2d(np.arange(-(N.x // 2), N.x // 2 + 1,
                 dtype=int), np.arange(-(N.y // 2), N.y // 2 + 1,
