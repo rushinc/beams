@@ -6,9 +6,13 @@ import beams as bm
 from beams import *
 
 class Cell:
-    def __init__(self, period, N_modes, layers):
-        self.p = period
-        self.N = N_modes
+    def __init__(self, period, N, layers):
+        self.p = to_vec2(period)
+        self.N = to_vec2(N, dtype=int)
+        if not self.N.x % 2:
+            self.N.x += 1 
+        if not self.N.y % 2:
+            self.N.y += 1 
         self.layers = list(layers)
         self.freq = None
         self.k = None

@@ -4,7 +4,7 @@ class Vector(object):
     def __init__(self, *args, **kwargs):
         self.data = []
         for arg in args:
-            self.data.append(np.array(arg))
+            self.data.append(np.array(arg, **kwargs))
         self.dim = len(self.data)
 
     def __getitem__(self, indices):
@@ -105,6 +105,9 @@ class Vector(object):
             s += ele.__str__().replace("\n", "      \n") + ",\n"
         return s[:-2]
 
+    def i(self, *args):
+        return self.__class__(*[a[b] for (a, b) in zip(self.data, args)])
+
     def ceil(self):
         return self.__class__(np.ceil(self.data))
 
@@ -161,9 +164,10 @@ class Vector(object):
 
 class Vector2d(Vector):
     def __init__(self, x=0., y=0., **kwargs):
-        for k, v in kwargs.items():
-            if k == 'xy': x = v; y = v
-        super().__init__(x, y)
+        if 'xy' in kwargs.keys():
+            v = kwargs.pop('xy')
+            x = v; y = v 
+        super().__init__(x, y, **kwargs)
 
     @property
     def x(self):
@@ -187,13 +191,20 @@ class Vector2d(Vector):
         return Vector2d(new_x, new_y)
 
 class Vector3d(Vector):
-    def __init__(self, x=0., y=0., z=0.):
-        for k, v in kwargs.items():
-            if k == 'xy': x = v; y = v
-            if k == 'yz': x = v; y = v
-            if k == 'zx': x = v; y = v
-            if k == 'xyz': x = v; y = v; z = v
-        super().__init__(x, y, z)
+    def __init__(self, x=0., y=0., z=0., **kwargs):
+        if 'xy' in kwargs.keys():
+            v = kwargs.pop('xy')
+            x = v; y = v 
+        if 'yz' in kwargs.keys():
+            v = kwargs.pop('yz')
+            z = v; y = v 
+        if 'zx' in kwargs.keys():
+            v = kwargs.pop('zx')
+            x = v; z = v 
+        if 'xyz' in kwargs.keys():
+            v = kwargs.pop('xyz')
+            x = v; y = v; z = v 
+        super().__init__(x, y, z, **kwargs)
 
     @property
     def x(self):

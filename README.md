@@ -18,26 +18,24 @@ import beams as bm
 ```
 
 ## Basics
-Modal methods compute the functional form of the solution instead of the numeric values on a discrete grid. Since any function can be expressed as an infinite sum of a complete bases set, the coefficients over a truncated bases set can be computationally solved for. The Fourier modal method is so called because it uses the Fourier bases and any one dimensional function with period $`p`$ can be expressed under this basis as,
-```math
-f(x) = \sum_n \exp(-j \frac{2 \pi n x}{p})
-```
-This fundamental difference in approach provides its own set of advantages as well as limitations. For certain geometries and use cases the algorithm is naturally fast and efficient. In fact, even a three dimensional problem requires a two dimensional numerical formulation. The solution along the remaining dimension is purely analytical and comprises only of boundary conditions at interfaces. However, simple implementations of the FMM can demonstrate poor convergence around metals and improving performance for complicated geometries is often not trivial.
+Modal methods compute the functional form of the solution instead of the numeric values on a discrete grid. Since any function can be expressed as an infinite sum of a complete bases set, the coefficients over a truncated bases set can be computationally solved for. The Fourier modal method is so called because it uses the Fourier bases.
+
+This fundamental difference in approach from finite-difference or element methods provides its own set of advantages as well as limitations. For certain geometries and use cases the algorithm is inherently extremely fast and efficient. In fact, a three dimensional problem requires only a two dimensional numerical formulation. The solution along the remaining dimension is purely analytical and comprises only of boundary conditions at interfaces. However, simple implementations of the FMM can demonstrate poor convergence around sharp interfaces (especially metals) and improving performance for complicated geometries is often not trivial.
 
 The primary purpose of beams is to provide an intuitive scripting interface and enable quick analysis of electromagnetic scaterring for simple periodic structures. Future work includes extending the functionality as well accuracy of the implementation by integrating the latest advances in electromagnetic modal methods.
 
 ## Usage
 The best way to familiarize with beams is to play with the notebooks in the `examples/` directory. This will be under regular update until a comprehensive documentation is available and the package reaches enough maturity to warrant a release. 
 
-Simulating the transmission spectrum of a square lattice photonic crystal with cylindrical air holes would look like this.
+Simulating the transmission spectrum of a square lattice photonic crystal with cylindrical air holes in a silicon membrane on a glass substrate would look like this.
 ```
 import beams as bm
 import numpy as np
 
 p = bm.Vector2d(1, 1)
 
-air = bm.Material(epsilon=1)
-si = bm.Material(epsilon=3.4 ** 2)
+air = bm.Material()
+si = bm.Material(index=3.4)
 sio2 = bm.Material(epsilon=1.5 ** 2)
 hole = bm.Ellipse(r=.3, material=air)
 
@@ -45,8 +43,7 @@ inc = bm.Layer()
 sub = bm.Layer(material=sio2)
 phc = bm.Layer(h=.3, material=si, shapes=[hole])
 
-cell = bm.Cell(p, N=bm.Vector2d(xy=13),
-            layers=[inc, phc, sub])
+cell = bm.Cell(period=p, N=13, layers=[inc, phc, sub])
 
 freqs = np.linspace(0.6, 0.9, 100)
 angles = bm.Vector3d(np.linspace(0, np.pi/3, 10))
