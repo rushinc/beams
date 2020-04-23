@@ -105,9 +105,6 @@ class Vector(object):
             s += ele.__str__().replace("\n", "      \n") + ",\n"
         return s[:-2]
 
-    def i(self, *args):
-        return self.__class__(*[a[b] for (a, b) in zip(self.data, args)])
-
     def ceil(self):
         return self.__class__(np.ceil(self.data))
 
