@@ -112,7 +112,7 @@ class Layer:
 
     def __repr__(self):
         s = self.__str__()
-        s0 = "Layer with "
+        s0 = "Layer: "
         if "\np" in s:
             s.replace("\np", "\nFFT computed for p")
         else:
@@ -124,9 +124,10 @@ class Layer:
         return s0 + s
 
     def __str__(self):
-        s = "h = " + str(self.h) + ",\nshapes = " + str(self.shapes)
-        s += ",\nbackground = " + str(self.material)
-        s += ",\nresolution = " + str(self.resolution)
+        s = "h = " + str(round(self.h, 3))
+        s += "\nbackground = " + str(self.material).replace("\n", ", ")
+        s += "\n" + str(len(self.shapes)) + " shapes"
+        s += ", resolution = " + str(self.resolution)
         if self.period and self.N:
             s += "\np = " + str(self.period) + ", N = " + str(self.N)
         if self.freq and self.k:
