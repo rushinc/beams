@@ -386,11 +386,11 @@ class Layer:
             EPSxy = self._fft_eps_ix.copy()
             EPSyx = self._fft_eps_iy.copy()
             self.resolution = r
-            t0 = time.clock_gettime_ns(0)
+            t0 = time.time()
             for _ in range(n_iter):
                 self.__ffts(period, N)
-            t1 = time.clock_gettime_ns(0)
-            DT[i] = (t1 - t0) * 1e-9 / n_iter
+            t1 = time.time()
+            DT[i] = (t1 - t0) / n_iter
             d_eps = la.norm(self._fft_eps - EPS)
             d_eps_x = la.norm(self._fft_eps_ix - EPSxy)
             d_eps_y = la.norm(self._fft_eps_iy - EPSyx)
