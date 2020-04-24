@@ -51,7 +51,7 @@ angles = bm.Vector3d(np.linspace(0, np.pi/3, 10))
 (R, T) = cell.spectrum(freqs, angles)
 ```
 
-## To-do:
+## To-do
 - Add some parallelization and measure the speed-up.
 - Documentation (proposal, reports, readthedocs, etc.)
 - Better build and packaging.
@@ -63,5 +63,5 @@ angles = bm.Vector3d(np.linspace(0, np.pi/3, 10))
 - Integrate with an optimization toolbox for inverse-design.
 - Add a non-linear solver.
 
-## Disclaimer:
+## Disclaimer
 *At present this is an exercise in parallelizing FMM for UC Berkeley's CS267. Nothing here will work as expected.*
