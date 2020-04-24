@@ -71,4 +71,5 @@ from .materials import *
 from .vectors import *
 from .shapes import *
 from .layer import *
+from .layer_numba import *
 from .solver import *
