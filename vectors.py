@@ -116,7 +116,7 @@ class Vector(object):
     def __str__(self):
         s = ""
         for ele in self.data:
-            se = ele.__str__()
+            se = np.round(ele, 3).__str__()
             s += se
             if len(se) > 20 or "]\n" in s: s += ",\n"
             else: s += ", "
