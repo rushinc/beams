@@ -1,34 +1,138 @@
 import numpy as np
-import scipy as sp
 import beams as bm
 from numpy import fft
 from numpy.lib.scimath import sqrt
-from scipy import linalg as la
+from numpy import linalg as la
+import time
 from beams import *
 
 class Layer:
     def __init__(self, h=0, shapes=None, material=Material(), resolution=None):
-        self.h = float(h)
-        self.res = to_vec2(resolution)
-        self.dispersive = False
+        self._h = float(h)
+        self._res = to_vec2(resolution)
+        self._dispersive = False
 
         if not shapes:
-            self.shapes = []
+            self._shapes = []
         else:
-            self.shapes = shapes
+            self._shapes = shapes
             for s in shapes:
                 if s.material.dispersive:
-                    self.dispersive = True
+                    self._dispersive = True
 
-        self.material = material
+        self._material = material
         if material.dispersive:
-            self.dispersive = True
+            self._dispersive = True
+        self.reset()
 
-        self.period = None
-        self.N = None
-        self.K = None
-        self.k = None
-        self.freq = None
+    def reset(self):
+        self._period = None
+        self._N = None
+        self._K = None
+        self._k = None
+        self._freq = None
+        self._fft_eps = None
+        self._fft_eps_ix = None
+        self._fft_eps_iy = None
+        self.U = None
+        self.V = None
+        self.gamma = None
+        self._reset = True
+
+    @property
+    def material(self):
+        return self._material
+
+    @material.setter
+    def material(self, new_m):
+        self._material = new_m
+        if new_m.dispersive: self._dispersive = True
+        self.reset()
+
+    @property
+    def shapes(self):
+        return self._shapes
+
+    @shapes.setter
+    def shapes(self, new_shapes):
+        self._shapes = shapes
+        if not self.material.dispersive: self._dispersive = False
+        for s in new_shapes:
+            if s.material.dispersive:
+                self._dispersive = True
+        if not self._reset: self.reset()
+
+    @property
+    def h(self):
+        return self._h
+
+    @h.setter
+    def h(self, new_h):
+        self._h = float(h)
+
+    @property
+    def resolution(self):
+        return self._res
+
+    @resolution.setter
+    def resolution(self, new_res):
+        self._res = new_res
+        if not self._reset: self.reset()
+
+    @property
+    def dispersive(self):
+        return self._dispersive
+
+    @property
+    def period(self):
+        return self._period
+
+    @property
+    def freq(self):
+        return self._freq
+
+    @property
+    def k(self):
+        return self._k
+
+    @property
+    def K(self):
+        return self._K
+
+    @property
+    def N(self):
+        return self._N
+
+    @property
+    def X(self):
+        N_t = self.N.x * self.N.y
+        if self._h == 0: return np.eye(2 * N_t)
+        k0 = 2 * np.pi * self.freq
+        return np.diag(np.exp(-k0 * self.gamma * self.h))
+
+    def __repr__(self):
+        s = self.__str__()
+        s0 = "Layer: "
+        if "\np" in s:
+            s.replace("\np", "\nFFT computed for p")
+        else:
+            s += "\nNo FFT matrices stored"
+        if "\nf" in s:
+            s.replace("\nf", "\nEigenvalues for f")
+        else:
+            s += "\nNo eigenvalue solutions stored"
+        return s0 + s
+
+    def __str__(self):
+        s = "h = " + str(round(self.h, 3))
+        s += "\nbackground = " + str(self.material).replace("\n", ", ")
+        s += "\n" + str(len(self.shapes)) + " shapes"
+        s += ", resolution = " + str(self.resolution)
+        if self.period and self.N:
+            s += "\np = " + str(self.period) + ", N = " + str(self.N)
+        if self.freq and self.k:
+            s += "\nf = " + str(round(self.freq, 3)) + ", k = " + str(self.k)
+        return s
 
     def grid(self, resolution=None, period=None, freq=None, feature='shape'):
         if not period:
@@ -41,8 +145,8 @@ class Layer:
 
         if resolution:
             res = to_vec2(resolution)
-        elif self.res:
-            res = self.res
+        elif self.resolution:
+            res = self.resolution
         else:
             raise AttributeError('resolution of Layer object has not been initialized')
 
@@ -72,16 +176,20 @@ class Layer:
 
         if not freq: freq = self.freq
 
-        if not self.shapes:
-            self.fft_eps = self.material.get('eps', freq) * np.eye(N_t)
-            self.fft_eps_ix = self.material.get('eps', freq) * np.eye(N_t)
-            self.fft_eps_iy = self.material.get('eps', freq) * np.eye(N_t)
-            return
-
-        if self.res:
-            res = self.res
+        if self.resolution:
+            res = self.resolution
         else:
             res = (2 * N - 1) / period
+
+        if not self.shapes:
+            self._fft_eps = self.material.get('eps', freq) * np.eye(N_t)
+            self._fft_eps_ix = self.material.get('eps', freq) * np.eye(N_t)
+            self._fft_eps_iy = self.material.get('eps', freq) * np.eye(N_t)
+
+            self._res = res
+            self._period = period
+            self._N = N
+            return
 
         _, grid = self.grid(res, period, freq, 'eps')
         (G_y, G_x) = grid.shape
@@ -95,7 +203,7 @@ class Layer:
             for qq in range(N_y):
                 EPS[pp + N_x * qq, ::-1] = np.reshape(eps_mn[pp:pp + N_x,
                     qq:qq + N_y], (1, -1), order='F')
-        self.fft_eps = EPS
+        self._fft_eps = EPS
 
         i_iepsx_mj = np.zeros((N_x, G_y, N_x), dtype=complex)
         iepsx_fft = fft.fftshift(fft.fft(1 / grid, axis=0),
@@ -116,7 +224,7 @@ class Layer:
             for qq in range(N_x):
                 E4[pp, :, qq, :] = la.toeplitz(epsxy_mnj[pp,
                     N_y - 1:2 * N_y, qq], np.flip(epsxy_mnj[pp, :N_y, qq]))
-        self.fft_eps_ix = np.reshape(E4, (N_t, N_t), order='F')
+        self._fft_eps_ix = np.reshape(E4, (N_t, N_t), order='F')
 
         i_iepsy_nl = np.zeros((G_x, N_y, N_y), dtype=complex)
         iepsy_fft = fft.fftshift(fft.fft(1 / grid, axis=1),
@@ -137,18 +245,18 @@ class Layer:
             for ss in range(N_y):
                 E4[:, rr, :, ss] = la.toeplitz(epsyx_mnl[N_x - 1:2 * N_x - 1,
                     rr, ss], np.flip(epsyx_mnl[:N_x, rr, ss]))
-        self.fft_eps_iy = np.reshape(E4, [N_t, N_t], order='F')
+        self._fft_eps_iy = np.reshape(E4, [N_t, N_t], order='F')
 
-        self.res = res
-        self.period = period
-        self.N = N
+        self._res = res
+        self._period = period
+        self._N = N
 
     def __eigs(self, freq, K):
         N_t = K.x.shape[0]
         I = np.eye(N_t)
-        EPS = self.fft_eps
-        EPSxy = self.fft_eps_ix
-        EPSyx = self.fft_eps_iy
+        EPS = self._fft_eps
+        EPSxy = self._fft_eps_ix
+        EPSyx = self._fft_eps_iy
 
         F11 = -K.x @ la.solve(EPS, K.y)
         F12 = I + K.x @ la.solve(EPS, K.x)
@@ -172,8 +280,8 @@ class Layer:
             self.gamma = sqrt(Q)
 
         self.V = -self.L_he @ self.U / self.gamma
-        self.K = K
-        self.freq = freq
+        self._K = K
+        self._freq = freq
 
     def compute_eigs(self, freq, k, period, N):
         if (self.period != period or self.N != N
@@ -187,8 +295,7 @@ class Layer:
             ki = k0 * k + 2 * np.pi * m / period
             K = 1j * ki.grid().flatten().diag() / k0
             self.__eigs(freq, K)
-            self.k = k
-            self.X = np.diag(np.exp(-k0 * self.gamma * self.h))
+            self._k = k
 
     def get_fields(self, pts, amplitudes, components=''):
         if not self.K or not self.period or not self.N:
@@ -226,7 +333,7 @@ class Layer:
         else:
             U_xy = self.U
             V_xy = self.V
-            U_z = la.solve(self.fft_eps,
+            U_z = la.solve(self._fft_eps,
                     self.K.rotate(np.pi / 2).hstack()) @ self.V
             V_z = self.K.rotate(np.pi / 2).hstack() @ self.U
 
@@ -265,4 +372,32 @@ class Layer:
                 H.z[:, [j]] = k_phase @ v_z
 
         return (E, H)
+
+    def fft_convergence(self, max_res, n_res, N, period, n_iter=3):
+        N = to_vec2(N)
+        max_res = to_vec2(max_res)
+        res = bm.Vector2d(np.linspace(2 * N.x - 1, max_res.x, n_res + 1),
+                np.linspace(2 * N.y - 1, max_res.y, n_res + 1))
+        DT = np.zeros(n_res)
+        D = np.zeros(n_res)
+        self.resolution = res[0]
+        self.__ffts(period, N)
+        for i, r in enumerate(res[1:]):
+            EPS = self._fft_eps.copy()
+            EPSxy = self._fft_eps_ix.copy()
+            EPSyx = self._fft_eps_iy.copy()
+            self.resolution = r
+            t0 = time.time()
+            for _ in range(n_iter):
+                self.__ffts(period, N)
+            t1 = time.time()
+            DT[i] = (t1 - t0) / n_iter
+            d_eps = la.norm(self._fft_eps - EPS)
+            d_eps_x = la.norm(self._fft_eps_ix - EPSxy)
+            d_eps_y = la.norm(self._fft_eps_iy - EPSyx)
+            D[i] = max(d_eps, d_eps_x, d_eps_y)
+            print("Sim " + str(i + 1) + ": res = " + str(r)
+                    + "\nTime = " + str(round(DT[i], 3))
+                    + ", diff = " + str(round(D[i], 5)))
+        return (D, DT)
 

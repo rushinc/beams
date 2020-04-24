@@ -7,6 +7,20 @@ class Vector(object):
             self.data.append(np.array(arg, **kwargs))
         self.dim = len(self.data)
 
+    @property
+    def size(self):
+        sizes = [a.size for a in self.data]
+        if sizes.count(sizes[0]) == len(sizes):
+            return sizes[0]
+        return sizes
+
+    @property
+    def shape(self):
+        shapes = [a.size for a in self.data]
+        if shapes.count(shapes[0]) == len(shapes):
+            return shapes[0]
+        return shapes
+
     def __getitem__(self, indices):
         return self.__class__(*[a.__getitem__(indices) for a in self.data])
 
@@ -97,13 +111,16 @@ class Vector(object):
         return self.intensity() >= other
 
     def __repr__(self):
-        return "Vector(" + self.__str__() + ")"
+        return "Vector" + self.__str__().replace("\n", "\n       ")
 
     def __str__(self):
         s = ""
         for ele in self.data:
-            s += ele.__str__().replace("\n", "      \n") + ",\n"
-        return s[:-2]
+            se = ele.__str__()
+            s += se
+            if len(se) > 20 or "]\n" in s: s += ",\n"
+            else: s += ", "
+        return "(" + s[:-2] + ")"
 
     def ceil(self):
         return self.__class__(np.ceil(self.data))
