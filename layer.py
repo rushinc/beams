@@ -194,12 +194,6 @@ class Layer:
             self._res = res
             return self.material.get('eps', freq) * np.eye(N_t)
 
-        pts_arr = np.ogrid[-p.x / 2 : p.x / 2 : 1 / res.x,
-                -p.y / 2 : p.y / 2 : 1 / res.y]
-        pts_vec = to_vec2(pts_arr)
-        grid = self.get_eps(pts_vec)
-        G = to_vec2(grid.shape)
-
         if power[1] == -1:
             pts_mpi = np.ogrid[-p.x / 2 + rank * p.x / procs:
                     -p.x / 2 + (rank + 1) * p.x / procs:1 / res.x,
