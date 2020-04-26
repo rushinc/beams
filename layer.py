@@ -216,7 +216,7 @@ class Layer:
 
             FFTX = np.array([pgrid.shape[0] * procs, N.y, N.y],
                     dtype=int)
-            ffty_nl = DistArray(FFTX, [0, 1, 1])
+            ffty_nl = DistArray(FFTX, [0, 1, 1], dtype=complex)
             for i in range(g.x):
                 if N.y > 1:
                     m_eps = la.toeplitz(ffty_mpi[i, :N.y])
@@ -224,91 +224,73 @@ class Layer:
                 else:
                     ffty_nl[i, :, :] = 1 / ffty_mpi[i, 0]
 
-            print(rank, "ffty_nl", ffty_nl.shape)
             ffty_nl = ffty_nl.redistribute(0)
-            print(rank, "ffty_r", ffty_nl.shape)
             plan_x = PFFT(comm, FFTX, axes=0, dtype=complex,
                     grid=(1, 1, -1))
             fft_mpi = plan_x.forward(ffty_nl)
-            print(rank, "fft", fft_mpi.shape)
 
-            E4 = np.empty((N.x, fft_mpi.shape[1], N.x, fft_mpi.shape[2]),
+            E_dist = np.empty((N.x, N.y, N.x, fft_mpi.shape[2]),
                     dtype=complex)
             for rr in range(fft_mpi.shape[1]):
                 for ss in range(fft_mpi.shape[2]):
                     if N.x > 1:
-                        mm_eps = la.toeplitz(eps_fft[:N.x, rr, ss])
+                        mm_eps = la.toeplitz(fft_mpi[:N.x, rr, ss])
                         if power[0] == -1:
-                            E4[:, rr, :, ss] = la.inv(t_eps)
+                            E_dist[:, rr, :, ss] = la.inv(mm_eps)
                         else:
-                            E4[:, rr, :, ss] = tt_eps
+                            E_dist[:, rr, :, ss] = mm_eps
                     else:
                         if power[0] == -1:
-                            E4[:, rr, :, ss] = 1 / eps_fft[0, rr, ss]
+                            E_dist[:, rr, :, ss] = 1 / fft_mpi[0, rr, ss]
                         else:
-                            E4[:, rr, :, ss] = eps_fft[0, rr, ss]
-
-            epsy_nl = np.empty((G.x, N.y, N.y), dtype=complex)
-            epsy_fft = fft.fft(1 / grid, axis=1) / (G.y)
-
-            for pp in range(G.x):
-                if N.y > 1:
-                    t_eps = la.toeplitz(epsy_fft[pp, :N.y],
-                            np.hstack((0, epsy_fft[pp, :-N.y:-1])))
-                    epsy_nl[pp, :, :] = la.inv(t_eps)
-                else:
-                    epsy_nl[pp, :, :] = 1 / epsy_fft[pp, 0]
-
-            eps_fft = fft.fft(epsy_nl, axis=0) / (G.x)
-
-            E4 = np.empty((N.x, N.y, N.x, N.y), dtype=complex)
-            for rr in range(N.y):
-                for ss in range(N.y):
-                    if N.x > 1:
-                        tt_eps = la.toeplitz(eps_fft[:N.x, rr, ss],
-                                np.hstack((0, eps_fft[:-N.x:-1, rr, ss])))
-                        if power[0] == -1:
-                            E4[:, rr, :, ss] = la.inv(t_eps)
-                        else:
-                            E4[:, rr, :, ss] = tt_eps
-                    else:
-                        if power[0] == -1:
-                            E4[:, rr, :, ss] = 1 / eps_fft[0, rr, ss]
-                        else:
-                            E4[:, rr, :, ss] = eps_fft[0, rr, ss]
+                            E_dist[:, rr, :, ss] = fft_mpi[0, rr, ss]
+            E_dist = np.reshape(E_dist, (N.x * fft_mpi.shape[2], N_t))
+            E_coll = np.empty([N_t, N_t], dtype=complex)
+            comm.Allgather(E_dist, E_coll)
+            return E_coll
 
         else:
-            epsx_mj = np.empty((N.x, G.y, N.x), dtype=complex)
-            if power[0] == -1:
-                epsx_fft = fft.fft(1 / grid, axis=0) / (G.x)
-            else:
-                epsx_fft = fft.fft(grid, axis=0) / (G.x)
+            pts_mpi = np.ogrid[-p.x / 2 : p.x / 2 : 1 / res.x,
+                    -p.y / 2 + rank * p.y / procs:
+                    -p.y / 2 + (rank + 1) * p.y / procs:1 / res.y]
+            pts_mpi = to_vec2(pts_mpi)
+            pgrid = self.get_eps(pts_mpi)
+            FFTX = np.array([pgrid.shape[0], pgrid.shape[1] * procs],
+                    dtype=int)
+            plan_x = PFFT(comm, FFTX, axes=0, dtype=pgrid.dtype)
+            gmpi = newDistArray(plan_x, False)
+            gmpi[:] = pgrid
+            fftx_mpi = plan_x.forward(gmpi ** power[0])
+            g = to_vec2(fftx_mpi.shape)
 
-            for qq in range(G.y):
+            FFTY = np.array([N.x, pgrid.shape[1] * procs, N.x],
+                    dtype=int)
+            fftx_mj = DistArray(FFTY, [1, 0, 1], dtype=complex)
+            for i in range(g.y):
                 if N.x > 1:
-                    t_eps = la.toeplitz(epsx_fft[:N.x, qq],
-                        np.hstack((0, epsx_fft[:-N.x:-1, qq])))
-                    if power[0] == -1:
-                        epsx_mj[:, qq, :] = la.inv(t_eps)
-                    else:
-                        epsx_mj[:, qq, :] = t_eps
+                    m_eps = la.toeplitz(fftx_mpi[:N.x, i])
+                    fftx_mj[:, i, :] = la.inv(m_eps)
                 else:
-                    if power[0] == -1:
-                        epsx_mj[:, qq, :] = 1 / epsx_fft[0, qq]
-                    else:
-                        epsx_mj[:, qq, :] = epsx_fft[0, qq]
+                    fftx_mj[:, i, :] = 1 / fftx_mpi[i, 0]
 
-            eps_fft = fft.fft(epsx_mj, axis=1) / (G.y)
+            fftx_mj = fftx_mj.redistribute(1)
+            plan_y = PFFT(comm, FFTY, axes=1, dtype=complex,
+                    grid=(1, 1, -1))
+            fft_mpi = plan_y.forward(fftx_mj)
 
-            E4 = np.empty((N.x, N.y, N.x, N.y), dtype=complex);
-            for pp in range(N.x):
-                for qq in range(N.x):
+            E_dist = np.empty((N.x, N.y, fft_mpi.shape[2], N.y),
+                    dtype=complex)
+            for pp in range(fft_mpi.shape[0]):
+                for qq in range(fft_mpi.shape[2]):
                     if N.y > 1:
-                        tt_eps = la.toeplitz(eps_fft[pp, :N.y, qq],
-                            np.hstack((0, eps_fft[pp, :-N.y:-1, qq])))
-                        E4[pp, :, qq, :] = tt_eps
+                        mm_eps = la.toeplitz(fft_mpi[pp, :N.y, qq])
+                        E_dist[pp, :, qq, :] = mm_eps
                     else:
-                        E4[pp, :, qq, :] = eps_fft[pp, 0, qq]
+                        E_dist[pp, :, qq, :] = fft_mpi[pp, 0, qq]
+            E_dist = np.reshape(E_dist, (N.y * fft_mpi.shape[2], N_t))
+            E_coll = np.empty([N_t, N_t], dtype=complex)
+            comm.Allgather(E_dist, E_coll)
+            return E_coll
 
         self._res = res
         return np.reshape(E4, (N_t, N_t), order='F')
@@ -456,19 +438,21 @@ class Layer:
             EPSxy = self._fft_eps_ix.copy()
             EPSyx = self._fft_eps_iy.copy()
             self.resolution = r
-            t0 = time.time()
+            if not rank:
+                t0 = time.time()
             for _ in range(n_iter):
                 self._fft_eps = self.__fft(period, N, (1, 1))
                 self._fft_eps_ix = self.__fft(period, N, (-1, 1))
                 self._fft_eps_iy = self.__fft(period, N, (1, -1))
-            t1 = time.time()
-            DT[i] = (t1 - t0) / n_iter
-            d_eps = la.norm(self._fft_eps - EPS)
-            d_eps_x = la.norm(self._fft_eps_ix - EPSxy)
-            d_eps_y = la.norm(self._fft_eps_iy - EPSyx)
-            D[i] = max(d_eps, d_eps_x, d_eps_y)
-            print("Sim " + str(i + 1) + ": res = " + str(r)
-                    + "\nTime = " + str(round(DT[i], 3))
-                    + ", diff = " + str(round(D[i], 5)))
+            if not rank:
+                t1 = time.time()
+                DT[i] = (t1 - t0) / n_iter
+                d_eps = la.norm(self._fft_eps - EPS)
+                d_eps_x = la.norm(self._fft_eps_ix - EPSxy)
+                d_eps_y = la.norm(self._fft_eps_iy - EPSyx)
+                D[i] = max(d_eps, d_eps_x, d_eps_y)
+                print("Sim " + str(i + 1) + ": res = " + str(r)
+                        + "\nTime = " + str(round(DT[i], 3))
+                        + ", diff = " + str(round(D[i], 5)))
         return (D, DT)
 

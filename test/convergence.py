@@ -20,6 +20,6 @@ cell = bm.Cell(period=p, N=1, layers=[inc, phc, sub])
 f = 0.75
 a = bm.Vector3d(np.pi / 3, np.pi / 6, np.pi / 2)
 
-(FD, ft) = phc.fft_convergence(1e4, 20, bm.Vector2d(xy=3), p)
+(FD, ft) = phc.fft_convergence(1e4, 20, bm.Vector2d(xy=9), p, 2)
 # (RT, tt) = cell.convergence(15, freq=f, angles=a)
 
