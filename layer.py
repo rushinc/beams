@@ -201,6 +201,53 @@ class Layer:
         G = to_vec2(grid.shape)
 
         if power[1] == -1:
+            pts_mpi = np.ogrid[-p.x / 2 + rank * p.x / procs:
+                    -p.x / 2 + (rank + 1) * p.x / procs:1 / res.x,
+                    -p.y / 2 : p.y / 2 : 1 / res.y]
+            pts_mpi = to_vec2(pts_mpi)
+            pgrid = self.get_eps(pts_mpi)
+            FFTY = np.array([pgrid.shape[0] * procs, pgrid.shape[1]],
+                    dtype=int)
+            plan_y = PFFT(comm, FFTY, axes=1, dtype=pgrid.dtype)
+            gmpi = newDistArray(plan_y, False)
+            gmpi[:] = pgrid
+            ffty_mpi = plan_y.forward(1 / gmpi)
+            g = to_vec2(ffty_mpi.shape)
+
+            FFTX = np.array([pgrid.shape[0] * procs, N.y, N.y],
+                    dtype=int)
+            ffty_nl = DistArray(FFTX, [0, 1, 1])
+            for i in range(g.x):
+                if N.y > 1:
+                    m_eps = la.toeplitz(ffty_mpi[i, :N.y])
+                    ffty_nl[i, :, :] = la.inv(m_eps)
+                else:
+                    ffty_nl[i, :, :] = 1 / ffty_mpi[i, 0]
+
+            print(rank, "ffty_nl", ffty_nl.shape)
+            ffty_nl = ffty_nl.redistribute(0)
+            print(rank, "ffty_r", ffty_nl.shape)
+            plan_x = PFFT(comm, FFTX, axes=0, dtype=complex,
+                    grid=(1, 1, -1))
+            fft_mpi = plan_x.forward(ffty_nl)
+            print(rank, "fft", fft_mpi.shape)
+
+            E4 = np.empty((N.x, fft_mpi.shape[1], N.x, fft_mpi.shape[2]),
+                    dtype=complex)
+            for rr in range(fft_mpi.shape[1]):
+                for ss in range(fft_mpi.shape[2]):
+                    if N.x > 1:
+                        mm_eps = la.toeplitz(eps_fft[:N.x, rr, ss])
+                        if power[0] == -1:
+                            E4[:, rr, :, ss] = la.inv(t_eps)
+                        else:
+                            E4[:, rr, :, ss] = tt_eps
+                    else:
+                        if power[0] == -1:
+                            E4[:, rr, :, ss] = 1 / eps_fft[0, rr, ss]
+                        else:
+                            E4[:, rr, :, ss] = eps_fft[0, rr, ss]
+
             epsy_nl = np.empty((G.x, N.y, N.y), dtype=complex)
             epsy_fft = fft.fft(1 / grid, axis=1) / (G.y)
 
@@ -210,7 +257,7 @@ class Layer:
                             np.hstack((0, epsy_fft[pp, :-N.y:-1])))
                     epsy_nl[pp, :, :] = la.inv(t_eps)
                 else:
-                    epsy_nl[pp, :, :] = epsy_fft[pp, 0] ** -1
+                    epsy_nl[pp, :, :] = 1 / epsy_fft[pp, 0]
 
             eps_fft = fft.fft(epsy_nl, axis=0) / (G.x)
 
@@ -226,7 +273,7 @@ class Layer:
                             E4[:, rr, :, ss] = tt_eps
                     else:
                         if power[0] == -1:
-                            E4[:, rr, :, ss] = eps_fft[0, rr, ss] ** -1
+                            E4[:, rr, :, ss] = 1 / eps_fft[0, rr, ss]
                         else:
                             E4[:, rr, :, ss] = eps_fft[0, rr, ss]
 
@@ -247,7 +294,7 @@ class Layer:
                         epsx_mj[:, qq, :] = t_eps
                 else:
                     if power[0] == -1:
-                        epsx_mj[:, qq, :] = epsx_fft[0, qq] ** -1
+                        epsx_mj[:, qq, :] = 1 / epsx_fft[0, qq]
                     else:
                         epsx_mj[:, qq, :] = epsx_fft[0, qq]
 
@@ -401,9 +448,9 @@ class Layer:
         DT = np.zeros(n_res)
         D = np.zeros(n_res)
         self.resolution = res[0]
-        self._fft_eps = self.__fft(period, N, (1, 1), freq)
-        self._fft_eps_ix = self.__fft(period, N, (-1, 1), freq)
-        self._fft_eps_iy = self.__fft(period, N, (1, -1), freq)
+        self._fft_eps = self.__fft(period, N, (1, 1))
+        self._fft_eps_ix = self.__fft(period, N, (-1, 1))
+        self._fft_eps_iy = self.__fft(period, N, (1, -1))
         for i, r in enumerate(res[1:]):
             EPS = self._fft_eps.copy()
             EPSxy = self._fft_eps_ix.copy()
@@ -411,9 +458,9 @@ class Layer:
             self.resolution = r
             t0 = time.time()
             for _ in range(n_iter):
-                self._fft_eps = self.__fft(period, N, (1, 1), freq)
-                self._fft_eps_ix = self.__fft(period, N, (-1, 1), freq)
-                self._fft_eps_iy = self.__fft(period, N, (1, -1), freq)
+                self._fft_eps = self.__fft(period, N, (1, 1))
+                self._fft_eps_ix = self.__fft(period, N, (-1, 1))
+                self._fft_eps_iy = self.__fft(period, N, (1, -1))
             t1 = time.time()
             DT[i] = (t1 - t0) / n_iter
             d_eps = la.norm(self._fft_eps - EPS)

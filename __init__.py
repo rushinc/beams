@@ -1,6 +1,22 @@
 import numpy as np
 from scipy import linalg as la
 
+try:
+    from mpi4py import MPI
+    from mpi4py_fft import PFFT, DistArray, newDistArray
+    comm = MPI.COMM_WORLD
+    procs = comm.Get_size()
+    rank = comm.Get_rank()
+    if not rank:
+        M, m = MPI.Get_version()
+        print(f'Initialized MPI version {M}.{m}')
+        print(f'{procs} processes')
+    with_mpi = True
+except ImportError as e:
+    print('Failed to load MPI')
+    with_mpi = False
+    pass
+
 def to_vec(elements, **kwargs):
     if elements is None:
         return None
