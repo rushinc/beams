@@ -207,21 +207,19 @@ class Layer:
             for pp in range(G.x):
                 if N.y > 1:
                     t_eps = la.toeplitz(epsy_fft[pp, :N.y],
-                            np.hstack((epsy_fft[pp, 0],
-                                np.flip(epsy_fft[pp, -N.y + 1:]))))
+                            np.hstack((0, epsy_fft[pp, :-N.y:-1])))
                     epsy_nl[pp, :, :] = la.inv(t_eps)
                 else:
                     epsy_nl[pp, :, :] = epsy_fft[pp, 0] ** -1
 
             eps_fft = fft.fft(epsy_nl, axis=0) / (G.x)
 
-            E4 = np.zeros((N.x,N.y,N.x,N.y), dtype=complex)
+            E4 = np.empty((N.x, N.y, N.x, N.y), dtype=complex)
             for rr in range(N.y):
                 for ss in range(N.y):
                     if N.x > 1:
                         tt_eps = la.toeplitz(eps_fft[:N.x, rr, ss],
-                                np.hstack((eps_fft[0, rr, ss],
-                                    np.flip(eps_fft[-N.x + 1:, rr, ss]))))
+                                np.hstack((0, eps_fft[:-N.x:-1, rr, ss])))
                         if power[0] == -1:
                             E4[:, rr, :, ss] = la.inv(t_eps)
                         else:
@@ -242,8 +240,7 @@ class Layer:
             for qq in range(G.y):
                 if N.x > 1:
                     t_eps = la.toeplitz(epsx_fft[:N.x, qq],
-                            np.hstack((epsx_fft[0, qq],
-                                np.flip(epsx_fft[-N.x + 1:, qq]))))
+                        np.hstack((0, epsx_fft[:-N.x:-1, qq])))
                     if power[0] == -1:
                         epsx_mj[:, qq, :] = la.inv(t_eps)
                     else:
@@ -261,8 +258,7 @@ class Layer:
                 for qq in range(N.x):
                     if N.y > 1:
                         tt_eps = la.toeplitz(eps_fft[pp, :N.y, qq],
-                                np.hstack((eps_fft[pp, 0, qq], 
-                                    np.flip(eps_fft[pp, -N.y + 1:, qq]))))
+                            np.hstack((0, eps_fft[pp, :-N.y:-1, qq])))
                         E4[pp, :, qq, :] = tt_eps
                     else:
                         E4[pp, :, qq, :] = eps_fft[pp, 0, qq]
