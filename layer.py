@@ -238,7 +238,7 @@ class Layer:
                             E_dist[:, rr, :, ss] = 1 / fft_mpi[0, rr, ss]
                         else:
                             E_dist[:, rr, :, ss] = fft_mpi[0, rr, ss]
-            print(comm.Get_rank(), "\n", E_dist)
+            print(comm.Get_rank(), "\n", E_dist.ravel())
             E_coll = np.empty(N.x * N.y * N.x * N.y, dtype=complex)
             comm.Allgather(E_dist, E_coll)
             if not rank: print(E_coll)
@@ -287,7 +287,7 @@ class Layer:
                         E_dist[pp, :, qq, :] = mm_eps
                     else:
                         E_dist[pp, :, qq, :] = fft_mpi[pp, 0, qq]
-            print(comm.Get_rank(), "\n", E_dist)
+            print(comm.Get_rank(), "\n", E_dist.ravel())
             E_coll = np.empty(N.x * N.y * N.x * N.y, dtype=complex)
             comm.Allgather(E_dist, E_coll)
             if not rank: print(E_coll)
