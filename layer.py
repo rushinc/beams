@@ -238,11 +238,11 @@ class Layer:
                             E_dist[:, rr, :, ss] = 1 / fft_mpi[0, rr, ss]
                         else:
                             E_dist[:, rr, :, ss] = fft_mpi[0, rr, ss]
-            E_dist = np.reshape(E_dist, (N.x * fft_mpi.shape[2], N_t))
-            E_coll = np.empty([N_t, N_t], dtype=complex)
+            print(comm.Get_rank(), "\n", E_dist)
+            E_coll = np.empty([N.x, N.y, N.x, N.y], dtype=complex)
             comm.Allgather(E_dist, E_coll)
+            if not rank: print(E_coll)
             return E_coll
-
         else:
             pts_mpi = np.ogrid[-p.x / 2 : p.x / 2 : 1 / res.x,
                     -p.y / 2 + rank * p.y / procs:
@@ -288,14 +288,10 @@ class Layer:
                     else:
                         E_dist[pp, :, qq, :] = fft_mpi[pp, 0, qq]
             print(comm.Get_rank(), "\n", E_dist)
-            E_dist = np.reshape(E_dist, (N.y * fft_mpi.shape[2], N_t),
-                    order='F')
-            E_coll = np.empty([N_t, N_t], dtype=complex)
+            E_coll = np.empty([N.x, N.y, N.x, N.y], dtype=complex)
             comm.Allgather(E_dist, E_coll)
+            if not rank: print(E_coll)
             return E_coll
-
-        self._res = res
-        return np.reshape(E4, (N_t, N_t), order='F')
 
     def __eigs(self, freq, K):
         N_t = K.x.shape[0]
