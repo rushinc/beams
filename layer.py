@@ -245,7 +245,6 @@ class Layer:
                         else:
                             E_dist[:, rr, :, ss] = fft_mpi[0, rr, ss]
             E_dist = np.reshape(E_dist, (N.x * fft_mpi.shape[2], N_t))
-            if not rank: print('y\n', E_dist)
             E_coll = np.empty([N_t, N_t], dtype=complex)
             comm.Allgather(E_dist, E_coll)
             return E_coll
@@ -292,7 +291,6 @@ class Layer:
                     order='F')
             E_coll = np.empty([N_t, N_t], dtype=complex)
             comm.Allgather(E_dist, E_coll)
-            if not rank: print('x\n', E_coll)
             return E_coll
 
         self._res = res
