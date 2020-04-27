@@ -269,9 +269,15 @@ class Layer:
             for i in range(g.y):
                 if N.x > 1:
                     m_eps = la.toeplitz(fftx_mpi[:N.x, i])
-                    fftx_mj[:, i, :] = la.inv(m_eps)
+                    if power[0] == -1:
+                        fftx_mj[:, i, :] = la.inv(m_eps)
+                    else:
+                        fftx_mj[:, i, :] = m_eps
                 else:
-                    fftx_mj[:, i, :] = 1 / fftx_mpi[i, 0]
+                    if power[0] == -1:
+                        fftx_mj[:, i, :] = 1 / fftx_mpi[i, 0]
+                    else:
+                        fftx_mj[:, i, :] = fftx_mpi[i, 0]
 
             fftx_mj = fftx_mj.redistribute(1)
             plan_y = PFFT(comm, FFTY, axes=1, dtype=complex,
@@ -287,6 +293,7 @@ class Layer:
                         E_dist[pp, :, qq, :] = mm_eps
                     else:
                         E_dist[pp, :, qq, :] = fft_mpi[pp, 0, qq]
+            print(comm.Get_rank(), "\n", E_dist)
             E_dist = np.reshape(E_dist, (N.y * fft_mpi.shape[2], N_t),
                     order='F')
             E_coll = np.empty([N_t, N_t], dtype=complex)
