@@ -238,10 +238,8 @@ class Layer:
                             E_dist[:, rr, :, ss] = 1 / fft_mpi[0, rr, ss]
                         else:
                             E_dist[:, rr, :, ss] = fft_mpi[0, rr, ss]
-            print(comm.Get_rank(), "\n", E_dist.ravel())
             E_coll = np.empty(N.x * N.y * N.x * N.y, dtype=complex)
             comm.Allgather(E_dist, E_coll)
-            if not rank: print(E_coll)
             return E_coll
         else:
             pts_mpi = np.ogrid[-p.x / 2 : p.x / 2 : 1 / res.x,
@@ -287,10 +285,10 @@ class Layer:
                         E_dist[pp, :, qq, :] = mm_eps
                     else:
                         E_dist[pp, :, qq, :] = fft_mpi[pp, 0, qq]
-            print(comm.Get_rank(), "\n", E_dist.ravel())
-            E_coll = np.empty(N.x * N.y * N.x * N.y, dtype=complex)
+            E_dist = np.reshape(E_dist, (N.y * fft_mpi.shape[2], N_t),
+                    order='F')
+            E_coll = np.empty([N_t, N_t], dtype=complex)
             comm.Allgather(E_dist, E_coll)
-            if not rank: print(E_coll)
             return E_coll
 
     def __eigs(self, freq, K):
@@ -423,8 +421,10 @@ class Layer:
     def fft_convergence(self, max_res, n_res, N, period, n_iter=3):
         N = to_vec2(N)
         max_res = to_vec2(max_res)
-        res = bm.Vector2d(np.linspace(2 * N.x - 1, max_res.x, n_res + 1),
-                np.linspace(2 * N.y - 1, max_res.y, n_res + 1))
+        res = bm.Vector2d(np.logspace(np.log(2 * N.x - 1),
+            np.log(max_res.x), n_res + 1, base=np.e),
+            np.logspace(np.log(2 * N.y - 1),
+                np.log(max_res.y), n_res + 1, base=np.e))
         DT = np.zeros(n_res)
         D = np.zeros(n_res)
         self.resolution = res[0]
