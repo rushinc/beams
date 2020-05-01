@@ -23,7 +23,7 @@ def get_EPS(N_x, N_y, EPS, eps_mn):
             EPS[pp + N_x * qq, ::-1] = np.reshape(eps_mn[pp:pp + N_x,
                 qq:qq + N_y], (1, -1), order='F')
 
-@jit(nopython=True, parallel=True)
+@jit((numba.float64[:, :, :], numba.int64), nopython=True, parallel=True)
 def numba_inverse_i_iepsx_mj(i_iepsx_mj, G_y):
     for qq in prange(G_y):
         i_iepsx_mj[:, qq, :] = np.linalg.inv(i_iepsx_mj[:, qq, :])
