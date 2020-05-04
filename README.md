@@ -7,9 +7,9 @@ To install `beams` clone the repository to a location in your `PYTHONPATH` or ad
 ```
 git clone https://github.com/rushinc/beams
 ```
-2. To build OpenMP-supported Cython functions run (this will generate errors!!):
+2. To build OpenMP-supported Cython functions run:
 ```
-python setup.py build_ext --inplace
+python setup.py build_ext --inplace #this will generate errors!!
 ```
 3. In your python script or console add: 
 ```
