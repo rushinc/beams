@@ -3,6 +3,7 @@ import beams as bm
 from numpy import fft
 from numpy.lib.scimath import sqrt
 from numpy import linalg as la
+import fftc
 import time
 from beams import *
 
@@ -192,61 +193,9 @@ class Layer:
             return
 
         _, grid = self.grid(res, period, freq, 'eps')
-        (G_y, G_x) = grid.shape
-
-        EPS = np.zeros((N_t, N_t), dtype=complex)
-        eps_fft = fft.fftshift(fft.fft2(grid)) / (G_x * G_y)
-        eps_mn = eps_fft[G_x // 2 - N_x + 1:G_x // 2 + N_x,
-                G_y // 2 - N_y + 1:G_y // 2 + N_y]
-
-        for pp in range(N_x):
-            for qq in range(N_y):
-                EPS[pp + N_x * qq, ::-1] = np.reshape(eps_mn[pp:pp + N_x,
-                    qq:qq + N_y], (1, -1), order='F')
-        self._fft_eps = EPS
-
-        i_iepsx_mj = np.zeros((N_x, G_y, N_x), dtype=complex)
-        iepsx_fft = fft.fftshift(fft.fft(1 / grid, axis=0),
-                axes=0) / (G_x)
-
-        for qq in range(G_y):
-            iepsx_m = iepsx_fft[G_x // 2 - N_x + 1:G_x // 2 + N_x, qq]
-            iepsx_mj = la.toeplitz(iepsx_m[N_x - 1:2 * N_x],
-                    np.flip(iepsx_m[:N_x]))
-            i_iepsx_mj[:, qq, :] = la.inv(iepsx_mj)
-
-        epsxy_fft = fft.fftshift(fft.fft(i_iepsx_mj, axis=1),
-                axes=1) / (G_y)
-        epsxy_mnj = epsxy_fft[:, G_y // 2 + 1 - N_y:G_y // 2 + N_y, :]
-
-        E4 = np.zeros((N_x, N_y, N_x, N_y), dtype=complex);
-        for pp in range(N_x):
-            for qq in range(N_x):
-                E4[pp, :, qq, :] = la.toeplitz(epsxy_mnj[pp,
-                    N_y - 1:2 * N_y, qq], np.flip(epsxy_mnj[pp, :N_y, qq]))
-        self._fft_eps_ix = np.reshape(E4, (N_t, N_t), order='F')
-
-        i_iepsy_nl = np.zeros((G_x, N_y, N_y), dtype=complex)
-        iepsy_fft = fft.fftshift(fft.fft(1 / grid, axis=1),
-                axes=1) / (G_y)
-
-        for pp in range(G_x):
-            iepsy_n = iepsy_fft[pp, G_y // 2 - N_y + 1:G_y // 2 + N_y]
-            iepsy_nl = la.toeplitz(iepsy_n[N_y - 1:2 * N_y],
-                    np.flip(iepsy_n[:N_y]))
-            i_iepsy_nl[pp, :, :] = la.inv(iepsy_nl)
-
-        epsyx_fft = fft.fftshift(fft.fft(i_iepsy_nl, axis=0),
-                axes=0) / (G_x)
-        epsyx_mnl = epsyx_fft[G_x // 2 - N_x + 1:G_x // 2 + N_x, :, :]
-
-        E4 = np.zeros((N_x,N_y,N_x,N_y), dtype=complex)
-        for rr in range(N_y):
-            for ss in range(N_y):
-                E4[:, rr, :, ss] = la.toeplitz(epsyx_mnl[N_x - 1:2 * N_x - 1,
-                    rr, ss], np.flip(epsyx_mnl[:N_x, rr, ss]))
-        self._fft_eps_iy = np.reshape(E4, [N_t, N_t], order='F')
-
+        self._fft_eps = fftc(grid, N)
+        self._fft_eps_ix = fftc(grid, N, inv='x')
+        self._fft_eps_iy = fftc(grid, N, inv='y')
         self._res = res
         self._period = period
         self._N = N
