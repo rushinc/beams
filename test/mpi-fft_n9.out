@@ -1,0 +1,8 @@
+Initialized MPI version 3.1
+3 processes
+Sim 1: res = (516.15, 516.15)
+Time = 0.135, diff = 7.98681
+Sim 2: res = (1015.3, 1015.3)
+Time = 1.527, diff = 0.1138
+Sim 3: res = (1514.45, 1514.45)
+Time = 0.312, diff = 0.04434

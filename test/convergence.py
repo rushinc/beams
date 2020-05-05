@@ -20,6 +20,7 @@ cell = bm.Cell(period=p, N=1, layers=[inc, phc, sub])
 f = 0.75
 a = bm.Vector3d(np.pi / 3, np.pi / 6, np.pi / 2)
 
-(FD, ft) = phc.fft_convergence(5e3, 25, bm.Vector2d(xy=9), p)
-# (RT, tt) = cell.convergence(29, freq=f, angles=a)
+(FD, ft) = phc.fft_convergence(2e4, 50, bm.Vector2d(xy=9), p, 1)
+# (RT, tt) = cell.convergence(15, freq=f, angles=a)
 
+if not bm.rank: np.savez('mpi-out_9', FD, ft)
