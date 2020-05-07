@@ -1,6 +1,7 @@
 cimport cython
 import numpy as np
 cimport numpy as np
+from scipy.linalg.lapack import cgesv
 from libc.stdlib cimport malloc, free
 from numpy import linalg as la
 from numpy import fft
@@ -9,27 +10,44 @@ from cython.parallel import prange
 DTYPE = np.complex128
 ctypedef np.complex128_t DTYPE_t
 
-cdef DTYPE_t [:, :] toeplitz_c(DTYPE_t [:] c):
-    cdef Py_ssize_t N = c.shape[0]
-    cdef Py_ssize_t i, j
-    cdef DTYPE_t *toep_p = <DTYPE_t *> malloc(N * N * sizeof(DTYPE_t))
-    if not toep_p:
-        raise MemoryError()
-    cdef DTYPE_t [:, ::1] toep = <DTYPE_t [:N, :N]> toep_p
+cpdef void inv_toeplitz(DTYPE_t [:] fft_arr, DTYPE_t [:, :] toep) nogil:
+    cdef:
+        Py_ssize_t i, j
+        Py_ssize_t N = toep.shape[0]
 
     for i in range(N):
-        for j in range(i):
-            toep[i, j] = c[i - j]
-        for j in range(i, N):
-            toep[i, j] = np.conjugate(c[j - i])
-    return toep
+        for j in range(N):
+            toep[i, j] = fft_arr[i - j]
 
 '''
-cpdef np.ndarray[np.complex128_t, ndim=3] inv_toeplitz(np.complex128_t [:, :] ieps_fft, int N, int axis) nogil:
-    cdef Py_ssize_t G = ieps_fft.shape[axis]
-    toep = la.toeplitz(ieps_fft_N)
-    return la.inv(toep)
+cpdef void inv_toeplitz(DTYPE_t [:, :] raw_fft, DTYPE_t [:, :, :] toep_fft,
+        int axis):
+    cdef:
+        Py_ssize_t G = raw_fft.shape[1 - axis]
+        Py_ssize_t N = toep_fft.shape[axis]
+        Py_ssize_t i, j, p
+        DTYPE_t [:, :] toep = np.empty((N, N), dtype=DTYPE)
+        DTYPE_t [:, :] I = np.eye(N, dtype=DTYPE)
+        DTYPE_t [:] fft_n = np.empty(N - 1, dtype=DTYPE)
+        DTYPE_t [:] fft_p = np.empty(N, dtype=DTYPE)
 
+    for p in range(G):
+        if axis==1:
+            fft_p[:] = raw_fft[p, :N]
+            fft_n[:] = raw_fft[p, 1 - N:]
+        else:
+            fft_p[:] = raw_fft[:N, p]
+            fft_n[:] = raw_fft[1 - N:, p]
+        for i in range(N):
+            for j in range(i + 1):
+                toep[i, j] = fft_p[i - j]
+            for j in range(i + 1, N):
+                toep[i, j] = fft_n[j - i - 1]
+        if axis==0:
+            toep_fft[:, p, :] = toep
+        else:
+            toep_fft[p, :, :] = toep
+'''
 
 cpdef fftc(grid, N, inv=None):
     (G_y, G_x) = grid.shape
@@ -96,4 +114,3 @@ cpdef fftc(grid, N, inv=None):
             EPS[pp + N.x * qq, ::-1] = np.reshape(eps_mn[pp:pp + N.x,
                 qq:qq + N.y], (1, -1), order='F')
     return EPS
-'''
