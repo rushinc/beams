@@ -6,9 +6,67 @@ from numpy import linalg as la
 import time
 from beams import *
 
+from numba import jit, prange, typeof
+
+import numba
+
+import os
+
+import joblib
+
+os.environ['NUMBA_THREADING_LAYER'] = '16'
+
+@jit(parallel=True)
+def get_EPS(N_x, N_y, EPS, eps_mn):
+    for pp in prange(N_x):
+        for qq in prange(N_y):
+            EPS[pp + N_x * qq, ::-1] = np.reshape(eps_mn[pp:pp + N_x,
+                qq:qq + N_y], (1, -1), order='F')
+
+@jit((numba.float64[:, :, :], numba.int64), nopython=True, parallel=True)
+def numba_inverse_i_iepsx_mj(i_iepsx_mj, G_y):
+    for qq in prange(G_y):
+        i_iepsx_mj[:, qq, :] = np.linalg.inv(i_iepsx_mj[:, qq, :])
+
+@jit(nopython=True)
+def numba_inverse_i_iepsy_nl(i_iepsy_nl):
+    i_iepsy_nl = np.transpose(i_iepsy_nl, (1, 2, 0))
+    i_iepsy_nl = np.linalg.inv(i_iepsy_nl.T).T
+    i_iepsy_nl = np.transpose(i_iepsy_nl, (2, 0, 1))
+
+@jit(parallel=True)
+def get_i_iepsx_mj(G_x, G_y, N_x, N_y, iepsx_fft, i_iepsx_mj):
+    for qq in prange(G_y):
+        iepsx_m = iepsx_fft[G_x // 2 - N_x + 1:G_x // 2 + N_x, qq]
+        iepsx_mj = la.toeplitz(iepsx_m[N_x - 1:2 * N_x],
+                np.flip(iepsx_m[:N_x]))
+        i_iepsx_mj[:, qq, :] = iepsx_mj
+
+@jit(parallel=True)
+def get_i_iepsy_nl(G_x, G_y, N_x, N_y, iepsy_fft, i_iepsy_nl):
+    for pp in range(G_x):
+        iepsy_n = iepsy_fft[pp, G_y // 2 - N_y + 1:G_y // 2 + N_y]
+        iepsy_nl = la.toeplitz(iepsy_n[N_y - 1:2 * N_y],
+                np.flip(iepsy_n[:N_y]))
+        i_iepsy_nl[pp, :, :] = iepsy_nl
+
+@jit(parallel=True)
+def get_E4_xy(E4, N_x, N_y, epsxy_mnj):
+    for pp in prange(N_x):
+        for qq in prange(N_x):
+            E4[pp, :, qq, :] = la.toeplitz(epsxy_mnj[pp, N_y - 1:2 * N_y, qq], (epsxy_mnj[pp, :N_y, qq][::-1]))
+
+@jit(parallel=True)
+def get_E4_yx(E4, N_x, N_y, epsyx_mnl):
+    for rr in range(N_y):
+        for ss in range(N_y):
+            E4[:, rr, :, ss] = la.toeplitz(epsyx_mnl[N_x - 1:2 * N_x - 1,
+                rr, ss], epsyx_mnl[:N_x, rr, ss][::-1])
+
 class Layer_Numba:
     def __init__(self, h=0, shapes=None, material=Material(), resolution=None):
-        print("In Numba Layer")
+        # numba.config.NUMBA_NUM_THREADS = 64
+        print(numba.config.NUMBA_NUM_THREADS)
         self._h = float(h)
         self._res = to_vec2(resolution)
         self._dispersive = False
@@ -113,7 +171,7 @@ class Layer_Numba:
 
     def __repr__(self):
         s = self.__str__()
-        s0 = "Layer with "
+        s0 = "Layer: "
         if "\np" in s:
             s.replace("\np", "\nFFT computed for p")
         else:
@@ -125,9 +183,10 @@ class Layer_Numba:
         return s0 + s
 
     def __str__(self):
-        s = "h = " + str(self.h) + ",\nshapes = " + str(self.shapes)
-        s += ",\nbackground = " + str(self.material)
-        s += ",\nresolution = " + str(self.resolution)
+        s = "h = " + str(round(self.h, 3))
+        s += "\nbackground = " + str(self.material).replace("\n", ", ")
+        s += "\n" + str(len(self.shapes)) + " shapes"
+        s += ", resolution = " + str(self.resolution)
         if self.period and self.N:
             s += "\np = " + str(self.period) + ", N = " + str(self.N)
         if self.freq and self.k:
@@ -194,58 +253,55 @@ class Layer_Numba:
         _, grid = self.grid(res, period, freq, 'eps')
         (G_y, G_x) = grid.shape
 
+
+
         EPS = np.zeros((N_t, N_t), dtype=complex)
         eps_fft = fft.fftshift(fft.fft2(grid)) / (G_x * G_y)
         eps_mn = eps_fft[G_x // 2 - N_x + 1:G_x // 2 + N_x,
                 G_y // 2 - N_y + 1:G_y // 2 + N_y]
-
-        for pp in range(N_x):
-            for qq in range(N_y):
-                EPS[pp + N_x * qq, ::-1] = np.reshape(eps_mn[pp:pp + N_x,
-                    qq:qq + N_y], (1, -1), order='F')
+        get_EPS(N_x=N_x, N_y=N_y, EPS=EPS, eps_mn=eps_mn)
         self._fft_eps = EPS
+
+
 
         i_iepsx_mj = np.zeros((N_x, G_y, N_x), dtype=complex)
         iepsx_fft = fft.fftshift(fft.fft(1 / grid, axis=0),
                 axes=0) / (G_x)
+        get_i_iepsx_mj(G_x, G_y, N_x, N_y, iepsx_fft, i_iepsx_mj)
+        # numba_inverse_i_iepsx_mj(i_iepsx_mj, G_y)
+        i_iepsx_mj = np.transpose(i_iepsx_mj, (0, 2, 1))
+        i_iepsx_mj = np.linalg.inv(i_iepsx_mj.T).T
+        i_iepsx_mj = np.transpose(i_iepsx_mj, (0, 2, 1))
 
-        for qq in range(G_y):
-            iepsx_m = iepsx_fft[G_x // 2 - N_x + 1:G_x // 2 + N_x, qq]
-            iepsx_mj = la.toeplitz(iepsx_m[N_x - 1:2 * N_x],
-                    np.flip(iepsx_m[:N_x]))
-            i_iepsx_mj[:, qq, :] = la.inv(iepsx_mj)
+
 
         epsxy_fft = fft.fftshift(fft.fft(i_iepsx_mj, axis=1),
                 axes=1) / (G_y)
         epsxy_mnj = epsxy_fft[:, G_y // 2 + 1 - N_y:G_y // 2 + N_y, :]
-
-        E4 = np.zeros((N_x, N_y, N_x, N_y), dtype=complex);
-        for pp in range(N_x):
-            for qq in range(N_x):
-                E4[pp, :, qq, :] = la.toeplitz(epsxy_mnj[pp,
-                    N_y - 1:2 * N_y, qq], np.flip(epsxy_mnj[pp, :N_y, qq]))
+        E4 = np.zeros((N_x, N_y, N_x, N_y), dtype=complex)
+        get_E4_xy(E4, N_x=N_x, N_y=N_y, epsxy_mnj=epsxy_mnj)
         self._fft_eps_ix = np.reshape(E4, (N_t, N_t), order='F')
+
+
 
         i_iepsy_nl = np.zeros((G_x, N_y, N_y), dtype=complex)
         iepsy_fft = fft.fftshift(fft.fft(1 / grid, axis=1),
                 axes=1) / (G_y)
+        get_i_iepsy_nl(G_x, G_y, N_x, N_y, iepsy_fft, i_iepsy_nl)
+        i_iepsy_nl = np.transpose(i_iepsy_nl, (1, 2, 0))
+        i_iepsy_nl = np.linalg.inv(i_iepsy_nl.T).T
+        i_iepsy_nl = np.transpose(i_iepsy_nl, (2, 0, 1))
 
-        for pp in range(G_x):
-            iepsy_n = iepsy_fft[pp, G_y // 2 - N_y + 1:G_y // 2 + N_y]
-            iepsy_nl = la.toeplitz(iepsy_n[N_y - 1:2 * N_y],
-                    np.flip(iepsy_n[:N_y]))
-            i_iepsy_nl[pp, :, :] = la.inv(iepsy_nl)
+
 
         epsyx_fft = fft.fftshift(fft.fft(i_iepsy_nl, axis=0),
                 axes=0) / (G_x)
         epsyx_mnl = epsyx_fft[G_x // 2 - N_x + 1:G_x // 2 + N_x, :, :]
-
         E4 = np.zeros((N_x,N_y,N_x,N_y), dtype=complex)
-        for rr in range(N_y):
-            for ss in range(N_y):
-                E4[:, rr, :, ss] = la.toeplitz(epsyx_mnl[N_x - 1:2 * N_x - 1,
-                    rr, ss], np.flip(epsyx_mnl[:N_x, rr, ss]))
+        get_E4_yx(E4, N_x=N_x, N_y=N_y, epsyx_mnl=epsyx_mnl)
         self._fft_eps_iy = np.reshape(E4, [N_t, N_t], order='F')
+
+
 
         self._res = res
         self._period = period
@@ -258,10 +314,25 @@ class Layer_Numba:
         EPSxy = self._fft_eps_ix
         EPSyx = self._fft_eps_iy
 
+
+
+
+        print('EPS:', EPS.shape)
+
         F11 = -K.x @ la.solve(EPS, K.y)
         F12 = I + K.x @ la.solve(EPS, K.x)
         F21 = -I - K.y @ la.solve(EPS, K.y)
         F22 = K.y @ la.solve(EPS, K.x)
+
+        # F11 = numba_dot_solve(-K.x, EPS, K.y)
+        # F12 = numba_dot_solve(I + K.x, EPS, K.x)
+        # F21 = numba_dot_solve(- I - K.x, EPS, K.y)
+        # F22 = numba_dot_solve(K.y, EPS, K.x)
+
+
+
+
+
         self.L_eh = np.block([[F11, F12], [F21, F22]])
 
         G11 = -K.x @ K.y
@@ -387,11 +458,11 @@ class Layer_Numba:
             EPSxy = self._fft_eps_ix.copy()
             EPSyx = self._fft_eps_iy.copy()
             self.resolution = r
-            t0 = time.clock_gettime_ns(0)
+            t0 = time.time()
             for _ in range(n_iter):
                 self.__ffts(period, N)
-            t1 = time.clock_gettime_ns(0)
-            DT[i] = (t1 - t0) * 1e-9 / n_iter
+            t1 = time.time()
+            DT[i] = (t1 - t0) / n_iter
             d_eps = la.norm(self._fft_eps - EPS)
             d_eps_x = la.norm(self._fft_eps_ix - EPSxy)
             d_eps_y = la.norm(self._fft_eps_iy - EPSyx)
