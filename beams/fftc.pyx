@@ -6,6 +6,7 @@ from libc.stdlib cimport malloc, free
 from numpy import linalg as la
 from numpy import fft
 from cython.parallel import prange
+cimport scipy.linalg.cython_lapack as lapack_functions
 
 DTYPE = np.complex128
 ctypedef np.complex128_t DTYPE_t
@@ -19,7 +20,10 @@ cpdef void toeplitz_c(DTYPE_t [:] fft_arr, DTYPE_t [:, :] toep) nogil:
         for j in range(N):
             toep[i, j] = fft_arr[i - j]
 
-#cpdef void matx_inv_c(DTYPE_t [:, :] matrix) nogil:
+cpdef void matx_inv_c(DTYPE_t [:, :] matrix) nogil:
+    b = np.eye(matrix.shape[0], dtype=matrix.dtype)
+    _, _, inverse, _ = lapack_functions.cgbsv(matrix, b)
+    matrix = inverse
 
 cpdef DTYPE_t [:, :] fftc(grid, N, inv=None):
     (G_x, G_y) = grid.shape
