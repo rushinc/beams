@@ -16,9 +16,9 @@ cpdef eigsc(matrix):
     return vals, vecs
 
 cpdef eigsc_slepc(np.ndarray[DTYPE_t, ndim=2, mode="c"] matrix):
-    comm = None #PETSc.COMM_WORLD
-    size = 1 #comm.getSize()
-    rank = 0 #comm.getRank()
+    comm = PETSc.COMM_WORLD
+    size = comm.getSize()
+    rank = comm.getRank()
     
     print(str(size) + ", " + str(rank))
     m = matrix.shape[0]
@@ -36,10 +36,11 @@ cpdef eigsc_slepc(np.ndarray[DTYPE_t, ndim=2, mode="c"] matrix):
 
     nconv = E.getConverged()
     vr, vi = A.getVecs();
-    eigenvalues = np.zeros(m, dtype = complex)
-    eigenvectors = np.zeros(m*m, dtype = complex).reshape(m,m)
+    eigenvalues = np.zeros(m/size, dtype = complex)
+    eigenvectors = np.zeros([m/size,m], dtype = complex)
     for i in range(nconv):
         eigenvalues[i] = E.getEigenpair(i, vr, vi)
+        print("Rank " + str(rank) + " has " + str(i) + " eigenvalue " + str(eigenvalues[i]) + " with eigenvector " + str(vr.getArray()))
         eigenvectors[:,i] = vr.getArray() + vi.getArray()*1j
 
     #print("Number of converged eigenpairs: " + str(nconv) +".")
