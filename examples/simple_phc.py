@@ -1,6 +1,3 @@
-import sys
-sys.path.append('/home/rushin/Documents/Python/')
-
 import beams as bm
 import numpy as np
 
@@ -15,10 +12,10 @@ inc = bm.Layer()
 sub = bm.Layer(material=sio2)
 phc = bm.Layer(h=.3, material=si, shapes=[hole], resolution=500)
 
-cell = bm.Cell(period=p, N=11, layers=[inc, phc, sub])
+cell = bm.Cell(period=p, N=3, layers=[inc, phc, sub])
 
 freqs = np.linspace(0.6, 0.75, 100)
 angles = bm.Vector3d()
 
-(R, T) = cell.spectrum(freqs, angles)
+(R, T) = cell.spectrum([0.6], angles)
 

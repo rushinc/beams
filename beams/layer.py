@@ -3,7 +3,6 @@ import beams as bm
 from numpy import fft
 from numpy.lib.scimath import sqrt
 from numpy import linalg as la
-import fftc
 import time
 from beams import *
 
