@@ -923,17 +923,17 @@ typedef volatile __pyx_atomic_int_type __pyx_atomic_int;
             __pyx_sub_acquisition_count_locked(__pyx_get_slice_count_pointer(memview), memview->lock)
 #endif
 
+/* ForceInitThreads.proto */
+#ifndef __PYX_FORCE_INIT_THREADS
+  #define __PYX_FORCE_INIT_THREADS 0
+#endif
+
 /* NoFastGil.proto */
 #define __Pyx_PyGILState_Ensure PyGILState_Ensure
 #define __Pyx_PyGILState_Release PyGILState_Release
 #define __Pyx_FastGIL_Remember()
 #define __Pyx_FastGIL_Forget()
 #define __Pyx_FastGilFuncInit()
-
-/* ForceInitThreads.proto */
-#ifndef __PYX_FORCE_INIT_THREADS
-  #define __PYX_FORCE_INIT_THREADS 0
-#endif
 
 /* BufferFormatStructs.proto */
 #define IS_UNSIGNED(type) (((type) -1) > 0)
@@ -3950,7 +3950,7 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_15, __pyx_t_10, 0);
  *             toeplitz_c(ieps_fft_c[:, qq], i_ieps_c[:, :, qq])
  *             matx_inv_c(i_ieps_c[:, :, qq])             # <<<<<<<<<<<<<<
  * 
- *         epsxy_fft = fft.fft(i_ieps, axis=1) / (G_y)
+ *         epsxy_fft = fft.fft(i_ieps, axis=2) / (G_y)
  */
       __pyx_t_10.data = __pyx_v_i_ieps_c.data;
       __pyx_t_10.memview = __pyx_v_i_ieps_c.memview;
@@ -3986,7 +3986,7 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_10, 0);
     /* "beams/fftc.pyx":73
  *             matx_inv_c(i_ieps_c[:, :, qq])
  * 
- *         epsxy_fft = fft.fft(i_ieps, axis=1) / (G_y)             # <<<<<<<<<<<<<<
+ *         epsxy_fft = fft.fft(i_ieps, axis=2) / (G_y)             # <<<<<<<<<<<<<<
  * 
  *         for pp in range(N.x):
  */
@@ -4002,7 +4002,7 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_10, 0);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_i_ieps);
     __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_axis, __pyx_int_1) < 0) __PYX_ERR(0, 73, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_axis, __pyx_int_2) < 0) __PYX_ERR(0, 73, __pyx_L1_error)
     __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 73, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -4015,7 +4015,7 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_10, 0);
     __pyx_t_4 = 0;
 
     /* "beams/fftc.pyx":75
- *         epsxy_fft = fft.fft(i_ieps, axis=1) / (G_y)
+ *         epsxy_fft = fft.fft(i_ieps, axis=2) / (G_y)
  * 
  *         for pp in range(N.x):             # <<<<<<<<<<<<<<
  *             for qq in range(Nx):
@@ -4198,7 +4198,7 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_15, __pyx_t_10, 0);
  *     if inv=='y':
  *         iepsy_fft = fft.fft(1 / grid, axis=1) / (G_y)             # <<<<<<<<<<<<<<
  * 
- *         for pp in prange(G_x_c, nogil=True):
+ *         for pp in range(G_x):
  */
     __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
@@ -4229,78 +4229,35 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_15, __pyx_t_10, 0);
     /* "beams/fftc.pyx":83
  *         iepsy_fft = fft.fft(1 / grid, axis=1) / (G_y)
  * 
- *         for pp in prange(G_x_c, nogil=True):             # <<<<<<<<<<<<<<
+ *         for pp in range(G_x):             # <<<<<<<<<<<<<<
  *             toeplitz_c(ieps_fft_c[pp, :], i_ieps_c[pp, :, :])
  *             matx_inv_c(i_ieps_c[pp, :, :])
  */
-    {
-        #ifdef WITH_THREAD
-        PyThreadState *_save;
-        Py_UNBLOCK_THREADS
-        __Pyx_FastGIL_Remember();
-        #endif
-        /*try:*/ {
-          __pyx_t_6 = __pyx_v_G_x_c;
-          if ((1 == 0)) abort();
-          {
-              Py_ssize_t __pyx_parallel_temp0 = ((Py_ssize_t)0xbad0bad0);
-              const char *__pyx_parallel_filename = NULL; int __pyx_parallel_lineno = 0, __pyx_parallel_clineno = 0;
-              PyObject *__pyx_parallel_exc_type = NULL, *__pyx_parallel_exc_value = NULL, *__pyx_parallel_exc_tb = NULL;
-              int __pyx_parallel_why;
-              __pyx_parallel_why = 0;
-              #if ((defined(__APPLE__) || defined(__OSX__)) && (defined(__GNUC__) && (__GNUC__ > 2 || (__GNUC__ == 2 && (__GNUC_MINOR__ > 95)))))
-                  #undef likely
-                  #undef unlikely
-                  #define likely(x)   (x)
-                  #define unlikely(x) (x)
-              #endif
-              __pyx_t_17 = (__pyx_t_6 - 0 + 1 - 1/abs(1)) / 1;
-              if (__pyx_t_17 > 0)
-              {
-                  #ifdef _OPENMP
-                  #pragma omp parallel firstprivate(__pyx_t_10, __pyx_t_15) private(__pyx_filename, __pyx_lineno, __pyx_clineno) shared(__pyx_parallel_why, __pyx_parallel_exc_type, __pyx_parallel_exc_value, __pyx_parallel_exc_tb)
-                  #endif /* _OPENMP */
-                  {
-                      #ifdef _OPENMP
-                      #ifdef WITH_THREAD
-                      PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-                      #endif
-                      Py_BEGIN_ALLOW_THREADS
-                      #endif /* _OPENMP */
-                      #ifdef _OPENMP
-                      #pragma omp for firstprivate(__pyx_v_pp) lastprivate(__pyx_v_pp)
-                      #endif /* _OPENMP */
-                      for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_17; __pyx_t_16++){
-                          if (__pyx_parallel_why < 2)
-                          {
-                              __pyx_v_pp = (Py_ssize_t)(0 + 1 * __pyx_t_16);
+    __pyx_t_13 = __Pyx_PyInt_As_long(__pyx_v_G_x); if (unlikely((__pyx_t_13 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 83, __pyx_L1_error)
+    __pyx_t_14 = __pyx_t_13;
+    for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_14; __pyx_t_6+=1) {
+      __pyx_v_pp = __pyx_t_6;
 
-                              /* "beams/fftc.pyx":84
+      /* "beams/fftc.pyx":84
  * 
- *         for pp in prange(G_x_c, nogil=True):
+ *         for pp in range(G_x):
  *             toeplitz_c(ieps_fft_c[pp, :], i_ieps_c[pp, :, :])             # <<<<<<<<<<<<<<
  *             matx_inv_c(i_ieps_c[pp, :, :])
  * 
  */
-                              __pyx_t_15.data = __pyx_v_ieps_fft_c.data;
-                              __pyx_t_15.memview = __pyx_v_ieps_fft_c.memview;
-                              __PYX_INC_MEMVIEW(&__pyx_t_15, 0);
-                              {
+      __pyx_t_15.data = __pyx_v_ieps_fft_c.data;
+      __pyx_t_15.memview = __pyx_v_ieps_fft_c.memview;
+      __PYX_INC_MEMVIEW(&__pyx_t_15, 0);
+      {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_pp;
         Py_ssize_t __pyx_tmp_shape = __pyx_v_ieps_fft_c.shape[0];
     Py_ssize_t __pyx_tmp_stride = __pyx_v_ieps_fft_c.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         if (!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape)) {
-                #ifdef WITH_THREAD
-                PyGILState_STATE __pyx_gilstate_save = PyGILState_Ensure();
-                #endif
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 0)");
-                #ifdef WITH_THREAD
-                PyGILState_Release(__pyx_gilstate_save);
-                #endif
-            __PYX_ERR(0, 84, __pyx_L19_error)
+            __PYX_ERR(0, 84, __pyx_L1_error)
         }
         __pyx_t_15.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
@@ -4310,24 +4267,18 @@ __pyx_t_15.strides[0] = __pyx_v_ieps_fft_c.strides[1];
     __pyx_t_15.suboffsets[0] = -1;
 
 __pyx_t_10.data = __pyx_v_i_ieps_c.data;
-                              __pyx_t_10.memview = __pyx_v_i_ieps_c.memview;
-                              __PYX_INC_MEMVIEW(&__pyx_t_10, 0);
-                              {
+      __pyx_t_10.memview = __pyx_v_i_ieps_c.memview;
+      __PYX_INC_MEMVIEW(&__pyx_t_10, 0);
+      {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_pp;
         Py_ssize_t __pyx_tmp_shape = __pyx_v_i_ieps_c.shape[0];
     Py_ssize_t __pyx_tmp_stride = __pyx_v_i_ieps_c.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         if (!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape)) {
-                #ifdef WITH_THREAD
-                PyGILState_STATE __pyx_gilstate_save = PyGILState_Ensure();
-                #endif
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 0)");
-                #ifdef WITH_THREAD
-                PyGILState_Release(__pyx_gilstate_save);
-                #endif
-            __PYX_ERR(0, 84, __pyx_L19_error)
+            __PYX_ERR(0, 84, __pyx_L1_error)
         }
         __pyx_t_10.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
@@ -4341,39 +4292,33 @@ __pyx_t_10.strides[1] = __pyx_v_i_ieps_c.strides[2];
     __pyx_t_10.suboffsets[1] = -1;
 
 __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_15, __pyx_t_10, 0);
-                              __PYX_XDEC_MEMVIEW(&__pyx_t_15, 0);
-                              __pyx_t_15.memview = NULL;
-                              __pyx_t_15.data = NULL;
-                              __PYX_XDEC_MEMVIEW(&__pyx_t_10, 0);
-                              __pyx_t_10.memview = NULL;
-                              __pyx_t_10.data = NULL;
+      __PYX_XDEC_MEMVIEW(&__pyx_t_15, 1);
+      __pyx_t_15.memview = NULL;
+      __pyx_t_15.data = NULL;
+      __PYX_XDEC_MEMVIEW(&__pyx_t_10, 1);
+      __pyx_t_10.memview = NULL;
+      __pyx_t_10.data = NULL;
 
-                              /* "beams/fftc.pyx":85
- *         for pp in prange(G_x_c, nogil=True):
+      /* "beams/fftc.pyx":85
+ *         for pp in range(G_x):
  *             toeplitz_c(ieps_fft_c[pp, :], i_ieps_c[pp, :, :])
  *             matx_inv_c(i_ieps_c[pp, :, :])             # <<<<<<<<<<<<<<
  * 
  *         epsyx_fft = fft.fft(i_ieps, axis=0) / (G_x)
  */
-                              __pyx_t_10.data = __pyx_v_i_ieps_c.data;
-                              __pyx_t_10.memview = __pyx_v_i_ieps_c.memview;
-                              __PYX_INC_MEMVIEW(&__pyx_t_10, 0);
-                              {
+      __pyx_t_10.data = __pyx_v_i_ieps_c.data;
+      __pyx_t_10.memview = __pyx_v_i_ieps_c.memview;
+      __PYX_INC_MEMVIEW(&__pyx_t_10, 0);
+      {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_pp;
         Py_ssize_t __pyx_tmp_shape = __pyx_v_i_ieps_c.shape[0];
     Py_ssize_t __pyx_tmp_stride = __pyx_v_i_ieps_c.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         if (!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape)) {
-                #ifdef WITH_THREAD
-                PyGILState_STATE __pyx_gilstate_save = PyGILState_Ensure();
-                #endif
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 0)");
-                #ifdef WITH_THREAD
-                PyGILState_Release(__pyx_gilstate_save);
-                #endif
-            __PYX_ERR(0, 85, __pyx_L19_error)
+            __PYX_ERR(0, 85, __pyx_L1_error)
         }
         __pyx_t_10.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
@@ -4387,116 +4332,9 @@ __pyx_t_10.strides[1] = __pyx_v_i_ieps_c.strides[2];
     __pyx_t_10.suboffsets[1] = -1;
 
 __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_10, 0);
-                              __PYX_XDEC_MEMVIEW(&__pyx_t_10, 0);
-                              __pyx_t_10.memview = NULL;
-                              __pyx_t_10.data = NULL;
-                              goto __pyx_L22;
-                              __pyx_L19_error:;
-                              {
-                                  #ifdef WITH_THREAD
-                                  PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-                                  #endif
-                                  #ifdef _OPENMP
-                                  #pragma omp flush(__pyx_parallel_exc_type)
-                                  #endif /* _OPENMP */
-                                  if (!__pyx_parallel_exc_type) {
-                                    __Pyx_ErrFetchWithState(&__pyx_parallel_exc_type, &__pyx_parallel_exc_value, &__pyx_parallel_exc_tb);
-                                    __pyx_parallel_filename = __pyx_filename; __pyx_parallel_lineno = __pyx_lineno; __pyx_parallel_clineno = __pyx_clineno;
-                                    __Pyx_GOTREF(__pyx_parallel_exc_type);
-                                  }
-                                  #ifdef WITH_THREAD
-                                  __Pyx_PyGILState_Release(__pyx_gilstate_save);
-                                  #endif
-                              }
-                              __pyx_parallel_why = 4;
-                              goto __pyx_L21;
-                              __pyx_L21:;
-                              #ifdef _OPENMP
-                              #pragma omp critical(__pyx_parallel_lastprivates0)
-                              #endif /* _OPENMP */
-                              {
-                                  __pyx_parallel_temp0 = __pyx_v_pp;
-                              }
-                              __pyx_L22:;
-                              #ifdef _OPENMP
-                              #pragma omp flush(__pyx_parallel_why)
-                              #endif /* _OPENMP */
-                          }
-                      }
-                      #ifdef _OPENMP
-                      Py_END_ALLOW_THREADS
-                      #else
-{
-#ifdef WITH_THREAD
-                      PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-                      #endif
-                      #endif /* _OPENMP */
-                      /* Clean up any temporaries */
-                      __PYX_XDEC_MEMVIEW(&__pyx_t_10, 0);
-                      __PYX_XDEC_MEMVIEW(&__pyx_t_15, 0);
-                      #ifdef WITH_THREAD
-                      __Pyx_PyGILState_Release(__pyx_gilstate_save);
-                      #endif
-                      #ifndef _OPENMP
-}
-#endif /* _OPENMP */
-                  }
-              }
-              if (__pyx_parallel_exc_type) {
-                /* This may have been overridden by a continue, break or return in another thread. Prefer the error. */
-                __pyx_parallel_why = 4;
-              }
-              if (__pyx_parallel_why) {
-                __pyx_v_pp = __pyx_parallel_temp0;
-                switch (__pyx_parallel_why) {
-                      case 4:
-                  {
-                      #ifdef WITH_THREAD
-                      PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-                      #endif
-                      __Pyx_GIVEREF(__pyx_parallel_exc_type);
-                      __Pyx_ErrRestoreWithState(__pyx_parallel_exc_type, __pyx_parallel_exc_value, __pyx_parallel_exc_tb);
-                      __pyx_filename = __pyx_parallel_filename; __pyx_lineno = __pyx_parallel_lineno; __pyx_clineno = __pyx_parallel_clineno;
-                      #ifdef WITH_THREAD
-                      __Pyx_PyGILState_Release(__pyx_gilstate_save);
-                      #endif
-                  }
-                  goto __pyx_L15_error;
-                }
-              }
-          }
-          #if ((defined(__APPLE__) || defined(__OSX__)) && (defined(__GNUC__) && (__GNUC__ > 2 || (__GNUC__ == 2 && (__GNUC_MINOR__ > 95)))))
-              #undef likely
-              #undef unlikely
-              #define likely(x)   __builtin_expect(!!(x), 1)
-              #define unlikely(x) __builtin_expect(!!(x), 0)
-          #endif
-        }
-
-        /* "beams/fftc.pyx":83
- *         iepsy_fft = fft.fft(1 / grid, axis=1) / (G_y)
- * 
- *         for pp in prange(G_x_c, nogil=True):             # <<<<<<<<<<<<<<
- *             toeplitz_c(ieps_fft_c[pp, :], i_ieps_c[pp, :, :])
- *             matx_inv_c(i_ieps_c[pp, :, :])
- */
-        /*finally:*/ {
-          /*normal exit:*/{
-            #ifdef WITH_THREAD
-            __Pyx_FastGIL_Forget();
-            Py_BLOCK_THREADS
-            #endif
-            goto __pyx_L16;
-          }
-          __pyx_L15_error: {
-            #ifdef WITH_THREAD
-            __Pyx_FastGIL_Forget();
-            Py_BLOCK_THREADS
-            #endif
-            goto __pyx_L1_error;
-          }
-          __pyx_L16:;
-        }
+      __PYX_XDEC_MEMVIEW(&__pyx_t_10, 1);
+      __pyx_t_10.memview = NULL;
+      __pyx_t_10.data = NULL;
     }
 
     /* "beams/fftc.pyx":87
@@ -4504,7 +4342,7 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_10, 0);
  * 
  *         epsyx_fft = fft.fft(i_ieps, axis=0) / (G_x)             # <<<<<<<<<<<<<<
  * 
- *         for rr in prange(Ny, nogil=True):
+ *         for rr in range(Ny):
  */
     __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
@@ -4533,78 +4371,38 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_10, 0);
     /* "beams/fftc.pyx":89
  *         epsyx_fft = fft.fft(i_ieps, axis=0) / (G_x)
  * 
- *         for rr in prange(Ny, nogil=True):             # <<<<<<<<<<<<<<
+ *         for rr in range(Ny):             # <<<<<<<<<<<<<<
  *             for ss in range(Ny):
  *                 toeplitz_c(i_ieps_c[:, rr, ss], E4_c[:, rr, :, ss])
  */
-    {
-        #ifdef WITH_THREAD
-        PyThreadState *_save;
-        Py_UNBLOCK_THREADS
-        __Pyx_FastGIL_Remember();
-        #endif
-        /*try:*/ {
-          __pyx_t_17 = __pyx_v_Ny;
-          if ((1 == 0)) abort();
-          {
-              Py_ssize_t __pyx_parallel_temp0 = ((Py_ssize_t)0xbad0bad0);
-              Py_ssize_t __pyx_parallel_temp1 = ((Py_ssize_t)0xbad0bad0);
-              const char *__pyx_parallel_filename = NULL; int __pyx_parallel_lineno = 0, __pyx_parallel_clineno = 0;
-              PyObject *__pyx_parallel_exc_type = NULL, *__pyx_parallel_exc_value = NULL, *__pyx_parallel_exc_tb = NULL;
-              int __pyx_parallel_why;
-              __pyx_parallel_why = 0;
-              #if ((defined(__APPLE__) || defined(__OSX__)) && (defined(__GNUC__) && (__GNUC__ > 2 || (__GNUC__ == 2 && (__GNUC_MINOR__ > 95)))))
-                  #undef likely
-                  #undef unlikely
-                  #define likely(x)   (x)
-                  #define unlikely(x) (x)
-              #endif
-              __pyx_t_6 = (__pyx_t_17 - 0 + 1 - 1/abs(1)) / 1;
-              if (__pyx_t_6 > 0)
-              {
-                  #ifdef _OPENMP
-                  #pragma omp parallel private(__pyx_t_18, __pyx_t_19, __pyx_t_20) firstprivate(__pyx_t_10, __pyx_t_15) private(__pyx_filename, __pyx_lineno, __pyx_clineno) shared(__pyx_parallel_why, __pyx_parallel_exc_type, __pyx_parallel_exc_value, __pyx_parallel_exc_tb)
-                  #endif /* _OPENMP */
-                  {
-                      #ifdef _OPENMP
-                      #ifdef WITH_THREAD
-                      PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-                      #endif
-                      Py_BEGIN_ALLOW_THREADS
-                      #endif /* _OPENMP */
-                      #ifdef _OPENMP
-                      #pragma omp for firstprivate(__pyx_v_rr) lastprivate(__pyx_v_rr) lastprivate(__pyx_v_ss)
-                      #endif /* _OPENMP */
-                      for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_6; __pyx_t_16++){
-                          if (__pyx_parallel_why < 2)
-                          {
-                              __pyx_v_rr = (Py_ssize_t)(0 + 1 * __pyx_t_16);
-                              /* Initialize private variables to invalid values */
-                              __pyx_v_ss = ((Py_ssize_t)0xbad0bad0);
+    __pyx_t_6 = __pyx_v_Ny;
+    __pyx_t_16 = __pyx_t_6;
+    for (__pyx_t_17 = 0; __pyx_t_17 < __pyx_t_16; __pyx_t_17+=1) {
+      __pyx_v_rr = __pyx_t_17;
 
-                              /* "beams/fftc.pyx":90
+      /* "beams/fftc.pyx":90
  * 
- *         for rr in prange(Ny, nogil=True):
+ *         for rr in range(Ny):
  *             for ss in range(Ny):             # <<<<<<<<<<<<<<
  *                 toeplitz_c(i_ieps_c[:, rr, ss], E4_c[:, rr, :, ss])
  *         return np.reshape(E4, [N_t, N_t], order='F')
  */
-                              __pyx_t_18 = __pyx_v_Ny;
-                              __pyx_t_19 = __pyx_t_18;
-                              for (__pyx_t_20 = 0; __pyx_t_20 < __pyx_t_19; __pyx_t_20+=1) {
-                                __pyx_v_ss = __pyx_t_20;
+      __pyx_t_18 = __pyx_v_Ny;
+      __pyx_t_19 = __pyx_t_18;
+      for (__pyx_t_20 = 0; __pyx_t_20 < __pyx_t_19; __pyx_t_20+=1) {
+        __pyx_v_ss = __pyx_t_20;
 
-                                /* "beams/fftc.pyx":91
- *         for rr in prange(Ny, nogil=True):
+        /* "beams/fftc.pyx":91
+ *         for rr in range(Ny):
  *             for ss in range(Ny):
  *                 toeplitz_c(i_ieps_c[:, rr, ss], E4_c[:, rr, :, ss])             # <<<<<<<<<<<<<<
  *         return np.reshape(E4, [N_t, N_t], order='F')
  * 
  */
-                                __pyx_t_15.data = __pyx_v_i_ieps_c.data;
-                                __pyx_t_15.memview = __pyx_v_i_ieps_c.memview;
-                                __PYX_INC_MEMVIEW(&__pyx_t_15, 0);
-                                __pyx_t_15.shape[0] = __pyx_v_i_ieps_c.shape[0];
+        __pyx_t_15.data = __pyx_v_i_ieps_c.data;
+        __pyx_t_15.memview = __pyx_v_i_ieps_c.memview;
+        __PYX_INC_MEMVIEW(&__pyx_t_15, 0);
+        __pyx_t_15.shape[0] = __pyx_v_i_ieps_c.shape[0];
 __pyx_t_15.strides[0] = __pyx_v_i_ieps_c.strides[0];
     __pyx_t_15.suboffsets[0] = -1;
 
@@ -4615,15 +4413,9 @@ __pyx_t_15.strides[0] = __pyx_v_i_ieps_c.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         if (!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape)) {
-                #ifdef WITH_THREAD
-                PyGILState_STATE __pyx_gilstate_save = PyGILState_Ensure();
-                #endif
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 1)");
-                #ifdef WITH_THREAD
-                PyGILState_Release(__pyx_gilstate_save);
-                #endif
-            __PYX_ERR(0, 91, __pyx_L28_error)
+            __PYX_ERR(0, 91, __pyx_L1_error)
         }
         __pyx_t_15.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
@@ -4635,23 +4427,17 @@ __pyx_t_15.strides[0] = __pyx_v_i_ieps_c.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         if (!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape)) {
-                #ifdef WITH_THREAD
-                PyGILState_STATE __pyx_gilstate_save = PyGILState_Ensure();
-                #endif
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 2)");
-                #ifdef WITH_THREAD
-                PyGILState_Release(__pyx_gilstate_save);
-                #endif
-            __PYX_ERR(0, 91, __pyx_L28_error)
+            __PYX_ERR(0, 91, __pyx_L1_error)
         }
         __pyx_t_15.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
 __pyx_t_10.data = __pyx_v_E4_c.data;
-                                __pyx_t_10.memview = __pyx_v_E4_c.memview;
-                                __PYX_INC_MEMVIEW(&__pyx_t_10, 0);
-                                __pyx_t_10.shape[0] = __pyx_v_E4_c.shape[0];
+        __pyx_t_10.memview = __pyx_v_E4_c.memview;
+        __PYX_INC_MEMVIEW(&__pyx_t_10, 0);
+        __pyx_t_10.shape[0] = __pyx_v_E4_c.shape[0];
 __pyx_t_10.strides[0] = __pyx_v_E4_c.strides[0];
     __pyx_t_10.suboffsets[0] = -1;
 
@@ -4662,15 +4448,9 @@ __pyx_t_10.strides[0] = __pyx_v_E4_c.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         if (!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape)) {
-                #ifdef WITH_THREAD
-                PyGILState_STATE __pyx_gilstate_save = PyGILState_Ensure();
-                #endif
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 1)");
-                #ifdef WITH_THREAD
-                PyGILState_Release(__pyx_gilstate_save);
-                #endif
-            __PYX_ERR(0, 91, __pyx_L28_error)
+            __PYX_ERR(0, 91, __pyx_L1_error)
         }
         __pyx_t_10.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
@@ -4686,136 +4466,21 @@ __pyx_t_10.strides[1] = __pyx_v_E4_c.strides[2];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         if (!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape)) {
-                #ifdef WITH_THREAD
-                PyGILState_STATE __pyx_gilstate_save = PyGILState_Ensure();
-                #endif
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 3)");
-                #ifdef WITH_THREAD
-                PyGILState_Release(__pyx_gilstate_save);
-                #endif
-            __PYX_ERR(0, 91, __pyx_L28_error)
+            __PYX_ERR(0, 91, __pyx_L1_error)
         }
         __pyx_t_10.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
 __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_15, __pyx_t_10, 0);
-                                __PYX_XDEC_MEMVIEW(&__pyx_t_15, 0);
-                                __pyx_t_15.memview = NULL;
-                                __pyx_t_15.data = NULL;
-                                __PYX_XDEC_MEMVIEW(&__pyx_t_10, 0);
-                                __pyx_t_10.memview = NULL;
-                                __pyx_t_10.data = NULL;
-                              }
-                              goto __pyx_L33;
-                              __pyx_L28_error:;
-                              {
-                                  #ifdef WITH_THREAD
-                                  PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-                                  #endif
-                                  #ifdef _OPENMP
-                                  #pragma omp flush(__pyx_parallel_exc_type)
-                                  #endif /* _OPENMP */
-                                  if (!__pyx_parallel_exc_type) {
-                                    __Pyx_ErrFetchWithState(&__pyx_parallel_exc_type, &__pyx_parallel_exc_value, &__pyx_parallel_exc_tb);
-                                    __pyx_parallel_filename = __pyx_filename; __pyx_parallel_lineno = __pyx_lineno; __pyx_parallel_clineno = __pyx_clineno;
-                                    __Pyx_GOTREF(__pyx_parallel_exc_type);
-                                  }
-                                  #ifdef WITH_THREAD
-                                  __Pyx_PyGILState_Release(__pyx_gilstate_save);
-                                  #endif
-                              }
-                              __pyx_parallel_why = 4;
-                              goto __pyx_L32;
-                              __pyx_L32:;
-                              #ifdef _OPENMP
-                              #pragma omp critical(__pyx_parallel_lastprivates1)
-                              #endif /* _OPENMP */
-                              {
-                                  __pyx_parallel_temp0 = __pyx_v_rr;
-                                  __pyx_parallel_temp1 = __pyx_v_ss;
-                              }
-                              __pyx_L33:;
-                              #ifdef _OPENMP
-                              #pragma omp flush(__pyx_parallel_why)
-                              #endif /* _OPENMP */
-                          }
-                      }
-                      #ifdef _OPENMP
-                      Py_END_ALLOW_THREADS
-                      #else
-{
-#ifdef WITH_THREAD
-                      PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-                      #endif
-                      #endif /* _OPENMP */
-                      /* Clean up any temporaries */
-                      __PYX_XDEC_MEMVIEW(&__pyx_t_10, 0);
-                      __PYX_XDEC_MEMVIEW(&__pyx_t_15, 0);
-                      #ifdef WITH_THREAD
-                      __Pyx_PyGILState_Release(__pyx_gilstate_save);
-                      #endif
-                      #ifndef _OPENMP
-}
-#endif /* _OPENMP */
-                  }
-              }
-              if (__pyx_parallel_exc_type) {
-                /* This may have been overridden by a continue, break or return in another thread. Prefer the error. */
-                __pyx_parallel_why = 4;
-              }
-              if (__pyx_parallel_why) {
-                __pyx_v_rr = __pyx_parallel_temp0;
-                __pyx_v_ss = __pyx_parallel_temp1;
-                switch (__pyx_parallel_why) {
-                      case 4:
-                  {
-                      #ifdef WITH_THREAD
-                      PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-                      #endif
-                      __Pyx_GIVEREF(__pyx_parallel_exc_type);
-                      __Pyx_ErrRestoreWithState(__pyx_parallel_exc_type, __pyx_parallel_exc_value, __pyx_parallel_exc_tb);
-                      __pyx_filename = __pyx_parallel_filename; __pyx_lineno = __pyx_parallel_lineno; __pyx_clineno = __pyx_parallel_clineno;
-                      #ifdef WITH_THREAD
-                      __Pyx_PyGILState_Release(__pyx_gilstate_save);
-                      #endif
-                  }
-                  goto __pyx_L24_error;
-                }
-              }
-          }
-          #if ((defined(__APPLE__) || defined(__OSX__)) && (defined(__GNUC__) && (__GNUC__ > 2 || (__GNUC__ == 2 && (__GNUC_MINOR__ > 95)))))
-              #undef likely
-              #undef unlikely
-              #define likely(x)   __builtin_expect(!!(x), 1)
-              #define unlikely(x) __builtin_expect(!!(x), 0)
-          #endif
-        }
-
-        /* "beams/fftc.pyx":89
- *         epsyx_fft = fft.fft(i_ieps, axis=0) / (G_x)
- * 
- *         for rr in prange(Ny, nogil=True):             # <<<<<<<<<<<<<<
- *             for ss in range(Ny):
- *                 toeplitz_c(i_ieps_c[:, rr, ss], E4_c[:, rr, :, ss])
- */
-        /*finally:*/ {
-          /*normal exit:*/{
-            #ifdef WITH_THREAD
-            __Pyx_FastGIL_Forget();
-            Py_BLOCK_THREADS
-            #endif
-            goto __pyx_L25;
-          }
-          __pyx_L24_error: {
-            #ifdef WITH_THREAD
-            __Pyx_FastGIL_Forget();
-            Py_BLOCK_THREADS
-            #endif
-            goto __pyx_L1_error;
-          }
-          __pyx_L25:;
-        }
+        __PYX_XDEC_MEMVIEW(&__pyx_t_15, 1);
+        __pyx_t_15.memview = NULL;
+        __pyx_t_15.data = NULL;
+        __PYX_XDEC_MEMVIEW(&__pyx_t_10, 1);
+        __pyx_t_10.memview = NULL;
+        __pyx_t_10.data = NULL;
+      }
     }
 
     /* "beams/fftc.pyx":92

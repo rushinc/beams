@@ -70,9 +70,9 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc(grid, N, inv=None):
             toeplitz_c(ieps_fft_c[:, qq], i_ieps_c[:, :, qq])
             matx_inv_c(i_ieps_c[:, :, qq])
 
-        epsxy_fft = fft.fft(i_ieps, axis=1) / (G_y)
+        epsxy_fft = fft.fft(i_ieps, axis=2) / (G_y)
 
-        for pp in range(N.x):
+        for pp in range(Nx):
             for qq in range(Nx):
                 toeplitz_c(i_ieps_c[pp, qq, :], E4_c[pp, :, qq, :])
         return np.reshape(E4, (N_t, N_t), order='F')
@@ -80,13 +80,13 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc(grid, N, inv=None):
     if inv=='y':
         iepsy_fft = fft.fft(1 / grid, axis=1) / (G_y)
 
-        for pp in prange(G_x_c, nogil=True):
+        for pp in range(G_x):
             toeplitz_c(ieps_fft_c[pp, :], i_ieps_c[pp, :, :])
             matx_inv_c(i_ieps_c[pp, :, :])
 
         epsyx_fft = fft.fft(i_ieps, axis=0) / (G_x)
 
-        for rr in prange(Ny, nogil=True):
+        for rr in range(Ny):
             for ss in range(Ny):
                 toeplitz_c(i_ieps_c[:, rr, ss], E4_c[:, rr, :, ss])
         return np.reshape(E4, [N_t, N_t], order='F')
