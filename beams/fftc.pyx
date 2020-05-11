@@ -43,17 +43,14 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc(grid, N, inv=None):
 
     ieps_fft = np.empty(grid.shape, dtype=DTYPE)
     if inv=='x':
-        ieps_t = np.empty((N.x, N.x), dtype=DTYPE, order='F')
         i_ieps = np.empty((N.x, N.x, G_y), dtype=DTYPE, order='F')
         epsxy_fft = np.empty((N.x, N.x, G_y), dtype=DTYPE, order='F')
         E4 = np.empty((N.x, N.y, N.x, N.y), dtype=DTYPE);
     elif inv=='y':
-        ieps_t = np.empty((N.y, N.y), dtype=DTYPE)
         i_ieps = np.empty((G_x, N.y, N.y), dtype=DTYPE)
         epsxy_fft = np.empty((G_x, N.y, N.y), dtype=DTYPE)
         E4 = np.empty((N.x, N.y, N.x, N.y), dtype=DTYPE);
     else:
-        ieps_t = np.empty((1, 1), dtype=DTYPE)
         i_ieps = np.empty((1, 1, 1), dtype=DTYPE)
         epsxy_fft = np.empty((1, 1, 1), dtype=DTYPE)
         E4 = np.empty((1, 1, 1, 1), dtype=DTYPE);
@@ -74,7 +71,7 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc(grid, N, inv=None):
 
         for pp in range(Nx):
             for qq in range(Nx):
-                toeplitz_c(i_ieps_c[pp, qq, :], E4_c[pp, :, qq, :])
+                toeplitz_c(epsxy_fft_c[pp, qq, :], E4_c[pp, :, qq, :])
         return np.reshape(E4, (N_t, N_t), order='F')
 
     if inv=='y':
@@ -88,7 +85,7 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc(grid, N, inv=None):
 
         for rr in range(Ny):
             for ss in range(Ny):
-                toeplitz_c(i_ieps_c[:, rr, ss], E4_c[:, rr, :, ss])
+                toeplitz_c(epsxy_fft_c[:, rr, ss], E4_c[:, rr, :, ss])
         return np.reshape(E4, [N_t, N_t], order='F')
 
     EPS = np.zeros((N_t, N_t), dtype=DTYPE)
