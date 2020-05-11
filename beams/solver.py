@@ -364,10 +364,10 @@ class Cell:
             self.N = n
             t0 = time.time()
             (R[i], T[i]) = self.R_T(**kwargs)
+            t1 = time.time()
             print('N = ' + str(n) + ': R = ' + str(round(R[i], 5)) +
                     ', T = ' + str(round(T[i], 5)))
             self.reset()
-            t1 = time.time()
             dt = t1 - t0
             DT[i] = dt
             print(str(round(DT[i], 3)) + 's taken per iteration.')
