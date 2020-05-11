@@ -21,9 +21,15 @@ cpdef void toeplitz_c(DTYPE_t [:] fft_arr, DTYPE_t [:, :] toep) nogil:
             toep[i, j] = fft_arr[i - j]
 
 cpdef void matx_inv_c(DTYPE_t [:, :] matrix) nogil:
-    b = np.eye(matrix.shape[0], dtype=matrix.dtype)
-    _, _, inverse, _ = lapack_functions.cgbsv(matrix, b)
-    matrix = inverse
+    identity = np.eye(matrix.shape[0], dtype=matrix.dtype) # identity matrix that needs to be passed
+    N = matrix.shape[0]
+    NHRS = identity.shape[1]
+    LDA = N
+    LDB = N
+    INFO = 0
+    IPIV = np.zeros((identity.shape[0], ), dtype=matrix.dtype)
+
+    lapack_functions.cgesv(N, NHRS, matrix, LDA, IPIV, identity, LDB, INFO)
 
 cpdef DTYPE_t [:, :] fftc(grid, N, inv=None):
     (G_x, G_y) = grid.shape
