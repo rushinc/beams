@@ -4,7 +4,7 @@ import numpy
 
 ext_modules = [
     Extension(
-        "fftc",
+        "beams.fftc",
         ["beams/fftc.pyx"],
         include_dirs=[numpy.get_include()],
         extra_compile_args=['-fopenmp'],

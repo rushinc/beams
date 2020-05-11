@@ -1,6 +1,3 @@
-import sys
-sys.path.append('/home/rushin/Documents/Python/')
-
 import beams as bm
 import numpy as np
 
