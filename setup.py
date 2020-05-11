@@ -4,8 +4,10 @@ import numpy
 
 ext_modules = [
     Extension(
-        "fftc",
-        ["beams/fftc.pyx"],
+        "eigsc",
+        ["beams/eigsc.pyx"],
+        #"*",
+        #["beams/*.pyx"],
         include_dirs=[numpy.get_include()],
         extra_compile_args=['-fopenmp'],
         extra_link_args=['-fopenmp'],
