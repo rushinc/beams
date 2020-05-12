@@ -4,8 +4,6 @@ import numpy
 
 ext_modules = [
     Extension(
-        #"beams.fftc",
-        #["beams/fftc.pyx"],
         "*",
         ["beams/*.pyx"],
         include_dirs=[numpy.get_include()],
