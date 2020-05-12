@@ -3,8 +3,9 @@ import beams as bm
 from numpy import fft
 from numpy.lib.scimath import sqrt
 from numpy import linalg as la
-import time
+from pyfftw import next_fast_len
 from beams import *
+import time
 
 class Layer:
     def __init__(self, h=0, shapes=None, material=Material(), resolution=None):

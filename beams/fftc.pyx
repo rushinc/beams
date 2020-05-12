@@ -9,10 +9,10 @@ import pyfftw
 import numpy as np
 from cython.parallel import prange
 from pyfftw.interfaces import numpy_fft as fft
+from beams import NUM_THREADS
 
-num_threads = multiprocessing.cpu_count()
-pyfftw.config.NUM_THREADS = num_threads
-openmp.omp_set_num_threads(num_threads)
+pyfftw.config.NUM_THREADS = NUM_THREADS
+openmp.omp_set_num_threads(NUM_THREADS)
 DTYPE = np.complex128
 ctypedef np.complex128_t DTYPE_t
 
@@ -57,7 +57,7 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc_ix(grid, N):
     else:
         f_shape = grid.shape
     gf = pyfftw.empty_aligned(f_shape, dtype=DTYPE)
-    fft_1 = pyfftw.FFTW(gi, gf, axes=(0, ))
+    fft_1 = pyfftw.FFTW(gi, gf, axes=(0, ), threads=NUM_THREADS)
     gi[:] = 1 / grid
     ieps_fft = fft_1()
     ieps_fft /= G[0]
@@ -81,7 +81,7 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc_ix(grid, N):
 
     gi_2 = pyfftw.empty_aligned(i_ieps.shape, dtype=DTYPE)
     gf_2 = pyfftw.empty_aligned(i_ieps.shape, dtype=DTYPE)
-    fft_2 = pyfftw.FFTW(gi_2, gf_2, axes=(0, ))
+    fft_2 = pyfftw.FFTW(gi_2, gf_2, axes=(0, ), threads=NUM_THREADS)
     gi_2[:] = i_ieps
     epsxy_fft = fft_2()
     epsxy_fft /= G[1]
@@ -107,7 +107,7 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc_iy(grid, N):
     else:
         f_shape = grid.shape
     gf = pyfftw.empty_aligned(f_shape, dtype=DTYPE)
-    fft_1 = pyfftw.FFTW(gi, gf, axes=(1, ))
+    fft_1 = pyfftw.FFTW(gi, gf, axes=(1, ), threads=NUM_THREADS)
     gi[:] = 1 / grid
     ieps_fft = fft_1()
     ieps_fft /= G[1]
@@ -131,7 +131,7 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc_iy(grid, N):
 
     gi_2 = pyfftw.empty_aligned(i_ieps.shape, dtype=DTYPE)
     gf_2 = pyfftw.empty_aligned(i_ieps.shape, dtype=DTYPE)
-    fft_2 = pyfftw.FFTW(i_ieps, gf_2, axes=(0, ))
+    fft_2 = pyfftw.FFTW(i_ieps, gf_2, axes=(0, ), threads=NUM_THREADS)
     gi_2[:] = i_ieps
     epsxy_fft = fft_2()
     epsxy_fft /= G[0]
@@ -157,7 +157,7 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc_in(grid, N):
     else:
         f_shape = grid.shape
     gf = pyfftw.empty_aligned(f_shape, dtype=DTYPE)
-    fft_1 = pyfftw.FFTW(gi, gf, axes=(0, ))
+    fft_1 = pyfftw.FFTW(gi, gf, axes=(0, ), threads=NUM_THREADS)
     gi[:] = grid
     eps_fft = fft_1()
     eps_fft /= G[0]
@@ -180,7 +180,7 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc_in(grid, N):
 
     gi_2 = pyfftw.empty_aligned(eps_mn.shape, dtype=DTYPE)
     gf_2 = pyfftw.empty_aligned(eps_mn.shape, dtype=DTYPE)
-    fft_2 = pyfftw.FFTW(gi_2, gf_2, axes=(0, ))
+    fft_2 = pyfftw.FFTW(gi_2, gf_2, axes=(0, ), threads=NUM_THREADS)
     gi_2[:] = eps_mn
     epsxy_fft = fft_2()
     epsxy_fft /= G[1]

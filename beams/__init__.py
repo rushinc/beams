@@ -1,5 +1,8 @@
 import numpy as np
+import multiprocessing
 from scipy import linalg as la
+
+NUM_THREADS = multiprocessing.cpu_count()
 
 def to_vec(elements, **kwargs):
     if elements is None:
