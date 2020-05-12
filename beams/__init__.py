@@ -67,7 +67,7 @@ def star(S1, S2, dtype=complex):
 
     return np.block([[s11, s12], [s21, s22]])
 
-from .fftc import fftc
+from .fftc import *
 from .materials import Material
 from .vectors import Vector, Vector2d, Vector3d
 from .shapes import Shape, Rectangle, Ellipse

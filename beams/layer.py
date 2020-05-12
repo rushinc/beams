@@ -169,35 +169,14 @@ class Layer:
 
         return (vgrid.flatten(), layout)
 
-    def __ffts(self, period, N, freq=None):
+    def __ffts(self, grid, N):
         N_x = int(N.x)
         N_y = int(N.y)
         N_t = N_x * N_y
 
-        if not freq: freq = self.freq
-
-        if self.resolution:
-            res = self.resolution
-        else:
-            res = (2 * N - 1) / period
-
-        if not self.shapes:
-            self._fft_eps = self.material.get('eps', freq) * np.eye(N_t)
-            self._fft_eps_ix = self.material.get('eps', freq) * np.eye(N_t)
-            self._fft_eps_iy = self.material.get('eps', freq) * np.eye(N_t)
-
-            self._res = res
-            self._period = period
-            self._N = N
-            return
-
-        _, grid = self.grid(res, period, freq, 'eps')
-        self._fft_eps = fftc(grid, N)
-        self._fft_eps_ix = fftc(grid, N, inv='x')
-        self._fft_eps_iy = fftc(grid, N, inv='y')
-        self._res = res
-        self._period = period
-        self._N = N
+        self._fft_eps = fftc_in(grid, N)
+        self._fft_eps_ix = fftc_ix(grid, N)
+        self._fft_eps_iy = fftc_iy(grid, N)
 
     def __eigs(self, freq, K):
         N_t = K.x.shape[0]
@@ -232,10 +211,27 @@ class Layer:
         self._freq = freq
 
     def compute_eigs(self, freq, k, period, N):
+        N_t = N.x * N.y
         if (self.period != period or self.N != N
                 or self.freq != freq or self.k != k):
             if self.period != period or self.N != N or self.dispersive:
-                self.__ffts(period, N, freq)
+                if self.resolution:
+                    res = self.resolution
+                else:
+                    res = (2 * N - 1) / period
+                if not self.shapes:
+                    self._fft_eps = self.material.get('eps', freq) *\
+                            np.eye(N_t)
+                    self._fft_eps_ix = self.material.get('eps', freq) *\
+                            np.eye(N_t)
+                    self._fft_eps_iy = self.material.get('eps', freq) *\
+                            np.eye(N_t)
+                else:
+                    _, grid = self.grid(res, period, freq, 'eps')
+                    self.__ffts(grid, N)
+                self._res = res
+                self._period = period
+                self._N = N
             k0 = 2 * np.pi * freq
             m = bm.Vector2d(np.arange(-(N.x // 2), N.x // 2 + 1,
                 dtype=int), np.arange(-(N.y // 2), N.y // 2 + 1,
@@ -331,15 +327,17 @@ class Layer:
         DT = np.zeros(n_res)
         D = np.zeros(n_res)
         self.resolution = res[0]
-        self.__ffts(period, N)
+        _, grid = self.grid(period=period, feature='eps')
+        self.__ffts(grid, N)
         for i, r in enumerate(res[1:]):
             EPS = self._fft_eps.copy()
             EPSxy = self._fft_eps_ix.copy()
             EPSyx = self._fft_eps_iy.copy()
             self.resolution = r
+            _, grid = self.grid(period=period, feature='eps')
             t0 = time.time()
             for _ in range(n_iter):
-                self.__ffts(period, N)
+                self.__ffts(grid, N)
             t1 = time.time()
             DT[i] = (t1 - t0) / n_iter
             d_eps = la.norm(self._fft_eps - EPS)
