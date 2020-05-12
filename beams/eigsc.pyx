@@ -16,13 +16,15 @@ cpdef eigsc(matrix):
     return vals, vecs
 
 cpdef eigsc_slepc(np.ndarray[DTYPE_t, ndim=2, mode="c"] matrix):
-    comm = None #PETSc.COMM_WORLD
-    size = 1 #comm.getSize()
-    rank = 0 #comm.getRank()
-    
-    print(str(size) + ", " + str(rank))
-    m = matrix.shape[0]
+    comm = PETSc.COMM_WORLD
+    size = comm.getSize()
+    rank = comm.getRank()
 
+    m = matrix.shape[0]
+    #print("here")
+    #print(str(size) + ", " + str(rank) + ", " + str(m))
+    
+    
     localLowRow = int(rank*m/size)
     localHighRow = int((rank+1)*m/size)
 
@@ -34,16 +36,23 @@ cpdef eigsc_slepc(np.ndarray[DTYPE_t, ndim=2, mode="c"] matrix):
     E.setDimensions(m,PETSc.DECIDE)
     E.solve()
 
+
     nconv = E.getConverged()
     vr, vi = A.getVecs();
     eigenvalues = np.zeros(m, dtype = complex)
-    eigenvectors = np.zeros(m*m, dtype = complex).reshape(m,m)
+    eigenvectors = np.zeros([m//size,m], dtype = complex)
     for i in range(nconv):
         eigenvalues[i] = E.getEigenpair(i, vr, vi)
+        #print(vr.getArray().shape)
+        #print("Rank " + str(rank) + " has " + str(i) + " eigenvalue " + str(eigenvalues[i]) + " with eigenvector " + str(vr.getArray()) + " " + str(vi.getArray())
         eigenvectors[:,i] = vr.getArray() + vi.getArray()*1j
+        #print("Rank " + str(rank) + " has " + str(i) + " eigenvector " + str(eigenvectors))
+
+    #print("Rank " + str(rank) + " has vals " + str(eigenvalues) + " and vecs " + str(eigenvectors) +  ".")
+
 
     #print("Number of converged eigenpairs: " + str(nconv) +".")
     #print(eigenvalues)
-    return eigenvalues, eigenvalues 
+    return eigenvalues, eigenvectors 
     #return eigs_actualC(&matrix[0,0],
 
