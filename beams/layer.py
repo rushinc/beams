@@ -2,7 +2,6 @@ import numpy as np
 import beams as bm
 from numpy import fft
 from numpy.lib.scimath import sqrt
-from numpy import linalg as la
 from pyfftw import next_fast_len
 from beams import *
 import time
@@ -217,9 +216,15 @@ class Layer:
                 or self.freq != freq or self.k != k):
             if self.period != period or self.N != N or self.dispersive:
                 if self.resolution:
-                    res = self.resolution
+                    size = period * self.resolution
+                    size.x = next_fast_len(int(size.x))
+                    size.y = next_fast_len(int(size.y))
+                    res = size / period
                 else:
-                    res = (2 * N - 1) / period
+                    size = (2 * N - 1)
+                    size.x = next_fast_len(int(size.x))
+                    size.y = next_fast_len(int(size.y))
+                    res = size / period
                 if not self.shapes:
                     self._fft_eps = self.material.get('eps', freq) *\
                             np.eye(N_t)
@@ -270,53 +275,14 @@ class Layer:
                 c[:, 0] *= p_z
                 if amplitudes.x.shape[1] == 2:
                     c[:, 1] *= self.X @ (1 / p_z)
-                    (E[:, :, k], H[:, :, k]) = self.get_fields(pts_xy,
+                    (E[:, :, k], H[:, :, k]) = fields_in_plane(self, pts_xy,
                             Vector2d(c[:N_t, :], c[N_t:, :]), components)
                 else:
-                    (E[:, :, k], H[:, :, k]) = self.get_fields(pts_xy,
+                    (E[:, :, k], H[:, :, k]) = fields_in_plane(self, pts_xy,
                             Vector2d(c[:N_t], c[N_t:]), components)
+            return (E, H)
         else:
-            U_xy = self.U
-            V_xy = self.V
-            U_z = la.solve(self._fft_eps,
-                    self.K.rotate(np.pi / 2).hstack()) @ self.V
-            V_z = self.K.rotate(np.pi / 2).hstack() @ self.U
-
-            if amplitudes.x.shape[1] == 2:
-                U_xy = np.hstack((U_xy, U_xy))
-                V_xy = np.hstack((V_xy, -V_xy))
-                U_z = np.hstack((U_z, -U_z))
-                V_z = np.hstack((V_z, V_z))
-
-            u_xy = U_xy @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
-                    * 2 * N_t, 1), order='F')
-            v_xy = V_xy @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
-                    * 2 * N_t, 1), order='F')
-            u_z = U_z @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
-                    * 2 * N_t, 1), order='F')
-            v_z = V_z @ amplitudes.vstack().reshape((amplitudes.x.shape[1]\
-                    * 2 * N_t, 1), order='F')
-
-            e_x = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-            e_y = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-            e_z = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-            h_x = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-            h_y = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-            h_z = np.zeros((pts.x.size, pts.y.size), dtype=complex)
-            E = Vector3d(e_x, e_y, e_z)
-            H = Vector3d(h_x, h_y, h_z)
-
-            for (j, yy) in enumerate(pts.y):
-                r = Vector2d(pts.x, yy)
-                k_phase = np.exp(-k0 * self.K.diag().dot(r))
-                E.x[:, [j]] = k_phase @ u_xy[:N_t]
-                E.y[:, [j]] = k_phase @ u_xy[N_t:]
-                H.x[:, [j]] = k_phase @ v_xy[:N_t]
-                H.y[:, [j]] = k_phase @ v_xy[N_t:]
-                E.z[:, [j]] = k_phase @ u_z
-                H.z[:, [j]] = k_phase @ v_z
-
-        return (E, H)
+            return fields_in_plane(self, pts, amplitudes, components)
 
     def fft_convergence(self, max_res, n_res, N, period, n_iter=3):
         N = to_vec2(N)
@@ -328,6 +294,10 @@ class Layer:
         DT = np.zeros(n_res)
         D = np.zeros(n_res)
         self.resolution = res[0]
+        size = period * self.resolution
+        size.x = next_fast_len(int(size.x))
+        size.y = next_fast_len(int(size.y))
+        self.resolution = size / period
         _, grid = self.grid(period=period, feature='eps')
         self.__ffts(grid, N)
         for i, r in enumerate(res[1:]):
@@ -335,6 +305,10 @@ class Layer:
             EPSxy = self._fft_eps_ix.copy()
             EPSyx = self._fft_eps_iy.copy()
             self.resolution = r
+            size = period * self.resolution
+            size.x = next_fast_len(int(size.x))
+            size.y = next_fast_len(int(size.y))
+            self.resolution = size / period
             _, grid = self.grid(period=period, feature='eps')
             t0 = time.time()
             for _ in range(n_iter):

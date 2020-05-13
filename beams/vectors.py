@@ -189,7 +189,7 @@ class Vector2d(Vector):
 
     @x.setter
     def x(self, x_p):
-        self.data[0] = np.array(x_)
+        self.data[0] = np.array(x_p)
 
     @property
     def y(self):
