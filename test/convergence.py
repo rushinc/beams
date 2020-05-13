@@ -17,7 +17,7 @@ cell = bm.Cell(period=p, N=9, layers=[inc, phc, sub])
 f = 0.75
 a = bm.Vector3d(np.pi / 3, np.pi / 6, np.pi / 2)
 
-(FD, ft) = phc.fft_convergence(2e4, 50, bm.Vector2d(xy=13), p)
+(FD, ft) = phc.fft_convergence(2e4, 50, bm.Vector2d(xy=25), p)
 # (RT, tt) = cell.convergence(29, freq=f, angles=a)
 
-np.savez('fftw-16', FD, ft)
+np.savez('fftf-4', FD, ft)

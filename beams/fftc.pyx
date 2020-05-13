@@ -4,11 +4,9 @@ cimport numpy as np
 from libc.stdlib cimport malloc, free
 from scipy.linalg.cython_lapack cimport zgetrf, zgetri
 import cython
-import multiprocessing
 import pyfftw
 import numpy as np
 from cython.parallel import prange
-from pyfftw.interfaces import numpy_fft as fft
 from beams import NUM_THREADS
 
 pyfftw.config.NUM_THREADS = NUM_THREADS
