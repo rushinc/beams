@@ -5,7 +5,6 @@ import beams as bm
 import numpy as np
 import cProfile, pstats, io
 from pstats import SortKey
-pr = cProfile.Profile()
 
 p = bm.Vector2d(1, 1)
 
@@ -17,21 +16,22 @@ hole = bm.Ellipse(r=.3, material=air)
 inc = bm.Layer()
 sub = bm.Layer(material=sio2)
 
-freqs = np.linspace(0.6, 0.75, 1)
+freqs = [0.6]
 angles = bm.Vector3d()
 
-#NN = np.arange(1, 21, 2)
-#times = np.empty((3, len(NN)))
-ress = np.arange(100, 5100, 700)
-times = np.empty((3, len(ress)))
+NN = np.arange(5, 47, 2)
+times = np.empty((3, len(NN)))
+#ress = np.logspace(2, np.log10(2e4), 40)
+#times = np.empty((3, len(ress)))
 
-#for (nn, N) in enumerate(NN):
-#    print('N = ' + str(N))
-for (nn, res) in enumerate(ress):
-    print('res = ' + str(res))
-    phc = bm.Layer(h=.3, material=si, shapes=[hole], resolution=res)
-    cell = bm.Cell(period=p, N=11, layers=[inc, phc, sub])
+for (nn, N) in enumerate(NN):
+    print('N = ' + str(N))
+#for (nn, res) in enumerate(ress):
+#    print('res = ' + str(res))
+    phc = bm.Layer(h=.3, material=si, shapes=[hole], resolution=5140)
+    cell = bm.Cell(period=p, N=N, layers=[inc, phc, sub])
 
+    pr = cProfile.Profile()
     pr.enable()
     (R, T) = cell.spectrum(freqs, angles)
     pr.disable()
@@ -40,7 +40,7 @@ for (nn, res) in enumerate(ress):
     sortby = SortKey.CUMULATIVE
     ps = pstats.Stats(pr, stream=s).strip_dirs().sort_stats(sortby)
     ps.print_stats()
-    
+
     for l in s.getvalue().split('\n'):
         if 'ncalls' in l or '__eigs' in l or '__fft' in l or 'linsolve' in l:
             print(l)
