@@ -12,11 +12,12 @@ inc = bm.Layer()
 sub = bm.Layer(material=sio2)
 phc = bm.Layer(h=.3, material=si, shapes=[hole], resolution=500)
 
-cell = bm.Cell(period=p, N=29, layers=[inc, phc, sub])
+cell = bm.Cell(period=p, N=9, layers=[inc, phc, sub])
 
 f = 0.75
 a = bm.Vector3d(np.pi / 3, np.pi / 6, np.pi / 2)
 
-(FD, ft) = phc.fft_convergence(1e4, 25, bm.Vector2d(xy=9), p)
+(FD, ft) = phc.fft_convergence(2e4, 50, bm.Vector2d(xy=25), p)
 # (RT, tt) = cell.convergence(29, freq=f, angles=a)
 
+np.savez('omp-1', FD, ft)
