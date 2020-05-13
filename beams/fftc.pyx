@@ -11,6 +11,7 @@ from numpy import fft
 
 DTYPE = np.complex128
 ctypedef np.complex128_t DTYPE_t
+openmp.omp_set_num_threads(1)
 
 @cython.boundscheck(False)
 cpdef void toeplitz_c(DTYPE_t [:] fft_arr, DTYPE_t [:, :] toep) nogil:
@@ -57,14 +58,14 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc_ix(grid, N):
         DTYPE_t [:, :, :] i_ieps_c = i_ieps
         DTYPE_t [:, :, :, :] E4_c = E4
 
-    for qq in prange(G_c[1], nogil=True, schedule='dynamic'):
+    for qq in prange(G_c[1], nogil=True, schedule='guided'):
         toeplitz_c(ieps_fft_c[:, qq], i_ieps_c[qq, :, :])
         matx_inv_c(i_ieps_c[qq, :, :])
 
     epsxy_fft = fft.fft(i_ieps, axis=0) / G[1]
     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
 
-    for pp in prange(Nx, nogil=True, schedule='dynamic'):
+    for pp in prange(Nx, nogil=True, schedule='guided'):
         for qq in range(Nx):
             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])
 
@@ -89,14 +90,14 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc_iy(grid, N):
         DTYPE_t [:, :, :] i_ieps_c = i_ieps
         DTYPE_t [:, :, :, :] E4_c = E4
 
-    for pp in prange(G_c[0], nogil=True, schedule='dynamic'):
+    for pp in prange(G_c[0], nogil=True, schedule='guided'):
         toeplitz_c(ieps_fft_c[pp, :], i_ieps_c[pp, :, :])
         matx_inv_c(i_ieps_c[pp, :, :])
 
     epsxy_fft = fft.fft(i_ieps, axis=0) / G[0]
     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
 
-    for rr in prange(Ny, nogil=True, schedule='dynamic'):
+    for rr in prange(Ny, nogil=True, schedule='guided'):
         for ss in range(Ny):
             toeplitz_c(epsxy_fft_c[:, rr, ss], E4_c[:, rr, :, ss])
 
@@ -121,13 +122,13 @@ cpdef np.ndarray[DTYPE_t, ndim=2] fftc_in(grid, N):
         DTYPE_t [:, :, :] eps_mn_c = eps_mn
         DTYPE_t [:, :, :, :] E4_c = E4
 
-    for qq in prange(G_c[1], nogil=True, schedule='dynamic'):
+    for qq in prange(G_c[1], nogil=True, schedule='guided'):
         toeplitz_c(eps_fft_c[:, qq], eps_mn_c[qq, :, :])
 
     epsxy_fft = fft.fft(eps_mn, axis=0) / G[1]
     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
 
-    for pp in prange(Nx, nogil=True, schedule='dynamic'):
+    for pp in prange(Nx, nogil=True, schedule='guided'):
         for qq in range(Nx):
             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])
 

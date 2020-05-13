@@ -1320,7 +1320,7 @@ typedef int __pyx_t_5scipy_6linalg_13cython_lapack_zselect2(__pyx_t_double_compl
 struct __pyx_ctuple_int__and_int;
 typedef struct __pyx_ctuple_int__and_int __pyx_ctuple_int__and_int;
 
-/* "beams/fftc.pyx":52
+/* "beams/fftc.pyx":53
  * 
  *     cdef:
  *         (int, int) G_c = G             # <<<<<<<<<<<<<<
@@ -2633,7 +2633,7 @@ static PyObject *__pyx_tuple__31;
 static PyObject *__pyx_codeobj__32;
 /* Late includes */
 
-/* "beams/fftc.pyx":16
+/* "beams/fftc.pyx":17
  * 
  * @cython.boundscheck(False)
  * cpdef void toeplitz_c(DTYPE_t [:] fft_arr, DTYPE_t [:, :] toep) nogil:             # <<<<<<<<<<<<<<
@@ -2656,7 +2656,7 @@ static void __pyx_f_5beams_4fftc_toeplitz_c(__Pyx_memviewslice __pyx_v_fft_arr, 
   Py_ssize_t __pyx_t_8;
   Py_ssize_t __pyx_t_9;
 
-  /* "beams/fftc.pyx":19
+  /* "beams/fftc.pyx":20
  *     cdef:
  *         Py_ssize_t i, j
  *         Py_ssize_t N = toep.shape[0]             # <<<<<<<<<<<<<<
@@ -2665,7 +2665,7 @@ static void __pyx_f_5beams_4fftc_toeplitz_c(__Pyx_memviewslice __pyx_v_fft_arr, 
  */
   __pyx_v_N = (__pyx_v_toep.shape[0]);
 
-  /* "beams/fftc.pyx":21
+  /* "beams/fftc.pyx":22
  *         Py_ssize_t N = toep.shape[0]
  * 
  *     for i in range(N):             # <<<<<<<<<<<<<<
@@ -2677,7 +2677,7 @@ static void __pyx_f_5beams_4fftc_toeplitz_c(__Pyx_memviewslice __pyx_v_fft_arr, 
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "beams/fftc.pyx":22
+    /* "beams/fftc.pyx":23
  * 
  *     for i in range(N):
  *         for j in range(N):             # <<<<<<<<<<<<<<
@@ -2689,7 +2689,7 @@ static void __pyx_f_5beams_4fftc_toeplitz_c(__Pyx_memviewslice __pyx_v_fft_arr, 
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_j = __pyx_t_6;
 
-      /* "beams/fftc.pyx":23
+      /* "beams/fftc.pyx":24
  *     for i in range(N):
  *         for j in range(N):
  *             toep[i, j] = fft_arr[i - j]             # <<<<<<<<<<<<<<
@@ -2706,7 +2706,7 @@ static void __pyx_f_5beams_4fftc_toeplitz_c(__Pyx_memviewslice __pyx_v_fft_arr, 
     }
   }
 
-  /* "beams/fftc.pyx":16
+  /* "beams/fftc.pyx":17
  * 
  * @cython.boundscheck(False)
  * cpdef void toeplitz_c(DTYPE_t [:] fft_arr, DTYPE_t [:, :] toep) nogil:             # <<<<<<<<<<<<<<
@@ -2748,11 +2748,11 @@ static PyObject *__pyx_pw_5beams_4fftc_1toeplitz_c(PyObject *__pyx_self, PyObjec
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_toep)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("toeplitz_c", 1, 2, 2, 1); __PYX_ERR(0, 16, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("toeplitz_c", 1, 2, 2, 1); __PYX_ERR(0, 17, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "toeplitz_c") < 0)) __PYX_ERR(0, 16, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "toeplitz_c") < 0)) __PYX_ERR(0, 17, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -2760,12 +2760,12 @@ static PyObject *__pyx_pw_5beams_4fftc_1toeplitz_c(PyObject *__pyx_self, PyObjec
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_fft_arr = __Pyx_PyObject_to_MemoryviewSlice_ds___pyx_t_double_complex(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_fft_arr.memview)) __PYX_ERR(0, 16, __pyx_L3_error)
-    __pyx_v_toep = __Pyx_PyObject_to_MemoryviewSlice_dsds___pyx_t_double_complex(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_toep.memview)) __PYX_ERR(0, 16, __pyx_L3_error)
+    __pyx_v_fft_arr = __Pyx_PyObject_to_MemoryviewSlice_ds___pyx_t_double_complex(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_fft_arr.memview)) __PYX_ERR(0, 17, __pyx_L3_error)
+    __pyx_v_toep = __Pyx_PyObject_to_MemoryviewSlice_dsds___pyx_t_double_complex(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_toep.memview)) __PYX_ERR(0, 17, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("toeplitz_c", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 16, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("toeplitz_c", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 17, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("beams.fftc.toeplitz_c", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2784,9 +2784,9 @@ static PyObject *__pyx_pf_5beams_4fftc_toeplitz_c(CYTHON_UNUSED PyObject *__pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("toeplitz_c", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_fft_arr.memview)) { __Pyx_RaiseUnboundLocalError("fft_arr"); __PYX_ERR(0, 16, __pyx_L1_error) }
-  if (unlikely(!__pyx_v_toep.memview)) { __Pyx_RaiseUnboundLocalError("toep"); __PYX_ERR(0, 16, __pyx_L1_error) }
-  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_5beams_4fftc_toeplitz_c(__pyx_v_fft_arr, __pyx_v_toep, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+  if (unlikely(!__pyx_v_fft_arr.memview)) { __Pyx_RaiseUnboundLocalError("fft_arr"); __PYX_ERR(0, 17, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_toep.memview)) { __Pyx_RaiseUnboundLocalError("toep"); __PYX_ERR(0, 17, __pyx_L1_error) }
+  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_5beams_4fftc_toeplitz_c(__pyx_v_fft_arr, __pyx_v_toep, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2805,7 +2805,7 @@ static PyObject *__pyx_pf_5beams_4fftc_toeplitz_c(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "beams/fftc.pyx":27
+/* "beams/fftc.pyx":28
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef void matx_inv_c(double complex [:, :] matrix) nogil:             # <<<<<<<<<<<<<<
@@ -2823,7 +2823,7 @@ static void __pyx_f_5beams_4fftc_matx_inv_c(__Pyx_memviewslice __pyx_v_matrix, C
   Py_ssize_t __pyx_t_1;
   Py_ssize_t __pyx_t_2;
 
-  /* "beams/fftc.pyx":29
+  /* "beams/fftc.pyx":30
  * cpdef void matx_inv_c(double complex [:, :] matrix) nogil:
  *     cdef:
  *         int N = matrix.shape[0]             # <<<<<<<<<<<<<<
@@ -2832,7 +2832,7 @@ static void __pyx_f_5beams_4fftc_matx_inv_c(__Pyx_memviewslice __pyx_v_matrix, C
  */
   __pyx_v_N = (__pyx_v_matrix.shape[0]);
 
-  /* "beams/fftc.pyx":30
+  /* "beams/fftc.pyx":31
  *     cdef:
  *         int N = matrix.shape[0]
  *         int info, lwork = N             # <<<<<<<<<<<<<<
@@ -2841,7 +2841,7 @@ static void __pyx_f_5beams_4fftc_matx_inv_c(__Pyx_memviewslice __pyx_v_matrix, C
  */
   __pyx_v_lwork = __pyx_v_N;
 
-  /* "beams/fftc.pyx":31
+  /* "beams/fftc.pyx":32
  *         int N = matrix.shape[0]
  *         int info, lwork = N
  *         int *ipiv = <int *> malloc(N * sizeof(int))             # <<<<<<<<<<<<<<
@@ -2850,7 +2850,7 @@ static void __pyx_f_5beams_4fftc_matx_inv_c(__Pyx_memviewslice __pyx_v_matrix, C
  */
   __pyx_v_ipiv = ((int *)malloc((__pyx_v_N * (sizeof(int)))));
 
-  /* "beams/fftc.pyx":32
+  /* "beams/fftc.pyx":33
  *         int info, lwork = N
  *         int *ipiv = <int *> malloc(N * sizeof(int))
  *         double complex *work = <double complex *> malloc(N * N *\             # <<<<<<<<<<<<<<
@@ -2859,7 +2859,7 @@ static void __pyx_f_5beams_4fftc_matx_inv_c(__Pyx_memviewslice __pyx_v_matrix, C
  */
   __pyx_v_work = ((__pyx_t_double_complex *)malloc(((__pyx_v_N * __pyx_v_N) * (sizeof(__pyx_t_double_complex)))));
 
-  /* "beams/fftc.pyx":35
+  /* "beams/fftc.pyx":36
  *                 sizeof(double complex))
  * 
  *     zgetrf(&N, &N, &matrix[0, 0], &N, ipiv, &info)             # <<<<<<<<<<<<<<
@@ -2870,7 +2870,7 @@ static void __pyx_f_5beams_4fftc_matx_inv_c(__Pyx_memviewslice __pyx_v_matrix, C
   __pyx_t_2 = 0;
   __pyx_f_5scipy_6linalg_13cython_lapack_zgetrf((&__pyx_v_N), (&__pyx_v_N), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_matrix.data + __pyx_t_1 * __pyx_v_matrix.strides[0]) ) + __pyx_t_2 * __pyx_v_matrix.strides[1]) )))), (&__pyx_v_N), __pyx_v_ipiv, (&__pyx_v_info));
 
-  /* "beams/fftc.pyx":36
+  /* "beams/fftc.pyx":37
  * 
  *     zgetrf(&N, &N, &matrix[0, 0], &N, ipiv, &info)
  *     zgetri(&N, &matrix[0,0], &N, ipiv, work, &lwork, &info)             # <<<<<<<<<<<<<<
@@ -2881,7 +2881,7 @@ static void __pyx_f_5beams_4fftc_matx_inv_c(__Pyx_memviewslice __pyx_v_matrix, C
   __pyx_t_1 = 0;
   __pyx_f_5scipy_6linalg_13cython_lapack_zgetri((&__pyx_v_N), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_matrix.data + __pyx_t_2 * __pyx_v_matrix.strides[0]) ) + __pyx_t_1 * __pyx_v_matrix.strides[1]) )))), (&__pyx_v_N), __pyx_v_ipiv, __pyx_v_work, (&__pyx_v_lwork), (&__pyx_v_info));
 
-  /* "beams/fftc.pyx":38
+  /* "beams/fftc.pyx":39
  *     zgetri(&N, &matrix[0,0], &N, ipiv, work, &lwork, &info)
  * 
  *     free(ipiv)             # <<<<<<<<<<<<<<
@@ -2890,7 +2890,7 @@ static void __pyx_f_5beams_4fftc_matx_inv_c(__Pyx_memviewslice __pyx_v_matrix, C
  */
   free(__pyx_v_ipiv);
 
-  /* "beams/fftc.pyx":39
+  /* "beams/fftc.pyx":40
  * 
  *     free(ipiv)
  *     free(work)             # <<<<<<<<<<<<<<
@@ -2899,7 +2899,7 @@ static void __pyx_f_5beams_4fftc_matx_inv_c(__Pyx_memviewslice __pyx_v_matrix, C
  */
   free(__pyx_v_work);
 
-  /* "beams/fftc.pyx":27
+  /* "beams/fftc.pyx":28
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef void matx_inv_c(double complex [:, :] matrix) nogil:             # <<<<<<<<<<<<<<
@@ -2918,7 +2918,7 @@ static PyObject *__pyx_pw_5beams_4fftc_3matx_inv_c(PyObject *__pyx_self, PyObjec
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("matx_inv_c (wrapper)", 0);
   assert(__pyx_arg_matrix); {
-    __pyx_v_matrix = __Pyx_PyObject_to_MemoryviewSlice_dsds___pyx_t_double_complex(__pyx_arg_matrix, PyBUF_WRITABLE); if (unlikely(!__pyx_v_matrix.memview)) __PYX_ERR(0, 27, __pyx_L3_error)
+    __pyx_v_matrix = __Pyx_PyObject_to_MemoryviewSlice_dsds___pyx_t_double_complex(__pyx_arg_matrix, PyBUF_WRITABLE); if (unlikely(!__pyx_v_matrix.memview)) __PYX_ERR(0, 28, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2939,8 +2939,8 @@ static PyObject *__pyx_pf_5beams_4fftc_2matx_inv_c(CYTHON_UNUSED PyObject *__pyx
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("matx_inv_c", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_matrix.memview)) { __Pyx_RaiseUnboundLocalError("matrix"); __PYX_ERR(0, 27, __pyx_L1_error) }
-  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_5beams_4fftc_matx_inv_c(__pyx_v_matrix, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  if (unlikely(!__pyx_v_matrix.memview)) { __Pyx_RaiseUnboundLocalError("matrix"); __PYX_ERR(0, 28, __pyx_L1_error) }
+  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_5beams_4fftc_matx_inv_c(__pyx_v_matrix, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2958,7 +2958,7 @@ static PyObject *__pyx_pf_5beams_4fftc_2matx_inv_c(CYTHON_UNUSED PyObject *__pyx
   return __pyx_r;
 }
 
-/* "beams/fftc.pyx":43
+/* "beams/fftc.pyx":44
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_ix(grid, N):             # <<<<<<<<<<<<<<
@@ -3005,91 +3005,91 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_ix(PyObject *__pyx_v_grid, PyObj
   Py_ssize_t __pyx_t_18;
   __Pyx_RefNannySetupContext("fftc_ix", 0);
 
-  /* "beams/fftc.pyx":44
+  /* "beams/fftc.pyx":45
  * @cython.wraparound(False)
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_ix(grid, N):
  *     G = grid.shape             # <<<<<<<<<<<<<<
  *     N_t = N.x * N.y
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_grid, __pyx_n_s_shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_grid, __pyx_n_s_shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_G = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "beams/fftc.pyx":45
+  /* "beams/fftc.pyx":46
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_ix(grid, N):
  *     G = grid.shape
  *     N_t = N.x * N.y             # <<<<<<<<<<<<<<
  * 
  *     ieps_fft = fft.fft(1 / grid, axis=0) / G[0]
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_N_t = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "beams/fftc.pyx":47
+  /* "beams/fftc.pyx":48
  *     N_t = N.x * N.y
  * 
  *     ieps_fft = fft.fft(1 / grid, axis=0) / G[0]             # <<<<<<<<<<<<<<
  *     i_ieps = np.empty((G[1], N.x, N.x), dtype=DTYPE)
  *     E4 = np.empty((N.x, N.y, N.x, N.y), dtype=DTYPE)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_v_grid); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_v_grid); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
   __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_G, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_G, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_ieps_fft = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "beams/fftc.pyx":48
+  /* "beams/fftc.pyx":49
  * 
  *     ieps_fft = fft.fft(1 / grid, axis=0) / G[0]
  *     i_ieps = np.empty((G[1], N.x, N.x), dtype=DTYPE)             # <<<<<<<<<<<<<<
  *     E4 = np.empty((N.x, N.y, N.x, N.y), dtype=DTYPE)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_empty); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_empty); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_G, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_G, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1);
@@ -3100,18 +3100,18 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_ix(PyObject *__pyx_v_grid, PyObj
   __pyx_t_1 = 0;
   __pyx_t_4 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_5);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 48, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -3119,27 +3119,27 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_ix(PyObject *__pyx_v_grid, PyObj
   __pyx_v_i_ieps = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "beams/fftc.pyx":49
+  /* "beams/fftc.pyx":50
  *     ieps_fft = fft.fft(1 / grid, axis=0) / G[0]
  *     i_ieps = np.empty((G[1], N.x, N.x), dtype=DTYPE)
  *     E4 = np.empty((N.x, N.y, N.x, N.y), dtype=DTYPE)             # <<<<<<<<<<<<<<
  * 
  *     cdef:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_empty); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_empty); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = PyTuple_New(4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GIVEREF(__pyx_t_4);
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4);
@@ -3153,18 +3153,18 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_ix(PyObject *__pyx_v_grid, PyObj
   __pyx_t_2 = 0;
   __pyx_t_3 = 0;
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_6);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_6);
   __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_3) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_3) < 0) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3172,82 +3172,82 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_ix(PyObject *__pyx_v_grid, PyObj
   __pyx_v_E4 = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "beams/fftc.pyx":52
+  /* "beams/fftc.pyx":53
  * 
  *     cdef:
  *         (int, int) G_c = G             # <<<<<<<<<<<<<<
  *         Py_ssize_t Nx = N.x
  *         Py_ssize_t Ny = N.y
  */
-  __pyx_t_7 = __pyx_convert__from_py___pyx_ctuple_int__and_int(__pyx_v_G); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_7 = __pyx_convert__from_py___pyx_ctuple_int__and_int(__pyx_v_G); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 53, __pyx_L1_error)
   __pyx_v_G_c = __pyx_t_7;
 
-  /* "beams/fftc.pyx":53
+  /* "beams/fftc.pyx":54
  *     cdef:
  *         (int, int) G_c = G
  *         Py_ssize_t Nx = N.x             # <<<<<<<<<<<<<<
  *         Py_ssize_t Ny = N.y
  *         Py_ssize_t pp, qq, rr, ss
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_3); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_3); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_Nx = __pyx_t_8;
 
-  /* "beams/fftc.pyx":54
+  /* "beams/fftc.pyx":55
  *         (int, int) G_c = G
  *         Py_ssize_t Nx = N.x
  *         Py_ssize_t Ny = N.y             # <<<<<<<<<<<<<<
  *         Py_ssize_t pp, qq, rr, ss
  *         DTYPE_t [:, :] ieps_fft_c = ieps_fft
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_3); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_3); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_Ny = __pyx_t_8;
 
-  /* "beams/fftc.pyx":56
+  /* "beams/fftc.pyx":57
  *         Py_ssize_t Ny = N.y
  *         Py_ssize_t pp, qq, rr, ss
  *         DTYPE_t [:, :] ieps_fft_c = ieps_fft             # <<<<<<<<<<<<<<
  *         DTYPE_t [:, :, :] i_ieps_c = i_ieps
  *         DTYPE_t [:, :, :, :] E4_c = E4
  */
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsds___pyx_t_double_complex(__pyx_v_ieps_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsds___pyx_t_double_complex(__pyx_v_ieps_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 57, __pyx_L1_error)
   __pyx_v_ieps_fft_c = __pyx_t_9;
   __pyx_t_9.memview = NULL;
   __pyx_t_9.data = NULL;
 
-  /* "beams/fftc.pyx":57
+  /* "beams/fftc.pyx":58
  *         Py_ssize_t pp, qq, rr, ss
  *         DTYPE_t [:, :] ieps_fft_c = ieps_fft
  *         DTYPE_t [:, :, :] i_ieps_c = i_ieps             # <<<<<<<<<<<<<<
  *         DTYPE_t [:, :, :, :] E4_c = E4
  * 
  */
-  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_i_ieps, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_i_ieps, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 58, __pyx_L1_error)
   __pyx_v_i_ieps_c = __pyx_t_10;
   __pyx_t_10.memview = NULL;
   __pyx_t_10.data = NULL;
 
-  /* "beams/fftc.pyx":58
+  /* "beams/fftc.pyx":59
  *         DTYPE_t [:, :] ieps_fft_c = ieps_fft
  *         DTYPE_t [:, :, :] i_ieps_c = i_ieps
  *         DTYPE_t [:, :, :, :] E4_c = E4             # <<<<<<<<<<<<<<
  * 
- *     for qq in prange(G_c[1], nogil=True, schedule='dynamic'):
+ *     for qq in prange(G_c[1], nogil=True, schedule='guided'):
  */
-  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dsdsdsds___pyx_t_double_complex(__pyx_v_E4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dsdsdsds___pyx_t_double_complex(__pyx_v_E4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 59, __pyx_L1_error)
   __pyx_v_E4_c = __pyx_t_11;
   __pyx_t_11.memview = NULL;
   __pyx_t_11.data = NULL;
 
-  /* "beams/fftc.pyx":60
+  /* "beams/fftc.pyx":61
  *         DTYPE_t [:, :, :, :] E4_c = E4
  * 
- *     for qq in prange(G_c[1], nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for qq in prange(G_c[1], nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         toeplitz_c(ieps_fft_c[:, qq], i_ieps_c[qq, :, :])
  *         matx_inv_c(i_ieps_c[qq, :, :])
  */
@@ -3286,16 +3286,16 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_ix(PyObject *__pyx_v_grid, PyObj
                     Py_BEGIN_ALLOW_THREADS
                     #endif /* _OPENMP */
                     #ifdef _OPENMP
-                    #pragma omp for firstprivate(__pyx_v_qq) lastprivate(__pyx_v_qq) schedule(dynamic)
+                    #pragma omp for firstprivate(__pyx_v_qq) lastprivate(__pyx_v_qq) schedule(guided)
                     #endif /* _OPENMP */
                     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_13; __pyx_t_8++){
                         if (__pyx_parallel_why < 2)
                         {
                             __pyx_v_qq = (Py_ssize_t)(0 + 1 * __pyx_t_8);
 
-                            /* "beams/fftc.pyx":61
+                            /* "beams/fftc.pyx":62
  * 
- *     for qq in prange(G_c[1], nogil=True, schedule='dynamic'):
+ *     for qq in prange(G_c[1], nogil=True, schedule='guided'):
  *         toeplitz_c(ieps_fft_c[:, qq], i_ieps_c[qq, :, :])             # <<<<<<<<<<<<<<
  *         matx_inv_c(i_ieps_c[qq, :, :])
  * 
@@ -3310,7 +3310,7 @@ __pyx_t_14.strides[0] = __pyx_v_ieps_fft_c.strides[0];
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_qq;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_ieps_fft_c.strides[1];
-        if ((0)) __PYX_ERR(0, 61, __pyx_L8_error)
+        if ((0)) __PYX_ERR(0, 62, __pyx_L8_error)
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -3320,7 +3320,7 @@ __pyx_t_9.data = __pyx_v_i_ieps_c.data;
                             {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_qq;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_i_ieps_c.strides[0];
-        if ((0)) __PYX_ERR(0, 61, __pyx_L8_error)
+        if ((0)) __PYX_ERR(0, 62, __pyx_L8_error)
         __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -3340,8 +3340,8 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
                             __pyx_t_9.memview = NULL;
                             __pyx_t_9.data = NULL;
 
-                            /* "beams/fftc.pyx":62
- *     for qq in prange(G_c[1], nogil=True, schedule='dynamic'):
+                            /* "beams/fftc.pyx":63
+ *     for qq in prange(G_c[1], nogil=True, schedule='guided'):
  *         toeplitz_c(ieps_fft_c[:, qq], i_ieps_c[qq, :, :])
  *         matx_inv_c(i_ieps_c[qq, :, :])             # <<<<<<<<<<<<<<
  * 
@@ -3353,7 +3353,7 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
                             {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_qq;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_i_ieps_c.strides[0];
-        if ((0)) __PYX_ERR(0, 62, __pyx_L8_error)
+        if ((0)) __PYX_ERR(0, 63, __pyx_L8_error)
         __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -3452,10 +3452,10 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_9, 0);
         #endif
       }
 
-      /* "beams/fftc.pyx":60
+      /* "beams/fftc.pyx":61
  *         DTYPE_t [:, :, :, :] E4_c = E4
  * 
- *     for qq in prange(G_c[1], nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for qq in prange(G_c[1], nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         toeplitz_c(ieps_fft_c[:, qq], i_ieps_c[qq, :, :])
  *         matx_inv_c(i_ieps_c[qq, :, :])
  */
@@ -3478,56 +3478,56 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_9, 0);
       }
   }
 
-  /* "beams/fftc.pyx":64
+  /* "beams/fftc.pyx":65
  *         matx_inv_c(i_ieps_c[qq, :, :])
  * 
  *     epsxy_fft = fft.fft(i_ieps, axis=0) / G[1]             # <<<<<<<<<<<<<<
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_v_i_ieps);
   __Pyx_GIVEREF(__pyx_v_i_ieps);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_i_ieps);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 64, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_G, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_G, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_epsxy_fft = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "beams/fftc.pyx":65
+  /* "beams/fftc.pyx":66
  * 
  *     epsxy_fft = fft.fft(i_ieps, axis=0) / G[1]
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft             # <<<<<<<<<<<<<<
  * 
- *     for pp in prange(Nx, nogil=True, schedule='dynamic'):
+ *     for pp in prange(Nx, nogil=True, schedule='guided'):
  */
-  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_epsxy_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_epsxy_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 66, __pyx_L1_error)
   __pyx_v_epsxy_fft_c = __pyx_t_10;
   __pyx_t_10.memview = NULL;
   __pyx_t_10.data = NULL;
 
-  /* "beams/fftc.pyx":67
+  /* "beams/fftc.pyx":68
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
  * 
- *     for pp in prange(Nx, nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for pp in prange(Nx, nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         for qq in range(Nx):
  *             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])
  */
@@ -3567,7 +3567,7 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_9, 0);
                     Py_BEGIN_ALLOW_THREADS
                     #endif /* _OPENMP */
                     #ifdef _OPENMP
-                    #pragma omp for firstprivate(__pyx_v_pp) lastprivate(__pyx_v_pp) lastprivate(__pyx_v_qq) schedule(dynamic)
+                    #pragma omp for firstprivate(__pyx_v_pp) lastprivate(__pyx_v_pp) lastprivate(__pyx_v_qq) schedule(guided)
                     #endif /* _OPENMP */
                     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_15; __pyx_t_8++){
                         if (__pyx_parallel_why < 2)
@@ -3576,9 +3576,9 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_9, 0);
                             /* Initialize private variables to invalid values */
                             __pyx_v_qq = ((Py_ssize_t)0xbad0bad0);
 
-                            /* "beams/fftc.pyx":68
+                            /* "beams/fftc.pyx":69
  * 
- *     for pp in prange(Nx, nogil=True, schedule='dynamic'):
+ *     for pp in prange(Nx, nogil=True, schedule='guided'):
  *         for qq in range(Nx):             # <<<<<<<<<<<<<<
  *             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])
  * 
@@ -3588,8 +3588,8 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_9, 0);
                             for (__pyx_t_18 = 0; __pyx_t_18 < __pyx_t_17; __pyx_t_18+=1) {
                               __pyx_v_qq = __pyx_t_18;
 
-                              /* "beams/fftc.pyx":69
- *     for pp in prange(Nx, nogil=True, schedule='dynamic'):
+                              /* "beams/fftc.pyx":70
+ *     for pp in prange(Nx, nogil=True, schedule='guided'):
  *         for qq in range(Nx):
  *             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])             # <<<<<<<<<<<<<<
  * 
@@ -3605,14 +3605,14 @@ __pyx_t_14.strides[0] = __pyx_v_epsxy_fft_c.strides[0];
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_pp;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_epsxy_fft_c.strides[1];
-        if ((0)) __PYX_ERR(0, 69, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 70, __pyx_L17_error)
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_qq;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_epsxy_fft_c.strides[2];
-        if ((0)) __PYX_ERR(0, 69, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 70, __pyx_L17_error)
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -3622,7 +3622,7 @@ __pyx_t_9.data = __pyx_v_E4_c.data;
                               {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_pp;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_E4_c.strides[0];
-        if ((0)) __PYX_ERR(0, 69, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 70, __pyx_L17_error)
         __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -3633,7 +3633,7 @@ __pyx_t_9.strides[0] = __pyx_v_E4_c.strides[1];
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_qq;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_E4_c.strides[2];
-        if ((0)) __PYX_ERR(0, 69, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 70, __pyx_L17_error)
         __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -3734,10 +3734,10 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
         #endif
       }
 
-      /* "beams/fftc.pyx":67
+      /* "beams/fftc.pyx":68
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
  * 
- *     for pp in prange(Nx, nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for pp in prange(Nx, nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         for qq in range(Nx):
  *             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])
  */
@@ -3760,7 +3760,7 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
       }
   }
 
-  /* "beams/fftc.pyx":71
+  /* "beams/fftc.pyx":72
  *             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])
  * 
  *     return np.reshape(E4, (N_t, N_t), order='F')             # <<<<<<<<<<<<<<
@@ -3768,12 +3768,12 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
  * @cython.boundscheck(False)
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_reshape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_reshape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_v_N_t);
   __Pyx_GIVEREF(__pyx_v_N_t);
@@ -3781,7 +3781,7 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
   __Pyx_INCREF(__pyx_v_N_t);
   __Pyx_GIVEREF(__pyx_v_N_t);
   PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v_N_t);
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_INCREF(__pyx_v_E4);
   __Pyx_GIVEREF(__pyx_v_E4);
@@ -3789,20 +3789,20 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_3);
   __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_order, __pyx_n_u_F) < 0) __PYX_ERR(0, 71, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 71, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_order, __pyx_n_u_F) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 71, __pyx_L1_error)
+  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 72, __pyx_L1_error)
   __pyx_r = ((PyArrayObject *)__pyx_t_6);
   __pyx_t_6 = 0;
   goto __pyx_L0;
 
-  /* "beams/fftc.pyx":43
+  /* "beams/fftc.pyx":44
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_ix(grid, N):             # <<<<<<<<<<<<<<
@@ -3871,11 +3871,11 @@ static PyObject *__pyx_pw_5beams_4fftc_5fftc_ix(PyObject *__pyx_self, PyObject *
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_N)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("fftc_ix", 1, 2, 2, 1); __PYX_ERR(0, 43, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("fftc_ix", 1, 2, 2, 1); __PYX_ERR(0, 44, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fftc_ix") < 0)) __PYX_ERR(0, 43, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fftc_ix") < 0)) __PYX_ERR(0, 44, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -3888,7 +3888,7 @@ static PyObject *__pyx_pw_5beams_4fftc_5fftc_ix(PyObject *__pyx_self, PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("fftc_ix", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 43, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("fftc_ix", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 44, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("beams.fftc.fftc_ix", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3907,7 +3907,7 @@ static PyObject *__pyx_pf_5beams_4fftc_4fftc_ix(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("fftc_ix", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_5beams_4fftc_fftc_ix(__pyx_v_grid, __pyx_v_N, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_5beams_4fftc_fftc_ix(__pyx_v_grid, __pyx_v_N, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3924,7 +3924,7 @@ static PyObject *__pyx_pf_5beams_4fftc_4fftc_ix(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "beams/fftc.pyx":75
+/* "beams/fftc.pyx":76
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_iy(grid, N):             # <<<<<<<<<<<<<<
@@ -3972,91 +3972,91 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_iy(PyObject *__pyx_v_grid, PyObj
   Py_ssize_t __pyx_t_18;
   __Pyx_RefNannySetupContext("fftc_iy", 0);
 
-  /* "beams/fftc.pyx":76
+  /* "beams/fftc.pyx":77
  * @cython.wraparound(False)
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_iy(grid, N):
  *     G = grid.shape             # <<<<<<<<<<<<<<
  *     N_t = N.x * N.y
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_grid, __pyx_n_s_shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_grid, __pyx_n_s_shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_G = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "beams/fftc.pyx":77
+  /* "beams/fftc.pyx":78
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_iy(grid, N):
  *     G = grid.shape
  *     N_t = N.x * N.y             # <<<<<<<<<<<<<<
  * 
  *     ieps_fft = fft.fft(1 / grid, axis=1) / G[1]
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_N_t = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "beams/fftc.pyx":79
+  /* "beams/fftc.pyx":80
  *     N_t = N.x * N.y
  * 
  *     ieps_fft = fft.fft(1 / grid, axis=1) / G[1]             # <<<<<<<<<<<<<<
  *     i_ieps = np.empty((G[0], N.y, N.y), dtype=DTYPE)
  *     E4 = np.empty((N.x, N.y, N.x, N.y), dtype=DTYPE)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_v_grid); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_v_grid); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
   __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_axis, __pyx_int_1) < 0) __PYX_ERR(0, 79, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_axis, __pyx_int_1) < 0) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_G, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_G, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_ieps_fft = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "beams/fftc.pyx":80
+  /* "beams/fftc.pyx":81
  * 
  *     ieps_fft = fft.fft(1 / grid, axis=1) / G[1]
  *     i_ieps = np.empty((G[0], N.y, N.y), dtype=DTYPE)             # <<<<<<<<<<<<<<
  *     E4 = np.empty((N.x, N.y, N.x, N.y), dtype=DTYPE)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_empty); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_empty); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_G, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_G, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1);
@@ -4067,18 +4067,18 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_iy(PyObject *__pyx_v_grid, PyObj
   __pyx_t_1 = 0;
   __pyx_t_4 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_5);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 80, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -4086,27 +4086,27 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_iy(PyObject *__pyx_v_grid, PyObj
   __pyx_v_i_ieps = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "beams/fftc.pyx":81
+  /* "beams/fftc.pyx":82
  *     ieps_fft = fft.fft(1 / grid, axis=1) / G[1]
  *     i_ieps = np.empty((G[0], N.y, N.y), dtype=DTYPE)
  *     E4 = np.empty((N.x, N.y, N.x, N.y), dtype=DTYPE)             # <<<<<<<<<<<<<<
  * 
  *     cdef:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_empty); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_empty); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = PyTuple_New(4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GIVEREF(__pyx_t_4);
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4);
@@ -4120,18 +4120,18 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_iy(PyObject *__pyx_v_grid, PyObj
   __pyx_t_2 = 0;
   __pyx_t_3 = 0;
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_6);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_6);
   __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_3) < 0) __PYX_ERR(0, 81, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_3) < 0) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4139,82 +4139,82 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_iy(PyObject *__pyx_v_grid, PyObj
   __pyx_v_E4 = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "beams/fftc.pyx":84
+  /* "beams/fftc.pyx":85
  * 
  *     cdef:
  *         (int, int) G_c = G             # <<<<<<<<<<<<<<
  *         Py_ssize_t Nx = N.x
  *         Py_ssize_t Ny = N.y
  */
-  __pyx_t_7 = __pyx_convert__from_py___pyx_ctuple_int__and_int(__pyx_v_G); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_7 = __pyx_convert__from_py___pyx_ctuple_int__and_int(__pyx_v_G); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 85, __pyx_L1_error)
   __pyx_v_G_c = __pyx_t_7;
 
-  /* "beams/fftc.pyx":85
+  /* "beams/fftc.pyx":86
  *     cdef:
  *         (int, int) G_c = G
  *         Py_ssize_t Nx = N.x             # <<<<<<<<<<<<<<
  *         Py_ssize_t Ny = N.y
  *         Py_ssize_t pp, qq, rr, ss
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_3); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_3); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 86, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_Nx = __pyx_t_8;
 
-  /* "beams/fftc.pyx":86
+  /* "beams/fftc.pyx":87
  *         (int, int) G_c = G
  *         Py_ssize_t Nx = N.x
  *         Py_ssize_t Ny = N.y             # <<<<<<<<<<<<<<
  *         Py_ssize_t pp, qq, rr, ss
  *         DTYPE_t [:, :] ieps_fft_c = ieps_fft
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_3); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_3); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_Ny = __pyx_t_8;
 
-  /* "beams/fftc.pyx":88
+  /* "beams/fftc.pyx":89
  *         Py_ssize_t Ny = N.y
  *         Py_ssize_t pp, qq, rr, ss
  *         DTYPE_t [:, :] ieps_fft_c = ieps_fft             # <<<<<<<<<<<<<<
  *         DTYPE_t [:, :, :] i_ieps_c = i_ieps
  *         DTYPE_t [:, :, :, :] E4_c = E4
  */
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsds___pyx_t_double_complex(__pyx_v_ieps_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsds___pyx_t_double_complex(__pyx_v_ieps_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 89, __pyx_L1_error)
   __pyx_v_ieps_fft_c = __pyx_t_9;
   __pyx_t_9.memview = NULL;
   __pyx_t_9.data = NULL;
 
-  /* "beams/fftc.pyx":89
+  /* "beams/fftc.pyx":90
  *         Py_ssize_t pp, qq, rr, ss
  *         DTYPE_t [:, :] ieps_fft_c = ieps_fft
  *         DTYPE_t [:, :, :] i_ieps_c = i_ieps             # <<<<<<<<<<<<<<
  *         DTYPE_t [:, :, :, :] E4_c = E4
  * 
  */
-  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_i_ieps, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_i_ieps, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 90, __pyx_L1_error)
   __pyx_v_i_ieps_c = __pyx_t_10;
   __pyx_t_10.memview = NULL;
   __pyx_t_10.data = NULL;
 
-  /* "beams/fftc.pyx":90
+  /* "beams/fftc.pyx":91
  *         DTYPE_t [:, :] ieps_fft_c = ieps_fft
  *         DTYPE_t [:, :, :] i_ieps_c = i_ieps
  *         DTYPE_t [:, :, :, :] E4_c = E4             # <<<<<<<<<<<<<<
  * 
- *     for pp in prange(G_c[0], nogil=True, schedule='dynamic'):
+ *     for pp in prange(G_c[0], nogil=True, schedule='guided'):
  */
-  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dsdsdsds___pyx_t_double_complex(__pyx_v_E4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dsdsdsds___pyx_t_double_complex(__pyx_v_E4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 91, __pyx_L1_error)
   __pyx_v_E4_c = __pyx_t_11;
   __pyx_t_11.memview = NULL;
   __pyx_t_11.data = NULL;
 
-  /* "beams/fftc.pyx":92
+  /* "beams/fftc.pyx":93
  *         DTYPE_t [:, :, :, :] E4_c = E4
  * 
- *     for pp in prange(G_c[0], nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for pp in prange(G_c[0], nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         toeplitz_c(ieps_fft_c[pp, :], i_ieps_c[pp, :, :])
  *         matx_inv_c(i_ieps_c[pp, :, :])
  */
@@ -4253,16 +4253,16 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_iy(PyObject *__pyx_v_grid, PyObj
                     Py_BEGIN_ALLOW_THREADS
                     #endif /* _OPENMP */
                     #ifdef _OPENMP
-                    #pragma omp for firstprivate(__pyx_v_pp) lastprivate(__pyx_v_pp) schedule(dynamic)
+                    #pragma omp for firstprivate(__pyx_v_pp) lastprivate(__pyx_v_pp) schedule(guided)
                     #endif /* _OPENMP */
                     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_13; __pyx_t_8++){
                         if (__pyx_parallel_why < 2)
                         {
                             __pyx_v_pp = (Py_ssize_t)(0 + 1 * __pyx_t_8);
 
-                            /* "beams/fftc.pyx":93
+                            /* "beams/fftc.pyx":94
  * 
- *     for pp in prange(G_c[0], nogil=True, schedule='dynamic'):
+ *     for pp in prange(G_c[0], nogil=True, schedule='guided'):
  *         toeplitz_c(ieps_fft_c[pp, :], i_ieps_c[pp, :, :])             # <<<<<<<<<<<<<<
  *         matx_inv_c(i_ieps_c[pp, :, :])
  * 
@@ -4273,7 +4273,7 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_iy(PyObject *__pyx_v_grid, PyObj
                             {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_pp;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_ieps_fft_c.strides[0];
-        if ((0)) __PYX_ERR(0, 93, __pyx_L8_error)
+        if ((0)) __PYX_ERR(0, 94, __pyx_L8_error)
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -4287,7 +4287,7 @@ __pyx_t_9.data = __pyx_v_i_ieps_c.data;
                             {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_pp;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_i_ieps_c.strides[0];
-        if ((0)) __PYX_ERR(0, 93, __pyx_L8_error)
+        if ((0)) __PYX_ERR(0, 94, __pyx_L8_error)
         __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -4307,8 +4307,8 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
                             __pyx_t_9.memview = NULL;
                             __pyx_t_9.data = NULL;
 
-                            /* "beams/fftc.pyx":94
- *     for pp in prange(G_c[0], nogil=True, schedule='dynamic'):
+                            /* "beams/fftc.pyx":95
+ *     for pp in prange(G_c[0], nogil=True, schedule='guided'):
  *         toeplitz_c(ieps_fft_c[pp, :], i_ieps_c[pp, :, :])
  *         matx_inv_c(i_ieps_c[pp, :, :])             # <<<<<<<<<<<<<<
  * 
@@ -4320,7 +4320,7 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
                             {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_pp;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_i_ieps_c.strides[0];
-        if ((0)) __PYX_ERR(0, 94, __pyx_L8_error)
+        if ((0)) __PYX_ERR(0, 95, __pyx_L8_error)
         __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -4419,10 +4419,10 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_9, 0);
         #endif
       }
 
-      /* "beams/fftc.pyx":92
+      /* "beams/fftc.pyx":93
  *         DTYPE_t [:, :, :, :] E4_c = E4
  * 
- *     for pp in prange(G_c[0], nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for pp in prange(G_c[0], nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         toeplitz_c(ieps_fft_c[pp, :], i_ieps_c[pp, :, :])
  *         matx_inv_c(i_ieps_c[pp, :, :])
  */
@@ -4445,56 +4445,56 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_9, 0);
       }
   }
 
-  /* "beams/fftc.pyx":96
+  /* "beams/fftc.pyx":97
  *         matx_inv_c(i_ieps_c[pp, :, :])
  * 
  *     epsxy_fft = fft.fft(i_ieps, axis=0) / G[0]             # <<<<<<<<<<<<<<
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_v_i_ieps);
   __Pyx_GIVEREF(__pyx_v_i_ieps);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_i_ieps);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 96, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_G, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_G, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_epsxy_fft = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "beams/fftc.pyx":97
+  /* "beams/fftc.pyx":98
  * 
  *     epsxy_fft = fft.fft(i_ieps, axis=0) / G[0]
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft             # <<<<<<<<<<<<<<
  * 
- *     for rr in prange(Ny, nogil=True, schedule='dynamic'):
+ *     for rr in prange(Ny, nogil=True, schedule='guided'):
  */
-  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_epsxy_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_epsxy_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 98, __pyx_L1_error)
   __pyx_v_epsxy_fft_c = __pyx_t_10;
   __pyx_t_10.memview = NULL;
   __pyx_t_10.data = NULL;
 
-  /* "beams/fftc.pyx":99
+  /* "beams/fftc.pyx":100
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
  * 
- *     for rr in prange(Ny, nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for rr in prange(Ny, nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         for ss in range(Ny):
  *             toeplitz_c(epsxy_fft_c[:, rr, ss], E4_c[:, rr, :, ss])
  */
@@ -4534,7 +4534,7 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_9, 0);
                     Py_BEGIN_ALLOW_THREADS
                     #endif /* _OPENMP */
                     #ifdef _OPENMP
-                    #pragma omp for firstprivate(__pyx_v_rr) lastprivate(__pyx_v_rr) lastprivate(__pyx_v_ss) schedule(dynamic)
+                    #pragma omp for firstprivate(__pyx_v_rr) lastprivate(__pyx_v_rr) lastprivate(__pyx_v_ss) schedule(guided)
                     #endif /* _OPENMP */
                     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_15; __pyx_t_8++){
                         if (__pyx_parallel_why < 2)
@@ -4543,9 +4543,9 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_9, 0);
                             /* Initialize private variables to invalid values */
                             __pyx_v_ss = ((Py_ssize_t)0xbad0bad0);
 
-                            /* "beams/fftc.pyx":100
+                            /* "beams/fftc.pyx":101
  * 
- *     for rr in prange(Ny, nogil=True, schedule='dynamic'):
+ *     for rr in prange(Ny, nogil=True, schedule='guided'):
  *         for ss in range(Ny):             # <<<<<<<<<<<<<<
  *             toeplitz_c(epsxy_fft_c[:, rr, ss], E4_c[:, rr, :, ss])
  * 
@@ -4555,8 +4555,8 @@ __pyx_f_5beams_4fftc_matx_inv_c(__pyx_t_9, 0);
                             for (__pyx_t_18 = 0; __pyx_t_18 < __pyx_t_17; __pyx_t_18+=1) {
                               __pyx_v_ss = __pyx_t_18;
 
-                              /* "beams/fftc.pyx":101
- *     for rr in prange(Ny, nogil=True, schedule='dynamic'):
+                              /* "beams/fftc.pyx":102
+ *     for rr in prange(Ny, nogil=True, schedule='guided'):
  *         for ss in range(Ny):
  *             toeplitz_c(epsxy_fft_c[:, rr, ss], E4_c[:, rr, :, ss])             # <<<<<<<<<<<<<<
  * 
@@ -4572,14 +4572,14 @@ __pyx_t_14.strides[0] = __pyx_v_epsxy_fft_c.strides[0];
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_rr;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_epsxy_fft_c.strides[1];
-        if ((0)) __PYX_ERR(0, 101, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 102, __pyx_L17_error)
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_ss;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_epsxy_fft_c.strides[2];
-        if ((0)) __PYX_ERR(0, 101, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 102, __pyx_L17_error)
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -4593,7 +4593,7 @@ __pyx_t_9.strides[0] = __pyx_v_E4_c.strides[0];
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_rr;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_E4_c.strides[1];
-        if ((0)) __PYX_ERR(0, 101, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 102, __pyx_L17_error)
         __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -4604,7 +4604,7 @@ __pyx_t_9.strides[1] = __pyx_v_E4_c.strides[2];
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_ss;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_E4_c.strides[3];
-        if ((0)) __PYX_ERR(0, 101, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 102, __pyx_L17_error)
         __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -4701,10 +4701,10 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
         #endif
       }
 
-      /* "beams/fftc.pyx":99
+      /* "beams/fftc.pyx":100
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
  * 
- *     for rr in prange(Ny, nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for rr in prange(Ny, nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         for ss in range(Ny):
  *             toeplitz_c(epsxy_fft_c[:, rr, ss], E4_c[:, rr, :, ss])
  */
@@ -4727,7 +4727,7 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
       }
   }
 
-  /* "beams/fftc.pyx":103
+  /* "beams/fftc.pyx":104
  *             toeplitz_c(epsxy_fft_c[:, rr, ss], E4_c[:, rr, :, ss])
  * 
  *     return np.reshape(E4, [N_t, N_t], order='F')             # <<<<<<<<<<<<<<
@@ -4735,12 +4735,12 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
  * @cython.boundscheck(False)
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_reshape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_reshape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyList_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_v_N_t);
   __Pyx_GIVEREF(__pyx_v_N_t);
@@ -4748,7 +4748,7 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
   __Pyx_INCREF(__pyx_v_N_t);
   __Pyx_GIVEREF(__pyx_v_N_t);
   PyList_SET_ITEM(__pyx_t_3, 1, __pyx_v_N_t);
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_INCREF(__pyx_v_E4);
   __Pyx_GIVEREF(__pyx_v_E4);
@@ -4756,20 +4756,20 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_3);
   __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_order, __pyx_n_u_F) < 0) __PYX_ERR(0, 103, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_order, __pyx_n_u_F) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 104, __pyx_L1_error)
   __pyx_r = ((PyArrayObject *)__pyx_t_6);
   __pyx_t_6 = 0;
   goto __pyx_L0;
 
-  /* "beams/fftc.pyx":75
+  /* "beams/fftc.pyx":76
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_iy(grid, N):             # <<<<<<<<<<<<<<
@@ -4838,11 +4838,11 @@ static PyObject *__pyx_pw_5beams_4fftc_7fftc_iy(PyObject *__pyx_self, PyObject *
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_N)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("fftc_iy", 1, 2, 2, 1); __PYX_ERR(0, 75, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("fftc_iy", 1, 2, 2, 1); __PYX_ERR(0, 76, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fftc_iy") < 0)) __PYX_ERR(0, 75, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fftc_iy") < 0)) __PYX_ERR(0, 76, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -4855,7 +4855,7 @@ static PyObject *__pyx_pw_5beams_4fftc_7fftc_iy(PyObject *__pyx_self, PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("fftc_iy", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 75, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("fftc_iy", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 76, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("beams.fftc.fftc_iy", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4874,7 +4874,7 @@ static PyObject *__pyx_pf_5beams_4fftc_6fftc_iy(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("fftc_iy", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_5beams_4fftc_fftc_iy(__pyx_v_grid, __pyx_v_N, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_5beams_4fftc_fftc_iy(__pyx_v_grid, __pyx_v_N, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4891,7 +4891,7 @@ static PyObject *__pyx_pf_5beams_4fftc_6fftc_iy(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "beams/fftc.pyx":107
+/* "beams/fftc.pyx":108
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_in(grid, N):             # <<<<<<<<<<<<<<
@@ -4938,89 +4938,89 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_in(PyObject *__pyx_v_grid, PyObj
   Py_ssize_t __pyx_t_18;
   __Pyx_RefNannySetupContext("fftc_in", 0);
 
-  /* "beams/fftc.pyx":108
+  /* "beams/fftc.pyx":109
  * @cython.wraparound(False)
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_in(grid, N):
  *     G = grid.shape             # <<<<<<<<<<<<<<
  *     N_t = N.x * N.y
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_grid, __pyx_n_s_shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_grid, __pyx_n_s_shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 109, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_G = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "beams/fftc.pyx":109
+  /* "beams/fftc.pyx":110
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_in(grid, N):
  *     G = grid.shape
  *     N_t = N.x * N.y             # <<<<<<<<<<<<<<
  * 
  *     eps_fft = fft.fft(grid, axis=0) / G[0]
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 109, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 110, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 109, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 110, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_N_t = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "beams/fftc.pyx":111
+  /* "beams/fftc.pyx":112
  *     N_t = N.x * N.y
  * 
  *     eps_fft = fft.fft(grid, axis=0) / G[0]             # <<<<<<<<<<<<<<
  *     eps_mn = np.empty((G[1], N.x, N.x), dtype=DTYPE)
  *     E4 = np.empty((N.x, N.y, N.x, N.y), dtype=DTYPE)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_fft); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_v_grid);
   __Pyx_GIVEREF(__pyx_v_grid);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_grid);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 111, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 111, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_G, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_G, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_eps_fft = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "beams/fftc.pyx":112
+  /* "beams/fftc.pyx":113
  * 
  *     eps_fft = fft.fft(grid, axis=0) / G[0]
  *     eps_mn = np.empty((G[1], N.x, N.x), dtype=DTYPE)             # <<<<<<<<<<<<<<
  *     E4 = np.empty((N.x, N.y, N.x, N.y), dtype=DTYPE)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_empty); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_empty); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_G, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_G, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
@@ -5031,18 +5031,18 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_in(PyObject *__pyx_v_grid, PyObj
   __pyx_t_3 = 0;
   __pyx_t_4 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_5);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 112, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -5050,27 +5050,27 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_in(PyObject *__pyx_v_grid, PyObj
   __pyx_v_eps_mn = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "beams/fftc.pyx":113
+  /* "beams/fftc.pyx":114
  *     eps_fft = fft.fft(grid, axis=0) / G[0]
  *     eps_mn = np.empty((G[1], N.x, N.x), dtype=DTYPE)
  *     E4 = np.empty((N.x, N.y, N.x, N.y), dtype=DTYPE)             # <<<<<<<<<<<<<<
  * 
  *     cdef:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_empty); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_empty); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_6 = PyTuple_New(4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GIVEREF(__pyx_t_4);
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4);
@@ -5084,18 +5084,18 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_in(PyObject *__pyx_v_grid, PyObj
   __pyx_t_2 = 0;
   __pyx_t_1 = 0;
   __pyx_t_3 = 0;
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_6);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_6);
   __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 113, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -5103,82 +5103,82 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_in(PyObject *__pyx_v_grid, PyObj
   __pyx_v_E4 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "beams/fftc.pyx":116
+  /* "beams/fftc.pyx":117
  * 
  *     cdef:
  *         (int, int) G_c = G             # <<<<<<<<<<<<<<
  *         Py_ssize_t Nx = N.x
  *         Py_ssize_t Ny = N.y
  */
-  __pyx_t_7 = __pyx_convert__from_py___pyx_ctuple_int__and_int(__pyx_v_G); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_7 = __pyx_convert__from_py___pyx_ctuple_int__and_int(__pyx_v_G); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 117, __pyx_L1_error)
   __pyx_v_G_c = __pyx_t_7;
 
-  /* "beams/fftc.pyx":117
+  /* "beams/fftc.pyx":118
  *     cdef:
  *         (int, int) G_c = G
  *         Py_ssize_t Nx = N.x             # <<<<<<<<<<<<<<
  *         Py_ssize_t Ny = N.y
  *         Py_ssize_t pp, qq, rr, ss
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_Nx = __pyx_t_8;
 
-  /* "beams/fftc.pyx":118
+  /* "beams/fftc.pyx":119
  *         (int, int) G_c = G
  *         Py_ssize_t Nx = N.x
  *         Py_ssize_t Ny = N.y             # <<<<<<<<<<<<<<
  *         Py_ssize_t pp, qq, rr, ss
  *         DTYPE_t [:, :] eps_fft_c = eps_fft
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_N, __pyx_n_s_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_Ny = __pyx_t_8;
 
-  /* "beams/fftc.pyx":120
+  /* "beams/fftc.pyx":121
  *         Py_ssize_t Ny = N.y
  *         Py_ssize_t pp, qq, rr, ss
  *         DTYPE_t [:, :] eps_fft_c = eps_fft             # <<<<<<<<<<<<<<
  *         DTYPE_t [:, :, :] eps_mn_c = eps_mn
  *         DTYPE_t [:, :, :, :] E4_c = E4
  */
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsds___pyx_t_double_complex(__pyx_v_eps_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsds___pyx_t_double_complex(__pyx_v_eps_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 121, __pyx_L1_error)
   __pyx_v_eps_fft_c = __pyx_t_9;
   __pyx_t_9.memview = NULL;
   __pyx_t_9.data = NULL;
 
-  /* "beams/fftc.pyx":121
+  /* "beams/fftc.pyx":122
  *         Py_ssize_t pp, qq, rr, ss
  *         DTYPE_t [:, :] eps_fft_c = eps_fft
  *         DTYPE_t [:, :, :] eps_mn_c = eps_mn             # <<<<<<<<<<<<<<
  *         DTYPE_t [:, :, :, :] E4_c = E4
  * 
  */
-  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_eps_mn, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_eps_mn, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 122, __pyx_L1_error)
   __pyx_v_eps_mn_c = __pyx_t_10;
   __pyx_t_10.memview = NULL;
   __pyx_t_10.data = NULL;
 
-  /* "beams/fftc.pyx":122
+  /* "beams/fftc.pyx":123
  *         DTYPE_t [:, :] eps_fft_c = eps_fft
  *         DTYPE_t [:, :, :] eps_mn_c = eps_mn
  *         DTYPE_t [:, :, :, :] E4_c = E4             # <<<<<<<<<<<<<<
  * 
- *     for qq in prange(G_c[1], nogil=True, schedule='dynamic'):
+ *     for qq in prange(G_c[1], nogil=True, schedule='guided'):
  */
-  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dsdsdsds___pyx_t_double_complex(__pyx_v_E4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dsdsdsds___pyx_t_double_complex(__pyx_v_E4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 123, __pyx_L1_error)
   __pyx_v_E4_c = __pyx_t_11;
   __pyx_t_11.memview = NULL;
   __pyx_t_11.data = NULL;
 
-  /* "beams/fftc.pyx":124
+  /* "beams/fftc.pyx":125
  *         DTYPE_t [:, :, :, :] E4_c = E4
  * 
- *     for qq in prange(G_c[1], nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for qq in prange(G_c[1], nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         toeplitz_c(eps_fft_c[:, qq], eps_mn_c[qq, :, :])
  * 
  */
@@ -5217,16 +5217,16 @@ static PyArrayObject *__pyx_f_5beams_4fftc_fftc_in(PyObject *__pyx_v_grid, PyObj
                     Py_BEGIN_ALLOW_THREADS
                     #endif /* _OPENMP */
                     #ifdef _OPENMP
-                    #pragma omp for firstprivate(__pyx_v_qq) lastprivate(__pyx_v_qq) schedule(dynamic)
+                    #pragma omp for firstprivate(__pyx_v_qq) lastprivate(__pyx_v_qq) schedule(guided)
                     #endif /* _OPENMP */
                     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_13; __pyx_t_8++){
                         if (__pyx_parallel_why < 2)
                         {
                             __pyx_v_qq = (Py_ssize_t)(0 + 1 * __pyx_t_8);
 
-                            /* "beams/fftc.pyx":125
+                            /* "beams/fftc.pyx":126
  * 
- *     for qq in prange(G_c[1], nogil=True, schedule='dynamic'):
+ *     for qq in prange(G_c[1], nogil=True, schedule='guided'):
  *         toeplitz_c(eps_fft_c[:, qq], eps_mn_c[qq, :, :])             # <<<<<<<<<<<<<<
  * 
  *     epsxy_fft = fft.fft(eps_mn, axis=0) / G[1]
@@ -5241,7 +5241,7 @@ __pyx_t_14.strides[0] = __pyx_v_eps_fft_c.strides[0];
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_qq;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_eps_fft_c.strides[1];
-        if ((0)) __PYX_ERR(0, 125, __pyx_L8_error)
+        if ((0)) __PYX_ERR(0, 126, __pyx_L8_error)
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -5251,7 +5251,7 @@ __pyx_t_9.data = __pyx_v_eps_mn_c.data;
                             {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_qq;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_eps_mn_c.strides[0];
-        if ((0)) __PYX_ERR(0, 125, __pyx_L8_error)
+        if ((0)) __PYX_ERR(0, 126, __pyx_L8_error)
         __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -5353,10 +5353,10 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
         #endif
       }
 
-      /* "beams/fftc.pyx":124
+      /* "beams/fftc.pyx":125
  *         DTYPE_t [:, :, :, :] E4_c = E4
  * 
- *     for qq in prange(G_c[1], nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for qq in prange(G_c[1], nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         toeplitz_c(eps_fft_c[:, qq], eps_mn_c[qq, :, :])
  * 
  */
@@ -5379,56 +5379,56 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
       }
   }
 
-  /* "beams/fftc.pyx":127
+  /* "beams/fftc.pyx":128
  *         toeplitz_c(eps_fft_c[:, qq], eps_mn_c[qq, :, :])
  * 
  *     epsxy_fft = fft.fft(eps_mn, axis=0) / G[1]             # <<<<<<<<<<<<<<
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_fft); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_fft); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_fft); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_fft); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_eps_mn);
   __Pyx_GIVEREF(__pyx_v_eps_mn);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_eps_mn);
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 127, __pyx_L1_error)
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 127, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_G, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_G, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_epsxy_fft = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "beams/fftc.pyx":128
+  /* "beams/fftc.pyx":129
  * 
  *     epsxy_fft = fft.fft(eps_mn, axis=0) / G[1]
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft             # <<<<<<<<<<<<<<
  * 
- *     for pp in prange(Nx, nogil=True, schedule='dynamic'):
+ *     for pp in prange(Nx, nogil=True, schedule='guided'):
  */
-  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_epsxy_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds___pyx_t_double_complex(__pyx_v_epsxy_fft, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 129, __pyx_L1_error)
   __pyx_v_epsxy_fft_c = __pyx_t_10;
   __pyx_t_10.memview = NULL;
   __pyx_t_10.data = NULL;
 
-  /* "beams/fftc.pyx":130
+  /* "beams/fftc.pyx":131
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
  * 
- *     for pp in prange(Nx, nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for pp in prange(Nx, nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         for qq in range(Nx):
  *             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])
  */
@@ -5468,7 +5468,7 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
                     Py_BEGIN_ALLOW_THREADS
                     #endif /* _OPENMP */
                     #ifdef _OPENMP
-                    #pragma omp for firstprivate(__pyx_v_pp) lastprivate(__pyx_v_pp) lastprivate(__pyx_v_qq) schedule(dynamic)
+                    #pragma omp for firstprivate(__pyx_v_pp) lastprivate(__pyx_v_pp) lastprivate(__pyx_v_qq) schedule(guided)
                     #endif /* _OPENMP */
                     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_15; __pyx_t_8++){
                         if (__pyx_parallel_why < 2)
@@ -5477,9 +5477,9 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
                             /* Initialize private variables to invalid values */
                             __pyx_v_qq = ((Py_ssize_t)0xbad0bad0);
 
-                            /* "beams/fftc.pyx":131
+                            /* "beams/fftc.pyx":132
  * 
- *     for pp in prange(Nx, nogil=True, schedule='dynamic'):
+ *     for pp in prange(Nx, nogil=True, schedule='guided'):
  *         for qq in range(Nx):             # <<<<<<<<<<<<<<
  *             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])
  * 
@@ -5489,8 +5489,8 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
                             for (__pyx_t_18 = 0; __pyx_t_18 < __pyx_t_17; __pyx_t_18+=1) {
                               __pyx_v_qq = __pyx_t_18;
 
-                              /* "beams/fftc.pyx":132
- *     for pp in prange(Nx, nogil=True, schedule='dynamic'):
+                              /* "beams/fftc.pyx":133
+ *     for pp in prange(Nx, nogil=True, schedule='guided'):
  *         for qq in range(Nx):
  *             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])             # <<<<<<<<<<<<<<
  * 
@@ -5506,14 +5506,14 @@ __pyx_t_14.strides[0] = __pyx_v_epsxy_fft_c.strides[0];
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_pp;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_epsxy_fft_c.strides[1];
-        if ((0)) __PYX_ERR(0, 132, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 133, __pyx_L17_error)
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_qq;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_epsxy_fft_c.strides[2];
-        if ((0)) __PYX_ERR(0, 132, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 133, __pyx_L17_error)
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -5523,7 +5523,7 @@ __pyx_t_9.data = __pyx_v_E4_c.data;
                               {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_pp;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_E4_c.strides[0];
-        if ((0)) __PYX_ERR(0, 132, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 133, __pyx_L17_error)
         __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -5534,7 +5534,7 @@ __pyx_t_9.strides[0] = __pyx_v_E4_c.strides[1];
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_qq;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_E4_c.strides[2];
-        if ((0)) __PYX_ERR(0, 132, __pyx_L17_error)
+        if ((0)) __PYX_ERR(0, 133, __pyx_L17_error)
         __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -5635,10 +5635,10 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
         #endif
       }
 
-      /* "beams/fftc.pyx":130
+      /* "beams/fftc.pyx":131
  *     cdef DTYPE_t [:, :, :] epsxy_fft_c = epsxy_fft
  * 
- *     for pp in prange(Nx, nogil=True, schedule='dynamic'):             # <<<<<<<<<<<<<<
+ *     for pp in prange(Nx, nogil=True, schedule='guided'):             # <<<<<<<<<<<<<<
  *         for qq in range(Nx):
  *             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])
  */
@@ -5661,18 +5661,18 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
       }
   }
 
-  /* "beams/fftc.pyx":134
+  /* "beams/fftc.pyx":135
  *             toeplitz_c(epsxy_fft_c[:, pp, qq], E4_c[pp, :, qq, :])
  * 
  *     return np.reshape(E4, (N_t, N_t), order='F')             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 135, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_reshape); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 134, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_reshape); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 135, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 135, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_N_t);
   __Pyx_GIVEREF(__pyx_v_N_t);
@@ -5680,7 +5680,7 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
   __Pyx_INCREF(__pyx_v_N_t);
   __Pyx_GIVEREF(__pyx_v_N_t);
   PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_v_N_t);
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 134, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 135, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_INCREF(__pyx_v_E4);
   __Pyx_GIVEREF(__pyx_v_E4);
@@ -5688,20 +5688,20 @@ __pyx_f_5beams_4fftc_toeplitz_c(__pyx_t_14, __pyx_t_9, 0);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 135, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_order, __pyx_n_u_F) < 0) __PYX_ERR(0, 134, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 134, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_order, __pyx_n_u_F) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 135, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 134, __pyx_L1_error)
+  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 135, __pyx_L1_error)
   __pyx_r = ((PyArrayObject *)__pyx_t_6);
   __pyx_t_6 = 0;
   goto __pyx_L0;
 
-  /* "beams/fftc.pyx":107
+  /* "beams/fftc.pyx":108
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[DTYPE_t, ndim=2] fftc_in(grid, N):             # <<<<<<<<<<<<<<
@@ -5770,11 +5770,11 @@ static PyObject *__pyx_pw_5beams_4fftc_9fftc_in(PyObject *__pyx_self, PyObject *
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_N)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("fftc_in", 1, 2, 2, 1); __PYX_ERR(0, 107, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("fftc_in", 1, 2, 2, 1); __PYX_ERR(0, 108, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fftc_in") < 0)) __PYX_ERR(0, 107, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fftc_in") < 0)) __PYX_ERR(0, 108, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -5787,7 +5787,7 @@ static PyObject *__pyx_pw_5beams_4fftc_9fftc_in(PyObject *__pyx_self, PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("fftc_in", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 107, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("fftc_in", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 108, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("beams.fftc.fftc_in", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5806,7 +5806,7 @@ static PyObject *__pyx_pf_5beams_4fftc_8fftc_in(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("fftc_in", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_5beams_4fftc_fftc_in(__pyx_v_grid, __pyx_v_N, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_5beams_4fftc_fftc_in(__pyx_v_grid, __pyx_v_N, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -21946,7 +21946,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 22, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 272, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 856, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 1038, __pyx_L1_error)
@@ -22721,7 +22721,7 @@ if (!__Pyx_RefNanny) {
  * 
  * DTYPE = np.complex128             # <<<<<<<<<<<<<<
  * ctypedef np.complex128_t DTYPE_t
- * 
+ * openmp.omp_set_num_threads(1)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -22730,6 +22730,15 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_1) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "beams/fftc.pyx":14
+ * DTYPE = np.complex128
+ * ctypedef np.complex128_t DTYPE_t
+ * openmp.omp_set_num_threads(1)             # <<<<<<<<<<<<<<
+ * 
+ * @cython.boundscheck(False)
+ */
+  omp_set_num_threads(1);
 
   /* "beams/fftc.pyx":1
  * cimport cython             # <<<<<<<<<<<<<<
