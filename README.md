@@ -2,24 +2,7 @@
 The Berkeley ElectromAgnetic Modal Solver or beams solves Maxwell's equations using the Fourier Modal Method (FMM). Currently in the very early stages of development this Python module is riddled with bugs, lacks many basic features, and a comprehensive documentation.
 
 ## Installation
-To install `beams` clone the repository to a location in your `PYTHONPATH` or add the parent directory to `sys.path`. An automated setup process is yet to be implemented.
-1. Clone the repository: 
-```
-git clone https://github.com/rushinc/beams
-```
-2. To build OpenMP-supported Cython functions run:
-```
-python setup.py build_ext --inplace #this will generate errors!!
-```
-3. In your python script or console add: 
-```
-import sys
-sys.path.append('path/to/beams')
-```
-4. Import:
-```
-import beams as bm
-```
+To install `beams` clone the repository and install using `python setup.py install`.
 
 ## Usage
 The best way to familiarize with beams is to experiment with the notebooks in the `examples/` and `tests/` directories. These will be under regular update until a comprehensive documentation is made available. In the meantime, a brief sample is provided here.
@@ -56,7 +39,7 @@ This fundamental difference in approach from finite-difference or element method
 The primary purpose of beams is to provide a clean and intuitive scripting interface to enable quick analysis of optical elements like diffraction gratings, photonic crystals, and metallic nanoparticle arrays. Once a robust backbone is eshtablished devlopment will move towards extending the functionality and improving the accuracy of the solutions by integrating the latest advances in electromagnetic modal methods. However, a major focus will always be to ensure that the final code involved in desiging a structure remains easy to read, understand, and debug.
 
 ## To-do
-- Add some parallelization and measure the speed-up.
+- ~~Add some parallelization and measure the speed-up.~~
 - Documentation (proposal, reports, readthedocs, etc.)
 - Better build and packaging.
 - Implement an inbuilt eigenmode solver.
