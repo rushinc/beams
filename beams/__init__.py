@@ -4,7 +4,7 @@ from scipy import linalg as la
 
 #NUM_THREADS = 4
 NUM_THREADS = multiprocessing.cpu_count()
-print('Initialized with ' + str(NUM_THREADS) + 'threads...')
+print('Initialized with ' + str(NUM_THREADS) + ' threads...')
 
 def to_vec(elements, **kwargs):
     if elements is None:
