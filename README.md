@@ -50,5 +50,3 @@ The primary purpose of beams is to provide a clean and intuitive scripting inter
 - Integrate with an optimization toolbox for inverse-design.
 - Add a non-linear solver.
 
-## Disclaimer
-*At present this is an exercise in parallelizing FMM for UC Berkeley's CS267. Nothing here will work as expected.*
