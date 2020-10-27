@@ -76,6 +76,14 @@ class Vector(object):
     def __rfloordiv__(self, other):
         return self.__class__(*[other // a for a in self.data])
 
+    def __mod__ (self, other):
+        if isinstance(other, Vector):
+            return self.__class__(*[a % b for (a, b) in zip(self.data, other.data)])
+        return self.__class__(*[a % other for a in self.data])
+
+    def __rmod__(self, other):
+        return self.__class__(*[other % a for a in self.data])
+
     def __neg__(self):
         return self.__class__(*[-a for a in self.data])
 
@@ -98,17 +106,17 @@ class Vector(object):
     def __le__(self, other):
         if isinstance(other, Vector):
             return self.intensity() <= other.intensity()
-        return self.intensity() <= other
+        return self.length() <= other
 
     def __gt__(self, other):
         if isinstance(other, Vector):
             return self.intensity() > other.intensity()
-        return self.intensity() > other
+        return self.length() > other
 
     def __ge__(self, other):
         if isinstance(other, Vector):
             return self.intensity() >= other.intensity()
-        return self.intensity() >= other
+        return self.length() >= other
 
     def __repr__(self):
         return "Vector" + self.__str__().replace("\n", "\n       ")
@@ -130,6 +138,9 @@ class Vector(object):
 
     def dot(self, other):
         return sum([a * b for (a, b) in zip(self.data, other.data)])
+
+    def cross(self, other):
+        return self.__class__(np.cross(self.data, other.data))
 
     def norm(self):
         return float(np.linalg.norm(self.data))

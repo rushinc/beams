@@ -42,7 +42,7 @@ def fields_in_plane(l, pts, amplitudes, components=''):
     E = Vector3d(e_x, e_y, e_z)
     H = Vector3d(h_x, h_y, h_z)
 
-    for (j, yy) in enumerate(pts.y):
+    for (j, yy) in enumerate(pts.y.flatten()):
         r = Vector2d(pts.x, yy)
         k_phase = np.exp(-k0 * l.K.diag().dot(r))
         E.x[:, [j]] = k_phase @ u_xy[:N_t]

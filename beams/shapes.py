@@ -92,3 +92,28 @@ class Ellipse(Shape):
     def interior(self, pt):
         return (pt - self.center) / self.radii <= 1
 
+class Custom(Shape):
+    def __init__(self, array, size, **kwargs):
+        self._raw = array
+        self._size = size
+        super().__init__(interior=self.interior, **kwargs)
+
+    @property
+    def array(self):
+        return self._raw
+
+    @array.setter
+    def array(self, new_array):
+        self._raw = new_array
+
+    @property
+    def size(self):
+        return self._size
+
+    @size.setter
+    def size(self, new_size):
+        self._size = new_size
+
+    def interior(self, pts):
+        r_pos = pts - self.center
+
