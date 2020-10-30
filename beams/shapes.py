@@ -1,30 +1,57 @@
 import numpy as np
 import beams as bm
+from collections import Callable
+from copy import copy
 from beams import *
 
 class Shape:
     def __init__(self, interior, center=Vector2d(), material=bm.Material()):
-        self._material = material
+        if type(material) is materials.Material:
+            self._material = material
+        else:
+            raise AttributeError('material must be an object of beams.materials.Material class')
+        if isinstance(interior, Callable):
+            self._interior = interior
+        else:
+            raise AttributeError('interior must be a function which takes one beams.vectors.Vector2d input and returns True only if the vector is a part of the shape')
         self._center = to_vec2(center)
-        self._interior = interior
 
     def __contains__(self, point):
-        return self.interior(point)
+        pt = to_vec2(point)
+        return self.interior(pt)
 
     @property
     def material(self):
         return self._material
 
+    @material.setter
+    def material(self, new_material):
+        if type(new_material) is materials.Material:
+            self._material = new_material
+        else:
+            raise AttributeError('new_material must be an object of beams.materials.Material class')
+
     @property
     def center(self):
         return self._center
+
+    @center.setter
+    def center(self, new_center):
+        self._center = to_vec2(new_center)
 
     @property
     def interior(self):
         return self._interior
 
+    @interior.setter
+    def interior(self, new_interior):
+        if isinstance(new_interior, Callable):
+            self._interior = new_interior
+        else:
+            raise AttributeError('new_interior must be a function which takes one beams.vectors.Vector2d input and returns True only if the vector is a part of the shape')
+
     def __repr__(self):
-        return "Shape: " + self.__str__().replace("\n", "\n       ")
+        return "beams.Shape:\n" + self.__str__().replace("\n", "\n       ")
 
     def __str__(self):
         s = "center = " + str(self.center)
@@ -33,23 +60,31 @@ class Shape:
 
     def __add__(self, other):
         other = to_vec2(other)
+        new_shape = copy(self)
         new_center = self.center + other
-        return self.__class__(self.interior, new_center, self.material)
+        new_shape.center = new_center
+        return new_shape
 
     def __radd__(self, other):
         other = to_vec2(other)
+        new_shape = copy(self)
         new_center = self.center + other
-        return self.__class__(self.interior, new_center, self.material)
+        new_shape.center = new_center
+        return new_shape
 
     def __sub__(self, other):
         other = to_vec2(other)
+        new_shape = copy(self)
         new_center = self.center - other
-        return self.__class__(self.interior, new_center, self.material)
+        new_shape.center = new_center
+        return new_shape
 
     def __rsub__(self, other):
         other = to_vec2(other)
+        new_shape = copy(self)
         new_center = self.center - other
-        return self.__class__(self.interior, new_center, self.material)
+        new_shape.center = new_center
+        return new_shape
 
 class Rectangle(Shape):
     def __init__(self, size, **kwargs):
@@ -61,7 +96,7 @@ class Rectangle(Shape):
         return self._size
 
     def __repr__(self):
-        return "Rectangle: " + self.__str__().replace("\n", "\n           ")
+        return "beams.Rectangle:\n          " + self.__str__().replace("\n", "\n           ")
 
     def __str__(self):
         s = "center = " + str(self.center) + ", size = " + str(self.size)
@@ -81,8 +116,13 @@ class Ellipse(Shape):
     def radii(self):
         return self._r
 
+    @radii.setter
+    def radii(self, new_r):
+        r = to_vec2(new_r)
+        self._r = r
+
     def __repr__(self):
-        return "Ellipse: " + self.__str__().replace("\n", "\n         ")
+        return "beams.Ellipse:\n         " + self.__str__().replace("\n", "\n         ")
 
     def __str__(self):
         s = "center = " + str(self.center) + ", radii = " + str(self._r)
