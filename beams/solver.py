@@ -14,11 +14,12 @@ class Cell:
         self.reset()
 
     def reset(self):
-        """Forces reset. Stored solutions are discarded."""
+        """Force reset. Stored solutions are discarded."""
         self._freq = None
         self._k = None
         self._u = None
         self._B = None
+        self._S = None
         self._C = None
         self._reset = True
 
@@ -73,6 +74,11 @@ class Cell:
     def B(self):
         """Matrix form of the linear system."""
         return self._B
+
+    @property
+    def S(self):
+        """Scattering matrix for the cell."""
+        return self._S
 
     @property
     def C(self):
@@ -156,6 +162,26 @@ class Cell:
         C = la.solve(self.B, b)
         self._C = np.reshape(C, (4 * N_t, L + 1), order='F')
         self._C[2 * N_t:4 * N_t, L - 1] = np.zeros(2 * N_t, dtype=complex)
+
+    def Smatrix(self, freq, k):
+        L = self.L
+        N_t = self.N_t
+
+        self.layers[0].compute_eigs(freq, k, self.p, self.N)
+        for i in range(len(self.layers) - 1):
+            l1 = self.layers[i]
+            l2 = self.layers[i + 1]
+            l2.compute_eigs(freq, k, self.p, self.N)
+            si = np.block([[l2.U, -l1.U], [l2.V, l1.V]])
+            sf = np.block([[l1.U @ l1.X -l2.U @ l2.X], [l1.V @ l1.X, l2.V @ l2.X]])
+            Sc = la.solve(si, sf)
+
+            if i > 0: 
+                S = cascade(Sp, Sc)
+            else:
+                S = Sc
+            if i < len(self.layers) - 2: Sp = S
+        self._S = S
 
     def angles_to_k(self, freq, angles):
         """

@@ -45,7 +45,7 @@ def to_vec3(elements, **kwargs):
         except TypeError:
             return Vector3d(xyz=elements, **kwargs)
 
-def star(S1, S2, dtype=complex):
+def cascade(S1, S2, dtype=complex):
     (M, N) = S1.shape
     if M != N:
         raise TypeError('Only square matrices are supported for the star product')
